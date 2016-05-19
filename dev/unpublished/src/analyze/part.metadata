@@ -1,0 +1,6 @@
+      <param name="metadata" type="select" label="Select metadata">
+        <options from_file="MOCAT_metadata">
+        <column name="name" index="0"/>
+        <column name="value" index="0"/>
+        </options>
+      </param>

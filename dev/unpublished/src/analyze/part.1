@@ -1,0 +1,17 @@
+<tool id="mocat_analyses_TOOLID" name="TOOLNAME" version="0.0.1">
+  <description>TOOLDESC</description>
+  <command interpreter="perl">
+    MOCAT.pl
+    -analyze_file $input_file
+    -analyze_function TOOLNAME
+    -analyze_desc '$description'
+    -analyze_downsample '$downsample.downsample'
+    -analyze_downsample_size '$downsample.size'
+    -analyze_type '$analyze_type' -analyze_norm '$analyze_norm' -analyze_taxa '$analyze_taxa'
+    -cfg '/g/bork4/kultima/GIT/eclipse_projects/MOCAT/public/cfg/MOCAT.cfg'
+    -SETWD '/g/bork/kultima/galaxy/MOCAT_WD'
+    -length '$length_cutoff'
+    -identity '$identity_cutoff'
+    -analyze_feature_annotations '$feature_annotations'
+    -analyze_running_galaxy
+

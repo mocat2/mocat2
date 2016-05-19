@@ -1,0 +1,133 @@
+package MOCATPasteCoverageFiles;
+use strict;
+use warnings;
+use MOCATCore;
+use MOCATVariables;
+
+# This code is part of the MOCAT analysis pipeline
+# Code is (c) Copyright EMBL and BGI, 2012-2014
+# This code is released under GNU GPL v3.
+
+sub system_ {
+	my $cmd = shift;
+	system($cmd) == 0
+		or die("system($cmd) failed: $!\n");
+}
+
+sub paste {
+	### DEFINE VARIABLES AND OPEN OUTPUT FILE ###
+	my $job        = $_[0];
+	my $processors = $_[1];
+	$ZIP =~ s/pigz.*/pigz -p $processors/;
+
+	my $read_type = 'screened';
+	if ($use_extracted_reads) {
+		$read_type = 'extracted';
+	}
+
+	my $uniq = "";
+	if ($pcf_uniq) {
+		$uniq = ".uniq";
+	}
+
+	my $databases = join( "_AND_", @databases );
+	my $assembly_type = 'assembly';
+	my $end;
+	my $assembly = 0;
+	chomp( my $bn = `basename $sample_file` );
+	if (         $databases[0] eq 's'
+		|| $databases[0] eq 'c'
+		|| $databases[0] eq 'f'
+		|| $databases[0] eq 'r' )
+	{
+		if ( $databases[0] eq 's' ) { $end = 'scaftig' }
+		if ( $databases[0] eq 'c' ) { $end = 'contig' }
+		if ( $databases[0] eq 'f' ) { $end = 'scafSeq' }
+		if ( $databases[0] eq 'r' ) {
+			$assembly_type = 'assembly.revised';
+			$end           = 'scaftig';
+		}
+		$assembly  = 1;
+		$databases = "$assembly_type.$end";
+	}
+
+	system_ "mkdir -p $cwd/abundance.tables/$databases/$read_type.$reads.$conf{MOCAT_data_type}.$conf{MOCAT_mapping_mode}.l$conf{filter_length_cutoff}.p$conf{filter_percent_cutoff}";
+	foreach my $boi ( ( 'base', 'insert' ) ) {
+		foreach my $norm ( ( 'count', 'norm', 'scaled' ) ) {
+			my $do_not_run_scaled = 0;
+			print localtime() . ": Preparing $boi:$norm";
+			my $to_paste = '';
+			my $rownames;
+			my $folder;
+			my $file;
+			my %hash;
+			my $counter1 = 0;
+			my $counter2 = 0;
+
+			foreach my $sample (@samples) {
+				$counter1++;
+				if ( !$assembly ) {
+					$folder   = "$cwd/$sample/$boi.coverage.$databases.$conf{MOCAT_data_type}";
+					$rownames = "$folder/$sample.filtered.$read_type.$reads.on.$databases.$conf{MOCAT_data_type}.$conf{MOCAT_mapping_mode}.l$conf{filter_length_cutoff}.p$conf{filter_percent_cutoff}.rownames$uniq";
+					$file     = "$folder/$sample.filtered.$read_type.$reads.on.$databases.$conf{MOCAT_data_type}.$conf{MOCAT_mapping_mode}.l$conf{filter_length_cutoff}.p$conf{filter_percent_cutoff}.$boi.coverage.$norm";
+				}
+				elsif ($assembly) {
+					( my $max, my $avg, my $kmer ) = MOCATCore::get_kmer( $sample, $reads, "-r" );
+					$folder   = "$cwd/$sample/$boi.coverage.$sample.$assembly_type.$reads.$conf{MOCAT_data_type}.K$kmer.$end";
+					$rownames = "$folder/$sample.filtered.$reads.on.$end.$assembly_type.K$kmer.$conf{MOCAT_data_type}.$conf{MOCAT_mapping_mode}.l$conf{filter_length_cutoff}.p$conf{filter_percent_cutoff}.rownames$uniq";
+					$file     = "$folder/$sample.filtered.$reads.on.$end.$assembly_type.K$kmer.$conf{MOCAT_data_type}.$conf{MOCAT_mapping_mode}.l$conf{filter_length_cutoff}.p$conf{filter_percent_cutoff}.$boi.coverage.$norm";
+				}
+				unless ( -e $file ) {
+					if ( $norm eq 'scaled' ) {
+						$do_not_run_scaled = 1;
+					} else {
+						die "\nERROR & EXIT: Missing $file";
+					}
+				}
+				unless ( $hash{$counter2} ) {
+					$hash{$counter2} = "";
+				}
+				$hash{$counter2} = $hash{$counter2} . " $file ";
+				if ( $counter1 == 100 ) {
+					$counter1 = 0;
+					$counter2++;
+				}
+				print ".";
+			}
+			if ( $do_not_run_scaled == 0 ) {
+				my $norm2 = $norm;
+				if ( $norm eq 'count' ) {
+					$norm2 = 'raw';
+				}
+				unless ( -e "$rownames" ) {
+					die "\nERROR & EXIT: Missing $rownames";
+				}
+				print " OK!\n";
+				print localtime() . ": Processing $boi:$norm...";
+				my $name = "$cwd/abundance.tables/$databases/$read_type.$reads.$conf{MOCAT_data_type}.$conf{MOCAT_mapping_mode}.l$conf{filter_length_cutoff}.p$conf{filter_percent_cutoff}/$bn.$read_type.$reads.on.$databases.$conf{MOCAT_data_type}.$conf{MOCAT_mapping_mode}.l$conf{filter_length_cutoff}.p$conf{filter_percent_cutoff}.$boi.coverage.$norm2";
+				system_("cp $rownames $name.tmp1");
+				foreach my $f ( sort { $a <=> $b } keys %hash ) {
+					system_("paste $name.tmp1 $hash{$f} > $name.tmp2 && mv $name.tmp2 $name.tmp1");
+					print ".";
+				}
+				print "OK\n";
+				print localtime() . ": Preparing final version & zipping $boi:$norm...";
+				chomp( my $currentDate = `date` );
+				open C, ">$name.comments" or die "ERROR & EXIT: Cannot write to $!";
+				print C "# MOCAT $version ($MOCAT_ID) general abundance table ($boi.$norm)\n";
+				print C "# Created $currentDate by $username @ $hostname with identifier $date\n";
+				print C "# $cwd/MOCAT.pl " . join( " ", @args ) . "\n";
+				print C "# Original filename: $name\n";
+				close C;
+				system_("cat $name.comments $name.tmp1 | $ZIP -$ziplevel > $name.tmp.gz && rm -f $name.comments $name.tmp1 && sync && mv $name.tmp.gz $name.gz");
+				print " OK!\n";
+			} else {
+				print "\n";
+			}
+		}
+	}
+	print localtime() . ": Completed.\n";
+	print localtime() . ": RESULTS SAVED IN $cwd/abundance.tables/$databases/$read_type.$reads.$conf{MOCAT_data_type}.$conf{MOCAT_mapping_mode}.l$conf{filter_length_cutoff}.p$conf{filter_percent_cutoff}/\n";
+}
+
+1;

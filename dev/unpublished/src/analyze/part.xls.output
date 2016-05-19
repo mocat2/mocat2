@@ -1,0 +1,4 @@
+  </inputs>
+    <outputs>
+    <data name="output_xls" format="xls" metadata_source="input_file" input_dataset="input_file" />
+  </outputs>

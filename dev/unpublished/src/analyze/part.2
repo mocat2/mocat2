@@ -1,0 +1,59 @@
+  </command>
+  <inputs>
+    <param name="input_file" type="data" format="Gff" label="Tab-delimited file" size="60" />
+    <param name="analyze_type" type="select" label="Define what type of data the feature table comes from">
+      <option value="unknown" selected="true" >unknown</option>
+      <option value="insert" >inserts</option>
+      <option value="base" >bases</option>
+    </param>
+    <param name="analyze_norm" type="select" label="Define the type of normalization the feature table has">
+      <option value="unknown" selected="true" >unknown</option>
+      <option value="count" >count</option>
+      <option value="norm" >norm</option>
+      <option value="scaled" >scaled</option>
+    </param>
+    <param name="analyze_taxa" type="select" label="Define the feature type of the table">
+      <option value="unknown" selected="true" >unknown</option>
+      <option value="kingdom" >kingdom</option>
+      <option value="phylum" >phylum</option>
+      <option value="class" >class</option>
+      <option value="order" >order</option>
+      <option value="family" >family</option>
+      <option value="genus" >genus</option>
+      <option value="species" >species</option>
+      <option value="curated.species" >curated.species</option>
+    </param>
+    <param name="length_cutoff" type="text" size="2" value="0" label="Define the length cutoff used to generate the table" />
+    <param name="identity_cutoff" type="text" size="2" value="0" label="Define the percentage identitiy cutoff used to generate the table" />
+    <param name="description" type="text" size="40" value="" label="Description of this analysis" help="Adds a short optional description that may be useful to identify this analysis." />
+    
+    <conditional name="downsample">
+      <param name="downsample" type="select" label="Downsampling">
+        <option value="none" selected="true" >no downsampling</option>
+        <option value="rrarefy" >Downsample using rrarefy</option>
+        <option value="forslund" >Downsample using forslund method</option>
+        <option value="rrarefy.min" >downsample to smallest sample size (using rrarefy)</option>
+        <option value="rrarefy.top90percent" >downsample and use 90% of samples (using rrarefy)</option>
+      </param>
+      <when value="rrarefy">
+        <param name="size" type="text" size="5" value="10" label="Define the downsample size (will vary greatly on your data, probably needs to be checked in a graph first)" />
+      </when>
+      <when value="forslund">
+        <param name="size" type="text" size="5" value="10" label="Define the downsample size (will vary greatly on your data, probably needs to be checked in a graph first)" />
+      </when>
+      <when value="rrarefy.min">
+        <param name="size" type="hidden" value="" />
+      </when>
+      <when value="rrarefy.top90percent">
+        <param name="size" type="hidden" value="" />
+      </when>
+      
+    </conditional>
+    
+    <param name="feature_annotations" type="select" label="Select feature annotations to use" >
+       <option value="" selected="true" >None</option>
+       <option value="EggNOG /g/bork/kultima/annotations/functional/350/350.eggnog KEGG /g/bork/kultima/annotations/functional/350/350.kegg">350: EggNOG + KEGG</option>
+    </param>
+    
+
+    

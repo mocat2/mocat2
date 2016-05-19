@@ -1,0 +1,99 @@
+<help>
+
+**metahit metadata**
+
+UC: (N=53, NA=519, Y=188)
+
+CD: (N=52, NA=643, Y=65)
+
+IBD: (N=105, NA=402, Y=253)
+
+Smoking: (NA=451, ex_smoker=84, non_smoker=141, smoker=84)
+
+Enterotype: (ET1=159, ET2=114, ET3=284, NA=203)
+
+In_124: (N=636, Y=124)
+
+In_292: (N=468, Y=292)
+
+In_396: (N=364, Y=396)
+
+In_663: (N=97, Y=663)
+
+Nationality: (Danish=401, Spanish=359)
+
+Obesity: (NA=1, lean=362, obese=247, overW=150)
+
+Gender: (F=417, M=342, NA=1)
+
+Diabetes_type: (0=292, 1=78, 2=31, NA=359)
+
+Diabetes: (N=292, NA=359, Y=109)
+
+-----
+
+**tara metadata**
+
+Color_mixed: (black=14, blue=25, green=11, orange=11, pink=12, red=6, yellow=8)
+
+Ocean: (ARAB=10, ATL=29, IND=13, MED=15, PAC=12, RED=8)
+
+Type: (B=18, C=48, NA=21)
+
+Cruise: (NA=21, Tara_oceans=66)
+
+CTD: (NA=21, sbe19_standalone=5, sbe9_rosette=61)
+
+DepthCat: (DCM=40, MESO=10, OMZ=2, SUR=35)
+
+Beta: (0=54, 0.001=7, NA=26)
+
+Betap: (0=59, 0.001=2, NA=26)
+
+Size: (0-0d2=14, 0d2-1d6=34, 0d2-3=39)
+
+bbp: (0=11, 0.001=38, 0.002=8, 0.003=2, 0.004=1, 0.005=1, NA=26)
+
+bb: (0.002=22, 0.003=32, 0.004=4, 0.005=1, 0.006=2, NA=26)
+
+DCM: (0=47, 1=40)
+
+SUR: (0=52, 1=35)
+
+MESO: (0=77, 1=10)
+
+Type: (bac1=34, bac2=39, viral=14)
+
+Color: (black=14, blue=25, green=11, orange=11, pink=12, red=6, yellow=8)
+
+-----
+
+**cancer metadata**
+
+motivation: (NA=58, Screening=66, Symptom=83)
+
+wif_test: (0=116, 1=32, NA=59)
+
+diagnosis: (NA=52, cancer=63, large_adenome=19, normal=35, small_adenome=35, villous_tumor=3)
+
+localisation: (LC=38, LC/RC=3, NA=118, RC=22, RC/LC=6, Rectum=10, Sigmoid=6, rectum=4)
+
+CRC_stage: (0=99, 0.5=3, 1=10, 2=18, 3=17, 4=22, NA=30, p=8)
+
+enterotype: (ET1=8, ET2=19, ET3=61, NA=119)
+
+country: (France=155, Germany=9, Italy=4, USA=39)
+
+non_redundant_set: (biological_replicate=12, error_not_sequenced=1, keep=181, remove_all_villous_tumor=3, technical_replicate=3, unknown=7)
+
+flagged: (low_number_reads_passing_adapter=1, low_number_reads_passing_adapter_and_hg19=1, low_number_reads_passing_hg19=4, low_number_reads_passing_hg19_AND_low_total_assembly_length_AND_few_predicted_genes=1, low_total_assembly_length_AND_few_predicted_genes=2, no=195, very_low_number_reads_passing_hg19=1, very_low_number_reads_passing_hg19_AND_very_low_total_assembly_length_AND_very_few_predicted_genes=2)
+
+kmer: (35=2, 37=11, 39=10, 41=34, 43=60, 45=29, NA=61)
+
+cancer_101: (NA=106, n=62, y=39)
+
+gender: (F=78, M=104, NA=25)
+
+FOBT: (0=111, 1=42, NA=54)
+
+</help>

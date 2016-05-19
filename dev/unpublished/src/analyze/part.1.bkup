@@ -1,0 +1,27 @@
+<tool id="mocat_analyses_TOOLID" name="TOOLNAME" version="0.0.1">
+  <description>TOOLDESC</description>
+  <command interpreter="perl">
+    MOCAT.pl
+    -analyze_file $input_file
+    -analyze_output_xls $output_xls
+    -analyze_output_pdf $output_pdf
+    -analyze_function $function
+    -analyze_desc '$description'
+    -analyze_downsample $downsample
+    -analyze_metadata $metadata
+    -analyze_group $group
+    -analyze_condA $condA
+    -analyze_condB $condB
+    -analyze_type base -analyze_norm norm -analyze_taxa species
+    -cfg /g/bork4/kultima/GIT/eclipse_projects/MOCAT/public/cfg/MOCAT.cfg
+    -SETWD /g/bork/kultima/galaxy/MOCAT_WD
+  </command>
+  <inputs>
+    <param name="input_file" type="data" format="tabular" label="Tab-delimited file" size="60" />
+    <param name="description" type="text" size="40" value="" label="Description of this analysis" help="Adds a short optional description that may be useful to identify this analysis." />
+    <param name="downsample" type="select" label="Downsampling">
+      <option value="none" selected="true" >no downsampling</option>
+      <option value="min" >downsample to smallest sample size</option>
+      <option value="top90percent" >downsample and use 90% of samples</option>
+    </param>
+    

@@ -1,0 +1,87 @@
+	norMD Objective Function for multiple sequence alignments
+                        (version 1.3, Jan 2003)
+
+Changes since version 1.2
+-------------------------
+1. Fixed a bug in reading msf input files, in which sequence names contain only
+digits and no characters.
+
+Changes since version 1.1
+-------------------------
+
+1. normd and normd_rs have been modified to take into account the presence of
+fragments in the alignment.
+2. The calculation of the normd scores has been made more efficient, particularly
+for alignments with large numbers of sequences.
+
+Changes since version 1.0
+-------------------------
+
+1. normd_rs has been modified to cluster highly similar sequences (using percent 
+identity scores). Clusters of sequences are removed and scored as a single group.
+This is more efficient than removing and testing single sequences, and results in a 
+better discrimination between related and unrelated sequences.
+
+******************************************************************************
+
+1. A bug may occur on linux redhat systems causing a 'segmentation fault' in normd_sw.
+This appears to be a problem with glibc. A quick fix is to:
+setenv MALLOC_CHECK_ 0
+This tells it not to abort when there's a problem with malloc. Thanks to 
+Michael Sauder (msauder@stromix.com) for reporting the bug, and providing the fix.
+
+Please send bug reports, comments etc. to :-
+        julie@igbmc.u-strasbg.fr
+
+******************************************************************************
+
+norMD is written in ANSI-C and can be run on any machine with an ANSI-C
+compiler. Executables are provided for SUN and DEC Alpha platforms in:
+
+	norMD1_0.tar.gz
+
+Three programs are provided:
+
+normd:		calculates norMD for full multiple alignment
+normd_sw:	calculate norMD for each position in the alignment using a sliding window
+normd_rs:	remove badly aligned or unrelated sequences
+
+Usage:
+
+normd aln_file matrix gop gep [-v]
+	where aln_file is the alignment input file in MSF format
+		matrix is a residue similarity matrix in Blast format (see example gon250.bla)
+		gop is the Gap Opening penalty
+		gep is the Gap Extension penalty
+		-v is an optional parameter giving more verbose information
+
+normd calculates an overall quality score for a multiple sequence alignment. The default
+option prints out just the norMD score to the screen. The verbose option alse prints out
+the raw MD score and the parameters used in the norMD normalization.
+
+
+normd_sw aln_file matrix gop gep window_length
+	where aln_file is the alignment input file in MSF format
+		matrix is a residue similarity matrix in Blast format (see example gon250.bla)
+		gop is the Gap Opening penalty
+		gep is the Gap Extension penalty
+		window_length is the length of the sliding window
+
+normd_sw calculates a score for each position in the alignment, averaging the norMD
+scores over a user-specified window length. The position scores are printed out to
+the screen.
+
+normd_rs aln_file matrix gop gep cutoff query output_file
+	where aln_file is the alignment input file in MSF format
+		matrix is a residue similarity matrix in Blast format (see example gon250.bla)
+		gop is the Gap Opening penalty
+		gep is the Gap Extension penalty
+		cutoff is the norMD score cutoff for removing low scoring sequences
+		query is the name of the reference sequence in the alignment
+		output_file is the name of the alignment file to be created
+
+normd_rs removes badly aligned or unrelated sequences from an alignment, with respect
+to one of the sequences in the alignment. This is called the reference sequence. A
+cutoff can be specified to select the level of discrimination - a higher cutoff will
+remove more sequences, decreasing the cutoff will keep more sequences in the alignment.
+In tests, a cutoff of 9.0 proved to be reasonable.

@@ -1,0 +1,20 @@
+all: normd normd_sw normd_range
+
+CC	= cc
+CFLAGS  = -c -g 
+LFLAGS	= -g -lm 
+
+ROBJECTS = init.o readseq.o gcgcheck.o writeseq.o
+
+normd : normd.c $(ROBJECTS) readmatrix.o showpair.o utils.o
+	$(CC) normd.c $(ROBJECTS) readmatrix.o showpair.o utils.o -o normd $(LFLAGS)
+
+normd_sw : normd_sw.c $(ROBJECTS) readmatrix.o showpair.o utils.o
+	$(CC) normd_sw.c $(ROBJECTS) readmatrix.o showpair.o utils.o -o normd_sw $(LFLAGS)
+
+normd_range : normd_range.c $(ROBJECTS) readmatrix.o showpair.o utils.o
+	$(CC) normd_range.c $(ROBJECTS) readmatrix.o showpair.o utils.o -o normd_range $(LFLAGS)
+
+.c.o :
+	$(CC) $(CFLAGS) $?
+

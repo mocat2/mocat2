@@ -1,0 +1,53 @@
+#!/bin/sh
+
+# version 1.34 oct 2009
+#
+
+if [ $# != 2 ]
+then
+echo "Usage: rascal input_file output_file"
+exit
+fi
+#Change RASCALPATH and CLUSPACKPATH to reflect the current installation
+RASCALPATH=/home/julie/rascal1.34
+CLUSPACKPATH=$RASCALPATH/cluspack/
+
+echo $RASCALPATH
+echo $CLUSPACKPATH
+
+$RASCALPATH/tomsf $1 $$.msf>/dev/null
+echo ""
+echo "SECATOR RESULTS:"
+echo ""
+$CLUSPACKPATH/cluspack $$.msf -dt=alignment -nbc=secator -cm=bionj -fd=0.001
+echo ""
+echo "SUBFAMILY SEQUENCE ERRORS:"
+echo ""
+$RASCALPATH/scan_seqerrs $$.msf $$.clu > $$_err.log
+$RASCALPATH/realign_seqerrs $1 $$_err.log $$_1.msf 
+#
+echo ""
+echo "SUBFAMILY BLOCK ERRORS:"
+echo ""
+$RASCALPATH/scan_blockerrs $$_1.msf $$.clu > $$_err1.log
+$RASCALPATH/realign_blockerrs $$_1.msf $$_err1.log $$_2.msf
+#
+echo ""
+echo "ORPHAN SEQUENCE ERRORS:"
+echo ""
+$RASCALPATH/scan_orphanerrs $$_2.msf $$.clu > $$_err2.log
+$RASCALPATH/realign_orphanerrs $$_2.msf $$_err2.log $$_3.msf
+#
+echo ""
+echo "NON-CORE BLOCKS:"
+echo ""
+$RASCALPATH/scan_coreblocks $$_3.msf > $$_err3.log
+$RASCALPATH/realign_nonblock $$_3.msf $$_err3.log $$_4.msf 
+#
+# choose the output format : GCG/MSF or FASTA
+#
+#$RASCALPATH/tomsf $$_4.msf $$_4.ras>/dev/null
+$RASCALPATH/totfa $$_4.msf $$_4.ras>/dev/null
+#
+cp $$_4.ras $2
+rm $$*

@@ -1,0 +1,350 @@
+PileUp
+
+
+
+   MSF:  842  Type: P    Check:  7422   .. 
+
+ Name: 10228.estExt_Genewise1Plus.C_5 oo  Len:  842  Check:  7734  Weight:  7.2
+ Name: 45351.estExt_gwp.C_1220079 oo  Len:  842  Check:    82  Weight:  3.0
+ Name: 6412.Helro1_155960 oo  Len:  842  Check:   598  Weight:  4.5
+ Name: 7165.ENSANGP00000011065 oo  Len:  842  Check:  4710  Weight:  2.2
+ Name: 7227.CG6905-PA oo  Len:  842  Check:  5595  Weight:  3.8
+ Name: 7460.ENSAPMP00000011730 oo  Len:  842  Check:  6371  Weight:  4.5
+ Name: 7719.ENSCINP00000016359 oo  Len:  842  Check:  3683  Weight:  7.2
+ Name: 7739.estExt_fgenesh2_pm.C_1760 oo  Len:  842  Check:  6179  Weight:  3.0
+ Name: 9606.ENSP00000265414 oo  Len:  842  Check:  2643  Weight:  5.3
+ Name: 81824.estExt_fgenesh2_pg.C_160 oo  Len:  842  Check:  6715  Weight:  11.0
+ Name: LF_1.NOG04250 oo  Len:  842  Check:  9823  Weight:  16.4
+ Name: LF_10.NOG04250 oo  Len:  842  Check:  2589  Weight:  12.5
+ Name: LF_14.NOG04250 oo  Len:  842  Check:  1310  Weight:  0.7
+ Name: LF_20.NOG04250 oo  Len:  842  Check:  1178  Weight:  12.9
+ Name: LF_32.NOG04250 oo  Len:  842  Check:  5102  Weight:  0.7
+ Name: LF_39.NOG04250.fasta.abc.top.s oo  Len:  842  Check:  7132  Weight:  2.6
+ Name: LF_43.NOG04250.fasta.abc.top.s oo  Len:  842  Check:  5978  Weight:  1.5
+
+//
+
+
+
+10228.estExt_Genewise1Plus.C_5      .....MPRIM IKGGVWRNTE DEILKAAVMK YGKNQWSRIA SLLHRKSAKQ 
+45351.estExt_gwp.C_1220079          .....MPRII IKGGVWRNTE DEILKAAVMK YGKNQWSRIA SLLHRKSAKQ 
+6412.Helro1_155960                  .....MPRIM IKGGVWRNTE DEILKAAVMK YGKNQWSRIA SLLHRKSAKQ 
+7165.ENSANGP00000011065             .....MPRIM IKGGVWRNTE DEILKAAVMK YGKNQWSRIA SLLHRKSAKQ 
+7227.CG6905-PA                      .....MPRIM IKGGVWRNTE DEILKAAVMK YGKNQWSRIA SLLHRKSAKQ 
+7460.ENSAPMP00000011730             .....MPRIM IKGGVWRNTE DEILKAAVMK YGKNQWSRIA SLLHRKSAKQ 
+7719.ENSCINP00000016359             NSIHKMPRIT IKGGVWRNTE DEILKAAVMK YGLNQWSRIA SLLHRKSAKQ 
+7739.estExt_fgenesh2_pm.C_1760      .....MPRIT IKGGVWRNTE DEILKAAVMK YGKNQWSRIA SLLHRKSAKQ 
+9606.ENSP00000265414                .....MPRIM IKGGVWRNTE DEILKAAVMK YGKNQWSRIA SLLHRKSAKQ 
+81824.estExt_fgenesh2_pg.C_160      .....MPPVF IKGGVWTNVE DEVLKAAVMK YGPNQWDRVA SLLHRKSAKQ 
+LF_1.NOG04250                       .......... .......... .......... .......... .......... 
+LF_10.NOG04250                      .......... .......... .......... .......... .......... 
+LF_14.NOG04250                      .....MPRIT IKGGVWRNTE DEILKAAVMK YGKNQWARIA SLLHRKSSKQ 
+LF_20.NOG04250                      .DAVHNPTLG QQGVV.P... .......... .......... .......... 
+LF_32.NOG04250                      .....MPRIL IKGGIWRNTE DEILKAAVMK YGKNQWSRIA SLLHRKTSKQ 
+LF_39.NOG04250.fasta.abc.top.s      .....MGKVI IKGGVWRNTE DEILKAAVMK YGKNQWSRIA SLLHRKSAKQ 
+LF_43.NOG04250.fasta.abc.top.s      .....MPRII IKGGVWRNTE DEILKAAVMK YGKNQWSRIA SLLHRKSAKQ 
+
+
+10228.estExt_Genewise1Plus.C_5      CKARWFEWLD PSIKKTEWTK EEEEKLLHLA KLMPTQWRTI APIVGRSAAQ 
+45351.estExt_gwp.C_1220079          CKARWYEWLD PSIKKTEWSR EEDEKLLHLA KLMPTQWRTI APLIGRTAAQ 
+6412.Helro1_155960                  CKARWFEWLD PSIKKTEWSR EEEEKLLHLA KMMPTQWRTI APIVGRTAAQ 
+7165.ENSANGP00000011065             CKARWYEWLD PSIKKTEWSR EEDEKLLHLA KLMPTQWRTI APIIGRTAAQ 
+7227.CG6905-PA                      CKARWYEWLD PSIKKTEWSR EEDEKLLHLA KLMPTQWRTI APIIGRTAAQ 
+7460.ENSAPMP00000011730             CKARWFEWLD PSIKKTEWSR EEDEKLLHLA KLMPTQWRTI APIIGRTAAQ 
+7719.ENSCINP00000016359             CKARWYEWLD PSIKKTEWSR EEEEKLLHLA KLMPTQWRTI APIIGRTAAQ 
+7739.estExt_fgenesh2_pm.C_1760      CKARWFEWLD PSIKKTEWSR EEDEKLLHMA KLMPTQWRTI APVVGRTAAQ 
+9606.ENSP00000265414                CKARWYEWLD PSIKKTEWSR EEEEKLLHLA KLMPTQWRTI APIIGRTAAQ 
+81824.estExt_fgenesh2_pg.C_160      CKYRWYEWLD PSIKKTEWSR EEEEKLLHLA KTMSSQWRTI APMIGRTPIQ 
+LF_1.NOG04250                       .......... .......... .......... .......... .......... 
+LF_10.NOG04250                      .......... .......... .......... .......... .......... 
+LF_14.NOG04250                      CKARWYEWLD PGIKKTEWSR EEEEKLLHLA KLMPTQWRTI APIIGRTAAQ 
+LF_20.NOG04250                      .......... .......... .......... .......... .......... 
+LF_32.NOG04250                      CKARWYEWLD PSIKKTEWSR EEEEKLLHLA KLMPTQWRTI APIVGRTAAQ 
+LF_39.NOG04250.fasta.abc.top.s      CKARWQEWLD PAIKKVEWSR EEEEKLLHLA KLMPTQWRTI APIIGRTAAQ 
+LF_43.NOG04250.fasta.abc.top.s      CKARWYEWLD PSIKKTEWSR EEDEKLLHLA KLMPTQWRTI APLIGRTAAQ 
+
+
+10228.estExt_Genewise1Plus.C_5      CLEHYEMLLD KAQ.....MK EDTED..NDP RKLRPGEIDP NPENKPARPD 
+45351.estExt_gwp.C_1220079          CLERYEYLLD QAQ.....AK EGDKDEGDDP RKLRPGEIDP NPETKPARPD 
+6412.Helro1_155960                  CLEHYEFLLD KAQ......Q RDQEMGDDDP RKLKPGEIDP NPETKPARPD 
+7165.ENSANGP00000011065             CLERYEYLLD QAQ.....RK EEGEDGMDDP RKLKPGEIDP NPETKPARPD 
+7227.CG6905-PA                      CLERYEYLLD QAQ.....RK EDGEDTMDDP RKLKPGEIDP NPETKPARPD 
+7460.ENSAPMP00000011730             CLERYEYLLD QAQ.....KK EEGDDATDDP RKLKPGEIDP NPETKPARPD 
+7719.ENSCINP00000016359             CLEHYEYLLD KAA.....HN EEDEMGGDDP RKLKPGEIDP APETKPARPD 
+7739.estExt_fgenesh2_pm.C_1760      CLERYEFLLD QAQK..NESE AESGGLGDDP RKLKPGEIDP NPETKPARPD 
+9606.ENSP00000265414                CLEHYEFLLD KAA.....QR DNEEETTDDP RKLKPGEIDP NPETKPARPD 
+81824.estExt_fgenesh2_pg.C_160      CLERYEKLLD QAQNAGGAAG EADAADHHDA RRLRPGEIDP NPHTRPARPD 
+LF_1.NOG04250                       .......... .......... .......... .......... .......... 
+LF_10.NOG04250                      .......... .......... .......... .......... .......... 
+LF_14.NOG04250                      CLEHYEYLLD KAQ......N RDQDN.EDDP RKLKPGEIDP NPETKPAKPD 
+LF_20.NOG04250                      .......... .......... .......... .......... .......... 
+LF_32.NOG04250                      CLEHYEYLLD QAQ.....KK NEDGDDIIDP RKLKPGEIDP NPETKPARPD 
+LF_39.NOG04250.fasta.abc.top.s      CLEHYEKLLD QAQ.....AK ETGQDPEDDP RRLRPGEIDP NPHTKPARPD 
+LF_43.NOG04250.fasta.abc.top.s      CLERYEFLLD QAQ.....AK EGEKDEGEDP RKLRPGEIDP NPETKPARPD 
+
+
+10228.estExt_Genewise1Plus.C_5      PIDMDEDEIE MLAEARARLA NTQGKKAKRK AREKQLEEAR RLAALQKRRE 
+45351.estExt_gwp.C_1220079          PIDMDEDELE MLSEARARLA NTQGKKAKRK AREKQLEEAR RLAALQKRRE 
+6412.Helro1_155960                  PIDMDEDELE MLSEARARLA NTQGKKAKRK AREEQLNEAR RLASLQKRRE 
+7165.ENSANGP00000011065             PKDMDEDELE MLSEARARLA NTQGKKAKRK AREKQLEEAR RLAALQKRRE 
+7227.CG6905-PA                      PKDMDEDELE MLSEARARLA NTQGKKAKRK AREKQLEEAR RLATLQKRRE 
+7460.ENSAPMP00000011730             PKDMDEDELE MLSEARARLA NTQGKKAKRK AREKQLEEAR RLAALQKRRE 
+7719.ENSCINP00000016359             PVDMDEDEHE MLSEARARLA NTQGKKAKRK AREKQLEEAR RLASLQKRRE 
+7739.estExt_fgenesh2_pm.C_1760      PIDMDEDELE MLSEARARLA NTQGKKAKRK AREKQLEEAR RLAALQKRRE 
+9606.ENSP00000265414                PIDMDEDELE MLSEARARLA NTQGKKAKRK AREKQLEEAR RLAALQKRRE 
+81824.estExt_fgenesh2_pg.C_160      PVDMDEDEKE MLSEARARLA NTQGKKAKRK ARERQLEEAK RLARLQKQRE 
+LF_1.NOG04250                       .......... .......... .......... .......... .......... 
+LF_10.NOG04250                      .......... .......... .......... .......... .......... 
+LF_14.NOG04250                      PVDMDEDELE MLSEARARLA NTQGKKAKRK AREKQLEEAR RLAALQKRRE 
+LF_20.NOG04250                      .......... .......... .......... .......... .......... 
+LF_32.NOG04250                      PKDMDEDE.L MLSEARARLA NTQGKKSKRK AREKQLEEAR RLASLQKRRE 
+LF_39.NOG04250.fasta.abc.top.s      PIDMDEDEKE MLSEARARLA NTQGKKAKRK AREKQLEEAR RLSALQKRRE 
+LF_43.NOG04250.fasta.abc.top.s      PIDMDEDELE MLSEARARLA NTQGKKAKRK AREKQLEEAR RLAALQKRRE 
+
+
+10228.estExt_Genewise1Plus.C_5      LRAAGIDVRE KRRKKRQVDY NAEIPFEKKP AAGFYDTSSE SYKAFQPDFS 
+45351.estExt_gwp.C_1220079          LRAAGIDIRK HRKKKRGVDY NAEIPFEKKP ASGFYDTSDE NLPDYQPDFK 
+6412.Helro1_155960                  LRAAGIFIRE KKRKKRGIDY LNEVPFEKKP APGFYDTSNE KFDPLDPDFK 
+7165.ENSANGP00000011065             LRAAGIGLGN RKRKLKGIDY NSEVPFEKTP APGFYDTTEE FVVPIAADFS 
+7227.CG6905-PA                      LRAAGIGSGN RKR.IKGIDY NAEIPFEKRP AHGFYDTSEE HLQKNEPDFN 
+7460.ENSAPMP00000011730             LRAAGITVSQ KNKRKRGVNY NSEIPFEKRP APGFYDTSNE HVDPLAIDFS 
+7719.ENSCINP00000016359             LKAAGIAIRK KRRKKGRIDY NAEIPFEKKP ALGFYDVAEE VFDPLDPNFK 
+7739.estExt_fgenesh2_pm.C_1760      LRAAGIEVMK KRKKKRGVDY NAEIPFEKKP APGFYDTAEE TYQPLKPDFK 
+9606.ENSP00000265414                LRAAGIEIQK KRKRKRGVDY NAEIPFEKKP ALGFYDTSEE NYQALDADFR 
+81824.estExt_fgenesh2_pg.C_160      LRAAGINVRE RKRRGRNVDY NAEIPFQRTP APGFYDAGAD DP..VRPRVK 
+LF_1.NOG04250                       .......... .......... .......... .......... .......... 
+LF_10.NOG04250                      .......... .......... .......... .......... .......... 
+LF_14.NOG04250                      LRAAGIE... .......... .......... .......... .......... 
+LF_20.NOG04250                      .......... .......... .......... .......... .......... 
+LF_32.NOG04250                      MRAAGIRVRI KKSRKMTVDY HEEIPFEKKP LHGFFDTADE N......... 
+LF_39.NOG04250.fasta.abc.top.s      LRAAGIELER RNKKKMGMDY NADIPFEKRP AIGFFDPSSD E........Q 
+LF_43.NOG04250.fasta.abc.top.s      LRAAGIEIRK HRKKRRGVDY NAEIPFEKKP AQGFYDTGEE ELPDYQP... 
+
+
+10228.estExt_Genewise1Plus.C_5      KLRRQKLDGP TRDEVEERER KRDKDRQKKR KEKDMPGAIM QMN..RDTDP 
+45351.estExt_gwp.C_1220079          RLRQDHLEGK MRDEIEQQER KKDKERMKKK KESDLPGAVM QINKMNNPDH 
+6412.Helro1_155960                  RLRQQQLDGD MRRDKEEAEL KKDKERLKQR KENNLPDALL AQN..KFSEP 
+7165.ENSANGP00000011065             SLRQQTLDGE LRTEKEARER KKDKEKLKQR KENDIPTALL KNQ.....EP 
+7227.CG6905-PA                      KMRQQDLDGE LRSEKEERER KRDKQKLKQR KENEVPTAML QNM.....EP 
+7460.ENSAPMP00000011730             KMRQQHLDGE LRQEKEEMER RKDKQKLKQR KENDIPMGML NNE.....EP 
+7719.ENSCINP00000016359             RLRQDHLDKE LARVKEEREK IKDKQKNKDK D.......VA SIINNKNAEP 
+7739.estExt_fgenesh2_pm.C_1760      KLRQQNLDGE LRDDVEGRER RKDKQRQKRK KENELPDAIL QTQRANNPEF 
+9606.ENSP00000265414                KLRQQDLDGE LRSEKEGRDR KKDKQHLKRK KESDLPSAIL QTS..GVSEF 
+81824.estExt_fgenesh2_pg.C_160      QGMRSDVEGV PRKVREEQER REEQKKLEEL KKKDMAAALR KIHRVSGDEP 
+LF_1.NOG04250                       .......... .......... .......... .......... .......... 
+LF_10.NOG04250                      .......... .......... .......... .......... .......... 
+LF_14.NOG04250                      .......... .......... .......... .......... .......... 
+LF_20.NOG04250                      .......... .......... .......... .......... .......... 
+LF_32.NOG04250                      .......... .......... .......... .......... .......... 
+LF_39.NOG04250.fasta.abc.top.s      FAEKADFKPV SRTEADG... .......... .......... .......... 
+LF_43.NOG04250.fasta.abc.top.s      .......... .......... .......... .......... .......... 
+
+
+10228.estExt_Genewise1Plus.C_5      MIKRSKLVLP APQVSDAELE EIVKMGYTSE NVKASAEEGG NIASQK..LL 
+45351.estExt_gwp.C_1220079          VKKRSKLVLP KPQISDGELE EIVKMGYASE VARASVENGG .QASDA..LL 
+6412.Helro1_155960                  VRKRSKLVLP EPQISDRELE EVIKVGQASE FVRQQAEESG ELRELK..NK 
+7165.ENSANGP00000011065             AKKRSKLVLP EPQISDQELQ QVVKLGRASE IAKEVASESG VETTDA..LL 
+7227.CG6905-PA                      ERKRSKLVLP TPQISDMELQ QVVKLGRASE MAKEIAGESG IETTDA..LL 
+7460.ENSAPMP00000011730             IKKRSKLVLP EPQISDQELQ QVVKLGRASE VAREVATESG ITLSDS..LL 
+7719.ENSCINP00000016359             AKKRSKLVLP SPQISDMELE EVVKVG...Q AAKLAIEESG VPTSDS..LL 
+7739.estExt_fgenesh2_pm.C_1760      QKKRSKLVLP APQISEQELE EVVKLGQASE SARMVAEEGA GSEASRA.LL 
+9606.ENSP00000265414                TKKRSKLVLP APQISDAELQ EVVKVGQASE IARQTAEESG ITNSASSTLL 
+81824.estExt_fgenesh2_pg.C_160      TNKRSKLLLP APQVSDRDLE DLVKL..SKS GAEAAAEVDG KGASNS..LL 
+LF_1.NOG04250                       .......... .......... .......... .......... .......... 
+LF_10.NOG04250                      .......... .......... .......... .......... .......... 
+LF_14.NOG04250                      .......... .......... .......... .......... .......... 
+LF_20.NOG04250                      .......... .......... .......... .......... .......... 
+LF_32.NOG04250                      .......... .......... .......... .......... .......... 
+LF_39.NOG04250.fasta.abc.top.s      .......... .......... .......... .......... .......... 
+LF_43.NOG04250.fasta.abc.top.s      .......... .......... .......... .......... .......... 
+
+
+10228.estExt_Genewise1Plus.C_5      ADYSVTPGAG GALRTPRTPA NKDAILQEAQ NLIALSNVDT PLKGGLNTPL 
+45351.estExt_gwp.C_1220079          SEYSVTPAIN KALRTPRTPA EQDTVLQEAQ NILALSNVDT PLKGGLNTPM 
+6412.Helro1_155960                  LNVTDRSVRS SVRSSTVRSS VRSSVRQEDG DNVLMTPVT. .......... 
+7165.ENSANGP00000011065             ADYSITPQVA ATPRTP..AP VTDRILQEAQ NMMALTHVET PLKGGVNTPL 
+7227.CG6905-PA                      ADYSITPQVA ATPRTP..AP YTDRIMQEAQ NMMALTHTET PLKGGLNTPL 
+7460.ENSAPMP00000011730             ADYSLPTNAA VTPRTP..AA TADRILQEAQ NVMALTHVDT PLKGGLNTPL 
+7719.ENSCINP00000016359             ADYSVTPSTS NLRTPRTPMP SSDTVMQEAL NVMALTNVDT PLKGGTNVP. 
+7739.estExt_fgenesh2_pm.C_1760      SDYTVTPRPD .QLRTPRTPA TQDMVLQEAQ NIMALTNVDT PLKGGLNTPL 
+9606.ENSP00000265414                SEYNVT.NNS VALRTPRTPA SQDRILQEAQ NLMALTNVDT PLKGGLNTPL 
+81824.estExt_fgenesh2_pg.C_160      QNYAETPSFH .AARTPRAPQ EKDSLLTEAQ NIIALNQTSS VLEGGANTPL 
+LF_1.NOG04250                       .......... .......... .......... .......... .......... 
+LF_10.NOG04250                      .......... .......... .......... .......... .......... 
+LF_14.NOG04250                      .......... .......... .......... .......... .......... 
+LF_20.NOG04250                      .......... .......... .......... .......... .......... 
+LF_32.NOG04250                      .......... .......... .......... .......... .......... 
+LF_39.NOG04250.fasta.abc.top.s      .......... .......... .......... .......... .......... 
+LF_43.NOG04250.fasta.abc.top.s      .......... .......... .......... .......... .......... 
+
+
+10228.estExt_Genewise1Plus.C_5      RESG..FEGA TPKRNVPATP NTLLATPSRT ...ASGTTPR A..GESG... 
+45351.estExt_gwp.C_1220079          HESD..FQGV TPRQQAIQTP NMLLSTPYRT PGEGSGSTPR Q..GMTPRGA 
+6412.Helro1_155960                  .......... .......... .......... .......... .......... 
+7165.ENSANGP00000011065             HQSD..FSGV LPQSQTVATP NTVLATPFRS VRGPDGSATP GGFLTPASGA 
+7227.CG6905-PA                      HESD..FSGV LPKAASIATP NTVIATPFRT QR.EGGAATP GGFQTPSSGA 
+7460.ENSAPMP00000011730             NNSD..FTGV VPSTNAVATP NTILATPFRS QRSDGTPANS FNTPISARTQ 
+7719.ENSCINP00000016359             ..VDTDFSGI TPARPDIKTP NTVIATPFRT PSEAGTSDGM TPAMPTPRSI 
+7739.estExt_fgenesh2_pm.C_1760      HESD..FSGV TPKHQAVATP NPTFVTPFRT PGQSDGMTPG RGFTPGRAST 
+9606.ENSP00000265414                HESD..FSGV TPQRQVVQTP NTVLSTPFRT PSNGAEGLTP RSGTTPKPVI 
+81824.estExt_fgenesh2_pg.C_160      HDNGGYFDGM TPKRKEVATP NRVLTTPYRG ....SNVAVT P..GRNTSGA 
+LF_1.NOG04250                       .......... .......... .......... .......... .......... 
+LF_10.NOG04250                      .......... .......... .......... .......... .......... 
+LF_14.NOG04250                      .......... .......... .......... .......... .......... 
+LF_20.NOG04250                      .......... .......... .......... .......... .......... 
+LF_32.NOG04250                      .......... .......... .......... .......... .......... 
+LF_39.NOG04250.fasta.abc.top.s      .......... .......... .......... .......... .......... 
+LF_43.NOG04250.fasta.abc.top.s      .......... .......... .......... .......... .......... 
+
+
+10228.estExt_Genewise1Plus.C_5      .ITPGRTP.. .........V RDKLNINPED NLDLADDGSE SSKIHQGEIR 
+45351.estExt_gwp.C_1220079          IGTPSQRS.. .........V RDKLNINPED AVMEEYESEC AAKQQQSEAK 
+6412.Helro1_155960                  .......... .......... .......... ........HD EDNLTDIQTK 
+7165.ENSANGP00000011065             MVPVGSGTQP HAPGATPNFL RDKLNINTED GMSVAETPAA YK.SYQKQLK 
+7227.CG6905-PA                      LVPVKGAGGA TGVVNTPAYV RDKLSINPEE SMGVTETPAH YK.NYQKQLK 
+7460.ENSAPMP00000011730             NGVLAATP.. .........V RDKLSINPDE NMD.....GS ETPLIQKQVK 
+7719.ENSCINP00000016359             TSTPGFTP.. .........R RDKLNINRED MTPFN..PKV KASGSNYEER 
+7739.estExt_fgenesh2_pm.C_1760      TAGQTPLQAS .........V RDKLNINPEE GLMEYDDPQY TK.HLQEQHK 
+9606.ENSP00000265414                NSTPGRTP.. .........L RDKLNINPED GMADYSDPSY VKQMER.ESR 
+81824.estExt_fgenesh2_pg.C_160      IPDAANTP.. .........L RDKLGINKSS DSSLITPRNR QELERNKDLR 
+LF_1.NOG04250                       .......... .......... .......... .......... ......RRAE 
+LF_10.NOG04250                      .......... .......... .......... .......... .......... 
+LF_14.NOG04250                      .......... .......... .......... .......... .......... 
+LF_20.NOG04250                      .......... .......... .......... .......... .......... 
+LF_32.NOG04250                      .......... .......... .......... .......... .......... 
+LF_39.NOG04250.fasta.abc.top.s      .......... .......... .......... .......... .......... 
+LF_43.NOG04250.fasta.abc.top.s      .......... .......... .......... .......... .......... 
+
+
+10228.estExt_Genewise1Plus.C_5      AQLLQSLSKL PAPRNDFEIV APEDTIEE.E KVEH...ETM IT.DAAEIDE 
+45351.estExt_gwp.C_1220079          EQLLAGLASL PAPSNDFEIV LPETPAEASE EHKP...MDF VE.DAADIDE 
+6412.Helro1_155960                  YSLKKALANL PAPKDDYEIV LPEEQNGVED GLENGDDGSH LLPDQSDVDQ 
+7165.ENSANGP00000011065             SSLKEGLASL PAPRNDYEIV VPDNETDEAA DDGSMDVEQM VP.DQADVDE 
+7227.CG6905-PA                      STLRDGLSTL PAPRNDYEIV VPEQEESERI ETNS...EPA VE.DQADVDA 
+7460.ENSAPMP00000011730             EQLRAGLNAL PAPRNDYEIV VPEGETKDEE LTPT...TTE IIEDQADIDA 
+7719.ENSCINP00000016359             LNLRATLSTL PTPRNDFEIV LPENEDGMDG DHHDKDGSDM VE.DAADVEA 
+7739.estExt_fgenesh2_pm.C_1760      SQLRRGLQGL PTPKNDFEIV MPEEMPQDVG TEVEP..RAD LRPDQSDIDM 
+9606.ENSP00000265414                EHLRLGLLGL PAPKNDFEIV LPEN...AEK ELEEREIDDT YIEDAADVDA 
+81824.estExt_fgenesh2_pg.C_160      SSLRDGLASL PAPRKDYDIM VPD..VEEEE QDAT...AVR EE.DAAANDA 
+LF_1.NOG04250                       DMLKQGLSSL PKPKNDYEIV VPEGEGEEGD SEAGT..SAY IE.DQADLDN 
+LF_10.NOG04250                      .......... .......... .......... .......... .......... 
+LF_14.NOG04250                      .......... .......... .......... .......... .......... 
+LF_20.NOG04250                      .......... .......... .......... .......... .......... 
+LF_32.NOG04250                      .......... .......... .......... .......... .......... 
+LF_39.NOG04250.fasta.abc.top.s      .......... .......... .......... .......... .......... 
+LF_43.NOG04250.fasta.abc.top.s      .......... .......... .......... .......... .......... 
+
+
+10228.estExt_Genewise1Plus.C_5      RIQREQAAEE AKLLRRRSQA VQRGLPRPSE VNASVVR.QS ..QDITNELI 
+45351.estExt_gwp.C_1220079          RALALRAKQE ELERRRRSQA VQRELPRPSN VNTSVLR.PT NVEPPLSALQ 
+6412.Helro1_155960                  MKEEKIQAER LKELKSRSQV MQRSLPRPSE VNNTVLRSLN PDDLPLSELQ 
+7165.ENSANGP00000011065             KRKRNKLAQE AKELSLRSQV IQRDLPRPLE INTTVLR.PS NEMHGLTDLQ 
+7227.CG6905-PA                      RLLAEQEARR KRELEKRSQV IQRSLPRPTE VNTKILR.PQ SEKQNLTEQQ 
+7460.ENSAPMP00000011730             RQQQELIEQR KKELSRRSQV IQRDLPRPVD VNMNILR..P FMDTPLTDLQ 
+7719.ENSCINP00000016359             RKQAAIEAEL AEQLARRHAS VRKELPRPTV INETILR.QP .TTTQLDELQ 
+7739.estExt_fgenesh2_pm.C_1760      AEQARVNAER ERELKRRHHA VQRDLPRPVE PNSSILR.PL VMDPPLTELQ 
+9606.ENSP00000265414                RKQAIRDAER VKEMKRMHKA VQKDLPRPSE VNETILR.PL NVEPPLTDLQ 
+81824.estExt_fgenesh2_pg.C_160      RRAERARQNE AANFKLQTQA YQRKLSLPKT VNDKILR.NA DLTDPL...L 
+LF_1.NOG04250                       RREEELRAQR ELELRKRSHA VQRDLPRPLE TNGTVMR.P. .KDSQLDSLQ 
+LF_10.NOG04250                      .......... .......... .......... .......... .......... 
+LF_14.NOG04250                      .......... .......... .......... .......... .......... 
+LF_20.NOG04250                      .......... .......... .......... .......... .......... 
+LF_32.NOG04250                      .......... .......... .......... .......... .......... 
+LF_39.NOG04250.fasta.abc.top.s      .......... .......... .......... .......... .......... 
+LF_43.NOG04250.fasta.abc.top.s      .......... .......... .......... .......... .......... 
+
+
+10228.estExt_Genewise1Plus.C_5      MAEEQIKKEM LSMLYHDAVN HTA..TNQIS G......... ....IRSHNA 
+45351.estExt_gwp.C_1220079          MAEELIKKEM IVMLRNDIIN HPT..SQQIE SLTNKKTRNA AQAVITGNRA 
+6412.Helro1_155960                  KAEELIKEEM LTILHYDNLM DPP..QSSLT AKQQQQQEIN .......HVE 
+7165.ENSANGP00000011065             KAEELVKQEM VKMLNYDALR NPI..QQSQP ASVKRPM... ....LSQYQA 
+7227.CG6905-PA                      QAEELIKHEM ITMQLYDSVK DPV..PGQ.. ...SQHK... ....LEQLQS 
+7460.ENSAPMP00000011730             RAEELIKREM ITMLQYDALQ NPV..QQNRK SSSNS..... ....VAQAQA 
+7719.ENSCINP00000016359             KAEEAIKREM VTMLRHDALN NSA..PNQIP GKGKKAN... ...SMSAHTQ 
+7739.estExt_fgenesh2_pm.C_1760      LAEELIKREM VTMLHHDAIY NPSEEQASVA AGDKKKGAQS VGNKMAEHIA 
+9606.ENSP00000265414                KSEELIKKEM ITMLHYDLLH HPY..EPSGN KKGKTVGFGT N...NSEHIT 
+81824.estExt_fgenesh2_pg.C_160      IADEIVKEEM LQLLRSDKG. .......... .......... .......... 
+LF_1.NOG04250                       KAEELIKREM LTMLHYDSVT NPTDMQS..L AG..KKDAQK AAVHMAQHKA 
+LF_10.NOG04250                      .......... .......... .......... .......... .......... 
+LF_14.NOG04250                      .......... .......... .......... .......... .......... 
+LF_20.NOG04250                      .......... .......... .....GKKQP SQRAVLN... ....QAQHLS 
+LF_32.NOG04250                      .......... .......... .......... .......... .......... 
+LF_39.NOG04250.fasta.abc.top.s      .......... .......... .......... .......... .......... 
+LF_43.NOG04250.fasta.abc.top.s      .......... .......... .......... .......... .......... 
+
+
+10228.estExt_Genewise1Plus.C_5      AKEKYHYEDI AEEEITTARQ IIADEVENIK SSAGYSNLS. .FDAYCTVWD 
+45351.estExt_gwp.C_1220079          ALERDPMENF TDEELSSAKN LLRQEMDFVK SKMAHSDLP. .LEAYSKVWE 
+6412.Helro1_155960                  FLRSHPYEKF SLNEIDKAAR MLKEEMSIVK ERMGHSNLS. .LDAYTEVWE 
+7165.ENSANGP00000011065             YLEQHPYETI DEVELDEARK MLAAEMGVVK HGMAHGDLS. .LESYTQVWQ 
+7227.CG6905-PA                      YFKANPYEDI SQQELAKAKQ MLTEEMEVVK ERMAHGELP. .LDVYAQVWQ 
+7460.ENSAPMP00000011730             YLEQHPYINF EKEELVAAKK LLTDEMAVVK EGMAHGELS. .LDSYTTVWE 
+7719.ENSCINP00000016359             YLSKYPYEEI SPEELEDAKN LLNKEIEVVK TAMQHGNIS. .LDVYTKVWR 
+7739.estExt_fgenesh2_pm.C_1760      YLEEYPYTKI DEDSLNLAKE LLSHEMEVVK TGMGHGDLS. .VEVFNQVWE 
+9606.ENSP00000265414                YLEHNPYEKF SKEELKKAQD VLVQEMEVVK QGMSHGELS. .SEAYNQVWE 
+81824.estExt_fgenesh2_pg.C_160      ..EIRRLPLL QASAKADAEA VLQAEMEALA AEAGDTDLVA RHQRFVAARA 
+LF_1.NOG04250                       YLEQHAYHEV DEYEMELAKD LLTQEMAYVK QKMNHGELS. .LEAYTKVWQ 
+LF_10.NOG04250                      .......... .......... .......... .......... .......... 
+LF_14.NOG04250                      .......... .......... .......... .......... .......... 
+LF_20.NOG04250                      YLESHPYNPC EEDEMKEAHE ELMKEMEYVK EKMNHGDLS. .LESYTQVWE 
+LF_32.NOG04250                      .......... .......... .......... .......... .......... 
+LF_39.NOG04250.fasta.abc.top.s      .......... .......... .......... .......... .......... 
+LF_43.NOG04250.fasta.abc.top.s      .......... .......... .......... .......... .......... 
+
+
+10228.estExt_Genewise1Plus.C_5      ECYKEVLYIP SQARVTRVSM SNRKDRLDFC EKRLESNRQQ MTKEAKKANK 
+45351.estExt_gwp.C_1220079          ECYAQVLFLP SQQRYTRAAM ASKKDRLESL EKRLELNRYQ MTEDAKKAAK 
+6412.Helro1_155960                  NCYEQVLYLP AVKRFTRANL ASKKEKIESL EKRLETNKKH LEADSKVAVK 
+7165.ENSANGP00000011065             ECLSQVLYLP SQNRYTRANL ASKKDRIESA EKRLEINRKH MAKEAKRCGK 
+7227.CG6905-PA                      ECLGQVLYLP SQHRYTRANL ASKKDRLESA EKRLETNRRH MAKEAKRCGK 
+7460.ENSAPMP00000011730             ECLSQILYLE TQKRYTRATL ASKKDRVEAC ERKLEENRMH MTGEAKRAAR 
+7719.ENSCINP00000016359             DCYNQVLFVP SENRYTRANR ASKKDRIEAL EKQLETNRNH MTKEARQAAK 
+7739.estExt_fgenesh2_pm.C_1760      ECYSQVLFLV SQNRYTRANL ASKKDRLESQ EKKLES.... .......... 
+9606.ENSP00000265414                ECYSQVLYLP GQSRYTRANL ASKKDRIESL EKRLEINRGH MTTEAKRAAK 
+81824.estExt_fgenesh2_pg.C_160      AQLDAIVHVP SQQKFARVET VSQKEKIEGL EVEHRQLREH MAKDNKKAAK 
+LF_1.NOG04250                       ECYAQVLYVP SQNRYTRAN. .......... .......... .......... 
+LF_10.NOG04250                      .......... ...HEARATL ACKKEKIESL DKRLEMNRLH MAKEAKLAAR 
+LF_14.NOG04250                      .......... .......... .......... .......... .......... 
+LF_20.NOG04250                      ECYSQVLYLP SQKRYYRANL ATKKDRIESF EKRLVGNKNI MTKQAKRAAN 
+LF_32.NOG04250                      .......... .......... .......... .......... .......... 
+LF_39.NOG04250.fasta.abc.top.s      .......... .......... .......... .......... .......... 
+LF_43.NOG04250.fasta.abc.top.s      .......... .......... .......... .......... .......... 
+
+
+10228.estExt_Genewise1Plus.C_5      LEKKLK.VLL GGYQARAVAA QKQLAELNEQ LEQTNLECKT FEQLRLQELN 
+45351.estExt_gwp.C_1220079          IEKKLK.VLL GGYQTRAVGL TKQLSDLHEQ LEQSQVEMTT FQALRNQELQ 
+6412.Helro1_155960                  YEKKLKVILG G.YQSKEIEL TKRLEELQEH FEQTHIEYET FKKLQQHESI 
+7165.ENSANGP00000011065             IEKKLK.ILT AGYQARAQAL VKQFQDTNEQ IEQNSLALST FKFLAAQEDL 
+7227.CG6905-PA                      IEKKLK.ILT GGYQARAQVL IKQLQDTYGQ IEQNSVSLST FRFLGEQEAI 
+7460.ENSAPMP00000011730             MEKKLK.VLT GGYQTRAQVL TKQLHDLWEQ IEQAHLELST FKFLQTQEEA 
+7719.ENSCINP00000016359             LEKKLKKVLL GGYQQRSTSM IKQFTEIIDQ LYSSRIELNT FQELLRAEKG 
+7739.estExt_fgenesh2_pm.C_1760      .......... .....RATGL YKQLQEMHDQ TEQTYVELKT FETLKQNEDV 
+9606.ENSP00000265414                MEKKMK.ILL GGYQSRAMGL MKQLNDLWDQ IEQAHLELRT FEELKKHEDS 
+81824.estExt_fgenesh2_pg.C_160      LEKRLN.IAL GGYQKRAQGL RQSIEEMVME MAECQAQLKG FEVLRLAELA 
+LF_1.NOG04250                       .......... .......... .......... .......... .......... 
+LF_10.NOG04250                      MEKKLK.VIL AGYQNINQTS VKQLHDIFDQ IDQTYVELKT FDRLSQIEDI 
+LF_14.NOG04250                      .......... .......... .......... .......... .......... 
+LF_20.NOG04250                      IEKKLK.ILH EGYQKRSHEL IQQLTMVFDD IEQTDIEFKT FDYVRQHEIG 
+LF_32.NOG04250                      .......... .......... .......... .......... .......... 
+LF_39.NOG04250.fasta.abc.top.s      .......... .......... .......... .......... .......... 
+LF_43.NOG04250.fasta.abc.top.s      .......... .......... .......... .......... .......... 
+
+
+10228.estExt_Genewise1Plus.C_5      AIERRKEAMK ESLSRQVERE KELQNKYSSL L......... ..
+45351.estExt_gwp.C_1220079          AIPKRLEALK EDVQRQTERE KQLQAQYSEL LYERDSLLSK ..
+6412.Helro1_155960                  AVQKRLSSLK DDVDRQKDRE KELQSRYSEL KKKIELKK.. ..
+7165.ENSANGP00000011065             AIPKRLESLT EDVMRQTERE KTLQNRYAQL TEELEELNHL LE
+7227.CG6905-PA                      AVPRRLESLQ EDVRRQMDRE KELQQKYASL VEERDSLYSQ IE
+7460.ENSAPMP00000011730             AVPRRVNALM EDVNRQTERE RVLQTRYAQL .......... ..
+7719.ENSCINP00000016359             AIPKRLEAME NDYRVQVERE RELQKRYAEL VKQ....... ..
+7739.estExt_fgenesh2_pm.C_1760      AIPRRIESLK EDVKRQTDRE HELQKHYADL IVERDMLVSR ..
+9606.ENSP00000265414                AIPRRLECLK EDVQRQQERE KELQHRYADL LLEKETLKSK F.
+81824.estExt_fgenesh2_pg.C_160      AIPERLGELK ARVSAQEAKQ TALQLRYKAL TDAL...... ..
+LF_1.NOG04250                       .......... .......... .......... .......... ..
+LF_10.NOG04250                      AITKRVESLT EDVMRQMERE RELQKRYAEL LQHKEDLLEQ L.
+LF_14.NOG04250                      .......... .......... .......... .......... ..
+LF_20.NOG04250                      AIPKRLESLT EDVSRQMDRE RELQKRYAEL NIRKEEILHG Y.
+LF_32.NOG04250                      .......... .......... .......... .......... ..
+LF_39.NOG04250.fasta.abc.top.s      .......... .......... .......... .......... ..
+LF_43.NOG04250.fasta.abc.top.s      .......... .......... .......... .......... ..
+

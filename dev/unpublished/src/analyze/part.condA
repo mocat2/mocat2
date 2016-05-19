@@ -1,0 +1,2 @@
+    <param name="condA" type="text" size="40" value="" label="Condition A of selected group" optional="false" />
+    <param name="condB" type="text" size="40" value="" label="Condition B of selected group" optional="false" />

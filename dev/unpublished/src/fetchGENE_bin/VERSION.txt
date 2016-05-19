@@ -1,0 +1,24 @@
+#############################################################################
+# AQUA: automatic quality improvment for multiple sequence alignment        #
+#                                                                           #
+# Copyright (C) 2009 Jean Muller (muller@embl.de)                           # 
+#############################################################################
+
+Please cite the following article:
+----------------------------------
+Muller J, Creevey CJ, Thompson JD, Arendt D, Bork P.
+AQUA: automated quality improvement for multiple sequence alignments.
+Bioinformatics.  2010 Jan 15;26(2):263-5. Epub 2009 Nov 19.
+
+Please feel free to contact us for any suggestions or bug reports.
+email: jean.muller@embl.de
+
+-V 1.1 (current version)
+------------------------
+Bug Fix for selection of the best MSA, The best normd score was not always selected.
+
+
+-V 1.0
+------
+First release of AQUA.
+

@@ -1,0 +1,13 @@
+<param name="featureA" type="select" label="Select feature 1">
+<options from_dataset="input_file">
+    <column name="name" index="0"/>
+    <column name="value" index="0"/>
+</options>
+</param>
+
+<param name="featureB" type="select" label="Select feature 2">
+<options from_dataset="input_file">
+    <column name="name" index="0"/>
+    <column name="value" index="0"/>
+</options>
+</param>

@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+make clean
+make ENABLE_MULTITHREAD=""
+rm -rf binaries32
+mkdir binaries32
+mv ../binaries/* binaries32/
+
+export PATH=/MinGW64/mingw-w64-1.0-bin_i686-mingw_20100702/bin:$PATH
+export C_INCLUDE_PATH=/MinGW64/mingw-w64-1.0-bin_i686-mingw_20100702/include
+export LIBRARY_PATH=/MinGW64/mingw-w64-1.0-bin_i686-mingw_20100702/lib
+make clean
+make ENABLE_MULTITHREAD=""
+rm -rf binaries64
+mkdir binaries64
+mv ../binaries/* binaries64/

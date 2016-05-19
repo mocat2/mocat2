@@ -1,0 +1,36 @@
+
+        RASCAL (version 1.34 oct 2009)
+
+
+Please e-mail bug reports/complaints/suggestions 
+to Julie Thompson at julie@igbmc.fr
+ 
+VERSION CHANGES
+
+Changes since Version 1.32
+--------------------------
+
+1. Fixed a bug in scan_siteerrs that caused rascal (and macsims) to crash (reported by Laetitia)
+
+Changes since Version 1.31
+--------------------------
+
+1. Fixed a bug that caused misalignments by one residue.
+
+Changes since Version 1.3
+--------------------------
+
+1. Fixed a bug that removed residues from the c-terminal of the longest sequence.
+
+Changes since Version 1.2
+--------------------------
+
+1. RASCAL now uses the macsim XML format internally. The output is still GCG/MSF format.
+
+
+INSTALLATION
+
+1- Compile rascal using the makefile in this directory. 
+2- Compile cluspack in the sub-directory with the same name. 
+3- In the file named 'rascal', change the RASCAL and CLUSPACK path to respectively point to the directory containing the rascal and cluspack executables. 
+4- Usage is: rascal input_file output_file

@@ -1,0 +1,44 @@
+    <conditional name="metadata_source">
+      <param name="metadata" type="select" label="Select metadata">
+        <options from_file="MOCAT_metadata">
+        <column name="name" index="0"/>
+        <column name="value" index="0"/>
+        </options>
+      </param>
+
+      <when value="MetaHIT">
+	<param name="group" type="select" label="Select group from metadata">
+	  <options from_file="MOCAT_metadata_metahit">
+	    <column name="name" index="0"/>
+	    <column name="value" index="0"/>
+	  </options>
+	</param>
+      </when>
+
+      <when value="Cancer">
+	<param name="group" type="select" label="Select group from metadata (ONLY DUMMY METADATA!)">
+	  <options from_file="MOCAT_metadata_cancer">
+	    <column name="name" index="0"/>
+	    <column name="value" index="0"/>
+	  </options>
+	</param>
+      </when>
+      
+      <when value="HMP">
+	<param name="group" type="select" label="Select group from metadata">
+	  <options from_file="MOCAT_metadata_hmp">
+	    <column name="name" index="0"/>
+	    <column name="value" index="0"/>
+	  </options>
+	</param>
+      </when>
+      
+      <when value="TARA">
+	<param name="group" type="select" label="Select group from metadata">
+	  <options from_file="MOCAT_metadata_tara">
+	    <column name="name" index="0"/>
+	    <column name="value" index="0"/>
+	  </options>
+	</param>
+      </when>
+    </conditional>

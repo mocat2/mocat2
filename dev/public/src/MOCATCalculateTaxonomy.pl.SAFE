@@ -1,0 +1,1947 @@
+#!/usr/bin/env perl
+use strict;
+use warnings;
+use Getopt::Long;
+
+# This code is part of the MOCAT analysis pipeline
+# Code is (c) Copyright EMBL and BGI, 2012-2013
+# This code is released under GNU GPL v3.
+
+select(STDERR);
+$| = 1;
+select(STDOUT);
+$| = 1;
+
+my $all_tax_avg_len        = 0;
+my $prev_insert            = 0;
+my $prev_read              = 0;
+my $notInCoordFile         = 0;
+my $inCoordFile            = 0;
+my $total_bases_covered    = 0;
+my $total_length_matched   = 0;
+my $total_bases            = 0;
+my $seen_this_insert       = 0;
+my $total_seen_inserts     = 0;
+my $count_sum              = 0;
+my $db_average_gene_length = 0;
+my $db_gene_length         = 0;
+my %total_inserts_covered_norm;
+my %total_bases_covered_norm;
+my $weighted_base_avg   = 0;
+my $weighted_insert_avg = 0;
+my ( $base1, $base2 ) = 0;
+my $missingFile = "";
+my ( @padded_stats_file_data, $padded_stats_file, %PEaffectedInserts, $mm_file, $UNIQSUM, $MMSUM, $PE_filter, %revmap, %uniqueTaxa, %multipleMapper, %multipleMapperValue, %SEEN1, %SEEN2, %SEENi, $print_rownamesTax, %len, $len, $output_tax, %taxBase, %taxInsert, @readTarget1, @readTarget2, @insertTarget, %map, $map, $ZCAT, $bin_dir, %forwardReads, %reverseReads, %hash, %position, %base1, %base2, %inserts, @inserts, $total_inserts, $input_file, $insert_stats_file, $input, $sample, $cwd, $reads,
+	$data_type, $output, $match, $format, $positionFile, $data_dir, $counted_inserts, $file_list, $file, $falen, $coverage_file, $print_rownames, $printOnlyIfSample0, $mode, $SAM );
+my @levels;
+my $usage = "                                                                                                                                                                                                                     
+Can only be used internally in MOCAT. Sorry.
+";
+
+print STDERR "Profiling :: Program version v6f\n";
+
+GetOptions(
+	'i=s'                 => \$input_file,
+	's=s'                 => \$insert_stats_file,
+	'sample=s'            => \$sample,
+	'cwd=s'               => \$cwd,
+	'rcr=s'               => \$reads,
+	'dt=s'                => \$data_type,
+	'taxout=s'            => \$output_tax,
+	'out=s'               => \$output,
+	'match=s'             => \$match,
+	'pos=s'               => \$positionFile,
+	'datadir=s'           => \$data_dir,
+	'file_list=s'         => \$file_list,
+	'file=s'              => \$file,
+	'falen=s'             => \$falen,
+	'covfile=s'           => \$coverage_file,
+	'rownames=s'          => \$print_rownames,
+	'taxrownames=s'       => \$print_rownamesTax,
+	'counter=i'           => \$printOnlyIfSample0,
+	'bin=s'               => \$bin_dir,
+	'zcat=s'              => \$ZCAT,
+	'map=s'               => \$map,
+	'len=s'               => \$len,
+	'mode=s'              => \$mode,
+	'PE_filter=s'         => \$PE_filter,
+	'mmfile=s'            => \$mm_file,
+	'sam'                 => \$SAM,
+	'padded_stats_file=s' => \$padded_stats_file
+);
+
+( defined $mode ) or die "Mode was not defined.\n";
+
+# BAM or SOAP
+if ( $match eq "allbest" ) {
+	$format = "BAM";
+}
+else {
+	$format = "SOAP";
+}
+
+( -e "$input_file" ) or die "ERROR & EXIT: Missing input file $input_file";
+
+# Load Position hash
+my $counter = -1;
+my @data = split( "_AND_", $positionFile );
+if ( $file_list eq 'yes' ) {
+	print STDERR "Profiling :: Calculating coverage using a file list, need to make custom .coord file...\n";
+	unless ( -e "$file.coord" ) {
+		print STDERR "Profiling :: Creating a .coord file for $file:\n";
+		print STDERR "Profiling :: EXE $falen -infile $file -outfile $file.tmp\n";
+		system "$falen -infile $file -outfile $file.tmp";
+		print STDERR "Profiling :: Add middle column...";
+		open IN2,  "<$file.tmp"   or die "ERROR & EXIT: Cannot open input file $!";
+		open OUT2, ">$file.coord" or die "ERROR & EXIT: Cannot open output file $!";
+		while (<IN2>) {
+			chomp;
+			my @line = split;
+			print OUT2 "$line[0]\t1\t$line[1]\n";
+		}
+		close IN2;
+		close OUT2;
+		print STDERR "Profiling :: EXE rm $file.tmp\n";
+		system "rm $file.tmp";
+	}
+	open POS, "<$file.coord" or die("ERROR & EXIT: Could not open Coordinate file ($file.coord): $!");
+	print STDERR "Profiling :: Loading positions of reference $file.coord into hash...\n";
+	print STDERR "Profiling :: Map file is $file.coord\n";
+	while (<POS>) {
+		$counter++;
+		chomp;
+		my @line = split /\s+/;
+		my $c    = 0;
+		my $id   = $line[0];
+		while ( exists $position{"$id.$c"} ) { ++$c; }
+		$position{"$id.$c"} = [ $line[1], $line[2], 0, 0 ];
+		$db_gene_length += $line[2] - $line[1] + 1;
+
+		if ( $mode eq 'identifier' ) {
+			$len{ $line[0] } += $line[2] - $line[1] + 1;
+		}
+		if ( $mode eq 'functional' ) {
+			${ $map{'cog'}{ $line[0] } }[0]     = "not_annotated";
+			${ $map{'ko'}{ $line[0] } }[0]      = "not_annotated";
+			${ $map{'module'}{ $line[0] } }[0]  = "not_annotated";
+			${ $map{'pathway'}{ $line[0] } }[0] = "not_annotated";
+			$len{ $line[0] } += $line[2] - $line[1] + 1;
+		}
+	}
+}
+else {
+	foreach my $d (@data) {
+		( -e "$data_dir/$d.coord" ) or die "ERROR & EXIT: Missing coordinates file $data_dir/$d.coord for database $data_dir/$d";
+		open POS, '<', "$data_dir/$d.coord" or die("ERROR & EXIT: Could not open coordinate file ($data_dir/$d.coord): $!");
+		print STDERR "Profiling :: Loading positions of reference $data_dir/$d.coord into hash...\n";
+		while (<POS>) {
+			$counter++;
+			chomp;
+			(m/^\S+\s+\d+\s+\d+$/) or die "ERROR & EXIT: $data_dir/$d.coord has line:\n$_\nExpected the line to be of format: NONSPACECHARS\\tDIGIT\\tDIGIT";
+			my @line = split /\s+/;
+			my $c    = 0;
+			my $id   = $line[0];
+			while ( exists $position{"$id.$c"} ) { ++$c; }
+			$position{"$id.$c"} = [ $line[1], $line[2], 0, 0 ];
+			$db_gene_length += $line[2] - $line[1] + 1;
+
+			if ( $mode eq 'identifier' ) {
+				$len{ $line[0] } += $line[2] - $line[1] + 1;
+			}
+			if ( $mode eq 'functional' ) {
+				${ $map{'cog'}{ $line[0] } }[0]     = "not_annotated";
+				${ $map{'ko'}{ $line[0] } }[0]      = "not_annotated";
+				${ $map{'module'}{ $line[0] } }[0]  = "not_annotated";
+				${ $map{'pathway'}{ $line[0] } }[0] = "not_annotated";
+
+				${ $revmap{'cog'}{"not_annotated"} }[0]     = $line[0];    # This will only store the last loaded gene ID here, but it should be fine, because the -1 length isn\t used anyway
+				${ $revmap{'ko'}{"not_annotated"} }[0]      = $line[0];
+				${ $revmap{'module'}{"not_annotated"} }[0]  = $line[0];
+				${ $revmap{'pathway'}{"not_annotated"} }[0] = $line[0];
+
+				$len{ $line[0] } += $line[2] - $line[1] + 1;
+			}
+		}
+	}
+}
+
+# Load map
+unless ( $mode eq 'none' ) {
+	if ( $mode eq 'RefMG' ) {
+		@levels = ( 'kingdom', 'phylum', 'class', 'order', 'family', 'genus', 'species', 'specI_clusters', 'taxaid' );
+		print STDERR "Profiling :: Map file is $map\n";
+		print STDERR "Profiling :: Loading map file...\n";
+		open MAP, "<$map" or die "ERROR & EXIT: Missing $!";
+		while (<MAP>) {
+			chomp;
+			my @line = split "\t";
+			${ $map{'kingdom'}{ $line[0] } }[0]        = $line[1];
+			${ $map{'phylum'}{ $line[0] } }[0]         = $line[2];
+			${ $map{'class'}{ $line[0] } }[0]          = $line[3];
+			${ $map{'order'}{ $line[0] } }[0]          = $line[4];
+			${ $map{'family'}{ $line[0] } }[0]         = $line[5];
+			${ $map{'genus'}{ $line[0] } }[0]          = $line[6];
+			${ $map{'species'}{ $line[0] } }[0]        = $line[7];
+			${ $map{'specI_clusters'}{ $line[0] } }[0] = $line[8];
+			${ $map{'taxaid'}{ $line[0] } }[0]         = $line[0];
+
+			${ $revmap{'kingdom'}{ $line[1] } }[0]        = $line[0];
+			${ $revmap{'phylum'}{ $line[2] } }[0]         = $line[0];
+			${ $revmap{'class'}{ $line[3] } }[0]          = $line[0];
+			${ $revmap{'order'}{ $line[4] } }[0]          = $line[0];
+			${ $revmap{'family'}{ $line[5] } }[0]         = $line[0];
+			${ $revmap{'genus'}{ $line[6] } }[0]          = $line[0];
+			${ $revmap{'species'}{ $line[7] } }[0]        = $line[0];
+			${ $revmap{'specI_clusters'}{ $line[8] } }[0] = $line[0];
+			${ $revmap{'taxaid'}{ $line[0] } }[0]         = $line[0];
+
+		}
+		close MAP;
+
+		#load taxonomy length
+		open LEN, "<$len" or die("ERROR & EXIT: Could not open length file ($len): $!");
+		while (<LEN>) {
+			chomp;
+			my @line = split "\t";
+			$len{ $line[0] } = $line[1];
+			$all_tax_avg_len += $line[1];
+		}
+		close LEN;
+		$all_tax_avg_len = $all_tax_avg_len / scalar( keys %len );
+	}
+	elsif ( $mode eq 'mOTU' ) {
+		print STDERR "Profiling :: Map file is $map\n";
+		print STDERR "Profiling :: Loading map file...\n";
+		@levels = ('mOTU');
+		open MAP, "<$map" or die "ERROR & EXIT: Missing $!";
+		while (<MAP>) {
+			chomp;
+			my @line = split "\t";
+			@{ $map{'mOTU'}{ $line[0] } }[0] = "$line[2].$line[3]";
+			@{ $revmap{'mOTU'}{"$line[2].$line[3]"} }[0] = $line[0];
+			$len{ $line[0] } += $line[1];
+			
+			#print "SAVED len{ $line[0] }=$len{ $line[0] }\n";
+		}
+		close MAP;
+	}
+	elsif ( $mode eq 'functional' ) {
+		print STDERR "Profiling :: Eggnog map file is $map.eggnog\n";
+		print STDERR "Profiling :: Loading map file...\n";
+		@levels = ( 'cog', 'ko', 'module', 'pathway' );    # this level has to be reset to only gene level soon, and then re-reset to all these levels closer to the end of the script
+		open MAP, "<$map.eggnog" or die "ERROR & EXIT: Missing $!";
+		while (<MAP>) {
+			unless (m/^#/) {
+				chomp;
+				my @line = split "\t";
+				if ( ${ $map{'cog'}{ $line[0] } }[0] ) {
+					
+					#print STDERR "MAP cog : $line[0] --> $line[2]\n";  #TEXT#
+					
+					if ( ${ $map{'cog'}{ $line[0] } }[0] eq "not_annotated" ) {
+						${ $map{"cog"}{ $line[0] } }[0] = $line[2];
+					}
+					else {
+						push @{ $map{"cog"}{ $line[0] } }, $line[2];
+					}
+					push @{ $revmap{"cog"}{"$line[2]"} }, $line[0];
+				}
+				else {
+					#die "ERROR & EXIT: $line[0] exists in the eggNOG annotation file, but not in the catalog reads were mapped to.";
+				}
+			}
+		}
+		close MAP;
+
+		print STDERR "Profiling :: KEGG map file is $map.kegg\n";
+		print STDERR "Profiling :: Loading map file...\n";
+		open MAP, "<$map.kegg" or die "ERROR & EXIT: Missing $!";
+		while (<MAP>) {
+			unless (m/^#/) {
+				chomp;
+				my @line = split "\t";
+
+				for my $type ( 'ko', 'module', 'pathway' ) {
+					my $num;
+					if ( $type eq 'ko' ) {
+						$num = 5;
+					}
+					if ( $type eq 'module' ) {
+						$num = 6;
+					}
+					if ( $type eq 'pathway' ) {
+						$num = 7;
+					}
+					if ( $line[$num] ) {
+						my @list = split ",", $line[$num];
+						foreach my $item (@list) {
+							if ( ${ $map{$type}{ $line[0] } }[0] ) {
+								if ( ${ $map{$type}{ $line[0] } }[0] eq "not_annotated" ) {
+									${ $map{$type}{ $line[0] } }[0] = $item;
+								}
+								else {
+									push @{ $map{$type}{ $line[0] } }, $item;
+								}
+								push @{ $revmap{$type}{$item} }, $line[0];
+							}
+							else {
+								#die "ERROR & EXIT: $line[0] exists in the KEGG annotation file, but not in the catalog reads were mapped to.";
+							}
+						}
+					}
+				}
+			}
+		}
+		close MAP;
+
+	}
+	elsif ( $mode eq 'identifier' ) {
+		@levels = ('identifier');
+	}
+}
+
+# Reset functional levels to only gene
+if ( $mode eq 'functional' ) {
+	@levels = ('gene');
+}
+
+#Avg DB gene length
+$db_average_gene_length = $db_gene_length / ( $counter + 1 );
+print STDERR "Profiling :: total db length: $db_gene_length\n";
+print STDERR "Profiling :: avg db entry length: $db_average_gene_length\n";
+
+#Get number of total inserts
+if ( !( -e "$insert_stats_file.stats" ) ) {
+	print STDERR "Profiling :: missing insert file $insert_stats_file.stats, -1 fraction will be incorrect\n";
+	$total_bases   = 0;
+	$total_inserts = 0;
+	$missingFile   = "missing_insert_file";
+}
+else {
+	print STDERR "Profiling :: using stats file $insert_stats_file.stats\n";
+	open IN, "$insert_stats_file.stats" or die "ERROR & EXIT: Missing file $insert_stats_file.stats";
+	my $a;
+	$a = <IN>;
+	$a = <IN>;
+	close IN;
+	chomp $a;
+	my @line = split /\t/, $a;
+	@padded_stats_file_data = @line;
+	$total_bases            = $line[1];
+	print STDERR "Profiling :: Total bases $total_bases\n";
+
+	if ( $line[5] ) {
+		print STDERR "Profiling :: Loaded inserts from .stats file.\n";
+		$total_inserts = $line[5];
+		print STDERR "Profiling :: Total inserts $total_inserts\n";
+	}
+	elsif ( -e "$insert_stats_file.inserts.stats" ) {
+		print STDERR "Profiling :: Inserts file exists.\n";
+		$total_inserts = `tail -1 $insert_stats_file.inserts.stats`;
+		chomp $total_inserts;
+		print STDERR "Profiling :: Loaded inserts from .inserts.stats file and saves to stats file.\n";
+		open IN, "<$insert_stats_file.stats" or die "ERROR & EXIT: Missing file $insert_stats_file.stats";
+		$a = <IN>;
+		chomp $a;
+		my $line1 = "$a\tInserts";
+		$a = <IN>;
+		chomp $a;
+		my $line2 = "$a\t$total_inserts";
+		close IN;
+		open OUT, '>', "$insert_stats_file.stats" or die "ERROR & EXIT: Cannot open $insert_stats_file.stats for ouput.";
+		print OUT "$line1\n$line2\n";
+		close OUT;
+	}
+	else {
+		print STDERR "Profiling :: Inserts file doesn't exist. Creating it in the stats file...\n";
+		my $path;
+		if ( $reads eq "reads.processed" ) {
+			$path = "reads.processed.$data_type";
+		}
+		else {
+			$path = "reads.screened.$reads.$data_type";
+		}
+		print STDERR "Profiling :: EXE $ZCAT $cwd/$sample/$path/*pair.1*.gz $cwd/$sample/$path/*single*.gz\n | grep -c .";
+		chomp( $total_inserts = `$ZCAT $cwd/$sample/$path/*pair.1*.gz $cwd/$sample/$path/*single*.gz | grep -c .` );
+		$total_inserts = $total_inserts / 4;
+		open IN, "<$insert_stats_file.stats" or die "ERROR & EXIT: Missing file $insert_stats_file.stats";
+		$a = <IN>;
+		chomp $a;
+		my $line1 = "$a\tInserts";
+		$a = <IN>;
+		chomp $a;
+		my $line2 = "$a\t$total_inserts";
+		close IN;
+		open OUT, '>', "$insert_stats_file.stats" or die "ERROR & EXIT: Cannot open $insert_stats_file.stats for ouput.";
+		print OUT "$line1\n$line2\n";
+		close OUT;
+	}
+}
+
+#Parse input
+if ( $format eq 'BAM' ) {
+	print STDERR "Profiling :: Format is BAM, IN=samtools view $input_file |\n";
+	if ($SAM) {
+		open IN, "<$input_file" or die("ERROR & EXIT: Could not open samtools pipe (for $input_file): $!");
+	}
+	else {
+		open IN, "$bin_dir/samtools view $input_file | " or die("ERROR & EXIT: Could not open samtools pipe (for $input_file): $!");
+	}
+}
+elsif ( $format eq 'SOAP' ) {
+	print STDERR "Profiling :: Format is SAOP, IN=$ZCAT $input_file | \n";
+	open IN, "$ZCAT $input_file | " or die("ERROR & EXIT: Could not open zcat pipe (for $input_file): $!");
+}
+print STDERR getLoggingTime() ." Profiling :: Parsing file: $input_file...\n";
+print STDERR getLoggingTime() ." Profiling :: [IF THIS IS THE LAST LINE, THE PROCESS PROBABLY RAN OUT OF MEMORY]\n";
+my $insert;
+my $insertCounter = 0;
+my $CCC           = 0;
+if ( $PE_filter eq 'yes' ) {
+	foreach my $i (@levels) {
+		$PEaffectedInserts{$i} = 0;
+	}
+}
+else {
+	foreach my $i (@levels) {
+		$PEaffectedInserts{$i} = 'PE_filter_set_to_off';
+	}
+}
+while (<IN>) {
+	chomp;
+	my @line = split "\t", $_;
+	my $ref_id;
+	my $first_base;
+	my $length;
+	my $last_base;
+	my $read;
+	my $direction;
+
+	if ( $format eq 'BAM' ) {
+		$line[0] =~ m/(.+)\/([12])$/;    #get insert id
+		$read   = $line[0];
+		$insert = $1;
+		unless ($insert) {
+			die "ERROR & EXIT: Could not identify insert. Check input file!";
+		}
+		$direction  = $2;
+		$ref_id     = $line[2];
+		$first_base = $line[3];
+		$length     = length $line[9];
+		$last_base  = $first_base + $length - 1;    # read will be revcomp if direction is "-", so $first_base is always left-most base
+	}
+	elsif ( $format eq 'SOAP' ) {
+		$line[0] =~ m/(.+)\/([12])$/;               #get insert id
+		$read       = $line[0];
+		$insert     = $1;
+		$direction  = $2;
+		$ref_id     = $line[7];
+		$first_base = $line[8];
+		$length     = $line[5];
+		$last_base  = $first_base + $length - 1;    # read will be revcomp if direction is "-", so $first_base is always left-most base
+	}
+
+	# When next insert
+	if ( $insert ne $prev_insert && $prev_insert ne '0' ) {
+
+		if ( $seen_this_insert == 1 ) {
+			$total_seen_inserts++;
+		}
+		$seen_this_insert = 0;
+
+		# PE filter (insert)
+		my %INTERSECT = ();
+		unless ( $mode eq 'none' ) {
+			if ( $PE_filter eq 'yes' ) {
+				foreach my $i (@levels) {
+					my $b1 = scalar keys %{ $SEEN1{$i} };
+					my $b2 = scalar keys %{ $SEEN2{$i} };
+
+					if ( $b1 > 0 && $b2 > 0 ) {
+						my %intersect;
+						foreach my $k ( keys %{ $SEEN1{$i} } ) {
+							if ( exists $SEEN2{$i}{$k} ) {
+								$intersect{$k} = 1;
+							}
+						}
+						my $intersect = scalar keys %intersect;
+
+						if ( ( $intersect < $b1 || $intersect < $b2 ) && $intersect > 0 ) {
+							$PEaffectedInserts{$i}++;
+							%{ $INTERSECT{$i} } = %intersect;
+							foreach my $ref_id_index ( keys %hash ) {
+								my $ref_id = extract_ref_id($ref_id_index);
+								my @ref = getID( $i, $ref_id );
+								foreach my $ref (@ref) {
+									if ( exists $intersect{$ref} ) {
+										$INTERSECT{'insert_count'}{$i} += $SEENi{$i}{$ref};
+									}
+								}
+							}
+							foreach my $ref_id_index ( keys %base1 ) {
+								my $ref_id = extract_ref_id($ref_id_index);
+								my @ref = getID( $i, $ref_id );
+								foreach my $ref (@ref) {
+									if ( exists $intersect{$ref} ) {
+										$INTERSECT{'base1_count'}{$i} += $SEEN1{$i}{$ref};
+									}
+								}
+							}
+							foreach my $ref_id_index ( keys %base2 ) {
+								my $ref_id = extract_ref_id($ref_id_index);
+								my @ref = getID( $i, $ref_id );
+								foreach my $ref (@ref) {
+									if ( exists $intersect{$ref} ) {
+										$INTERSECT{'base2_count'}{$i} += $SEEN2{$i}{$ref};
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+
+		$insertCounter++;
+		my $count = scalar( keys %hash );
+
+		foreach my $ref_id_index ( keys %hash ) {
+			my $ref_id = extract_ref_id($ref_id_index);
+			$count_sum += ( 1 / $count );
+			@{ $position{$ref_id_index} }[2] += ( 1 / $count );
+
+			# Taxonomy
+			unless ( $mode eq 'none' ) {
+				my $one    = getPreID($ref_id);
+				my $length = $len{$one};
+				$total_inserts_covered_norm{$one} += 1 / $count;
+				my $count_tax     = $count;
+				my $countThisTaxa = 1;
+				foreach my $i (@levels) {
+					my @ref = getID( $i, $ref_id );
+					foreach my $ref (@ref) {
+						my $i_ref = "$i.$ref";
+						unless ( $taxInsert{$i_ref} ) {
+							@{ $taxInsert{$i_ref} } = ( 0, 0, 0, 0, 0, 0 );
+						}
+
+						# PE filter
+						if ( exists $INTERSECT{$i} ) {
+							$countThisTaxa = exists $INTERSECT{$i}{$ref};
+							( exists $INTERSECT{'insert_count'}{$i} )
+							  or die("INSERT{insert_count}{$i} does not exist");
+							$count_tax = $INTERSECT{'insert_count'}{$i};
+							%{ $SEENi{$i} } = %{ $INTERSECT{$i} };
+
+						}
+
+						# Continue with taxa
+						if ($countThisTaxa) {
+							@{ $taxInsert{$i_ref} }[0] += 1 / $count_tax;
+							@{ $taxInsert{$i_ref} }[1] += ( 1 / $count_tax ) / $length;
+
+							my $c = scalar keys %{ $SEENi{$i} };
+							if ( $c == 1 ) {
+								$uniqueTaxa{'insert'}{$i_ref} = 1;
+								@{ $taxInsert{$i_ref} }[2] += 1 / $count_tax;
+								@{ $taxInsert{$i_ref} }[3] += 1 / $count_tax / $length;
+								#print STDERR "UNIQ : $ref : @{ $taxBase{$i_ref} }[2] \n"
+							}
+							else {
+								%{ $multipleMapper{'insert'}{$i}{$insertCounter} } = %{ $SEENi{$i} };
+								$multipleMapperValue{'insert'}{$i}{$insertCounter} += 1 / $count_tax;
+							}
+							#print STDERR "SAVE insert - $i : $i_ref : $count_tax\n"; #TEXT#
+						}
+					}
+				}
+			}
+		}
+		%hash = ();
+
+		$insertCounter++;
+
+		#$count = scalar keys %base1; # FOR NOW, 2013-05-22 WE USE SCALAR KEYS   #how many different ref_ids have I seen? WE SOHOULD NOT USE THE SCALAR HASH
+		$count = scalar( keys %base1 );
+
+		foreach my $ref_id_index ( keys %base1 ) {
+			my $ref_id = extract_ref_id($ref_id_index);
+			$total_bases_covered += ( 1 / $count ) * $base1{$ref_id_index};
+			@{ $position{$ref_id_index} }[3] += ( 1 / $count ) * $base1{$ref_id_index};
+
+			# Taxonomy
+			unless ( $mode eq 'none' ) {
+				my $one    = getPreID($ref_id);
+				my $length = $len{$one};
+				$total_bases_covered_norm{$one} += 1 / $count * $base1{$ref_id_index};
+				my $count_tax     = $count;
+				my $countThisTaxa = 1;
+				foreach my $i (@levels) {
+					my @ref = getID( $i, $ref_id );
+					foreach my $ref (@ref) {
+						my $i_ref = "$i.$ref";
+						unless ( exists $taxBase{$i_ref} ) {
+							@{ $taxBase{$i_ref} } = ( 0, 0, 0, 0, 0, 0 );
+						}
+
+						# PE filter
+						if ( $INTERSECT{$i} ) {
+							$countThisTaxa = exists $INTERSECT{$i}{$ref};
+							( exists $INTERSECT{'base1_count'}{$i} )
+							  or die("INTERSECT{base1_count}{$i} does not exist.");
+							$count_tax = $INTERSECT{'base1_count'}{$i};
+							%{ $SEEN1{$i} } = %{ $INTERSECT{$i} };
+						}
+
+						# Continue with taxa
+						if ($countThisTaxa) {
+							my $value = 1.0 / $count_tax * $base1{$ref_id_index};
+							@{ $taxBase{$i_ref} }[0] += $value;
+							
+							#print "I'm giving $value to $i_ref || $length || $prev_read | $prev_insert\n";
+							
+							@{ $taxBase{$i_ref} }[1] += $value / $length;
+							my $c = scalar keys %{ $SEEN1{$i} };
+							if ( $c == 1 ) {
+								$uniqueTaxa{'base1'}{$i_ref} = 1;
+								@{ $taxBase{$i_ref} }[2] += $value;
+								@{ $taxBase{$i_ref} }[3] += $value / $length;
+							}
+							else {
+								%{ $multipleMapper{'base1'}{$i}{$insertCounter} } = %{ $SEEN1{$i} };
+								$multipleMapperValue{'base1'}{$i}{$insertCounter} += $value;
+							}
+							#print STDERR "SAVE base1 - $i : $i_ref : $value\n"; #TEXT#
+						}
+					}
+				}
+			}
+		}
+		%base1 = ();
+		$base1 = 0;
+
+		$insertCounter++;
+
+		#$count = scalar keys %base2;    #how many different ref_ids have I seen? DO NOT USE SCALAR HASH
+		$count = scalar( keys %base2 );
+
+		foreach my $ref_id_index ( keys %base2 ) {
+			$total_bases_covered += ( 1 / $count ) * $base2{$ref_id_index};
+			@{ $position{$ref_id_index} }[3] += ( 1 / $count ) * $base2{$ref_id_index};
+
+			# Taxonomy
+			unless ( $mode eq 'none' ) {
+				my $ref_id = extract_ref_id($ref_id_index);
+				my $one    = getPreID($ref_id);
+				my $length = $len{$one};
+				$total_bases_covered_norm{$one} += 1 / $count * $base2{$ref_id_index};
+				my $count_tax     = $count;
+				my $countThisTaxa = 1;
+				foreach my $i (@levels) {
+					my @ref = getID( $i, $ref_id );
+					foreach my $ref (@ref) {
+						my $i_ref = "$i.$ref";
+						unless ( $taxBase{$i_ref} ) {
+							@{ $taxBase{$i_ref} } = ( 0, 0, 0, 0, 0, 0 );
+						}
+
+						# PE filter
+						if ( $INTERSECT{$i} ) {
+							$countThisTaxa = exists $INTERSECT{$i}{$ref};
+							$count_tax     = $INTERSECT{'base2_count'}{$i};
+							%{ $SEEN2{$i} } = %{ $INTERSECT{$i} };
+						}
+
+						# Continue with taxa
+						if ($countThisTaxa) {
+							my $value = 1 / $count_tax * $base2{$ref_id_index};
+							@{ $taxBase{$i_ref} }[0] += $value;
+							@{ $taxBase{$i_ref} }[1] += $value / $length;
+							
+							#print "I'm giving $value to $i_ref || $length || $prev_read | $prev_insert\n";
+							
+							
+							my $c = scalar keys %{ $SEEN2{$i} };
+							if ( $c == 1 ) {
+								$uniqueTaxa{'base2'}{$i_ref} = 1;
+								@{ $taxBase{$i_ref} }[2] += $value;
+								@{ $taxBase{$i_ref} }[3] += $value / $length;
+							}
+							else {
+								%{ $multipleMapper{'base2'}{$i}{$insertCounter} } = %{ $SEEN2{$i} };
+								$multipleMapperValue{'base2'}{$i}{$insertCounter} += $value;
+							}
+							#print STDERR "SAVE base2 - $i : $i_ref : $value\n"; #TEXT#
+						}
+					}
+
+				}
+			}
+		}
+		%base2 = ();
+		$base2 = 0;
+
+		%SEEN1 = ();
+		%SEEN2 = ();
+		%SEENi = ();
+	}
+
+	# MAIN LOOP for each line
+	if ( exists $position{"$ref_id.0"} ) {
+		$inCoordFile++;
+		for ( my $index = 0 ; exists $position{"$ref_id.$index"} ; ++$index ) {
+			my $bounds = $position{"$ref_id.$index"};
+			if ( !( $last_base < $bounds->[0] || $first_base > $bounds->[1] ) ) {
+				my $subtract = 0;
+				$hash{"$ref_id.$index"} = 1;    #i have seen this reference id
+
+				if ( $first_base < $bounds->[0] ) {
+					$subtract = $bounds->[0] - $first_base;
+				}
+				if ( $last_base > $bounds->[1] ) {
+					$subtract = $subtract + $last_base - $bounds->[1];
+				}
+				if ( $direction == 1 ) {
+					$base1{"$ref_id.$index"} = $length;
+					$base1++;
+					foreach my $i (@levels) {
+						my @ref = getID( $i, $ref_id );
+						foreach my $ref (@ref) {
+							$SEEN1{$i}{$ref} = 1;
+						}
+					}
+				}
+				elsif ( $direction == 2 ) {
+					$base2{"$ref_id.$index"} = $length;
+					$base2++;
+					foreach my $i (@levels) {
+						my @ref = getID( $i, $ref_id );
+						foreach my $ref (@ref) {
+							$SEEN2{$i}{$ref} = 1;
+						}
+					}
+				}
+				else {
+					die "Direction should be 1 or 2. Internal unknown error.\n";
+				}
+				$seen_this_insert = 1;
+
+				#$total_length_matched += $length - $subtract;   OLD
+				$total_length_matched += $length;
+
+				# Added to put seen refs in hashes to see how many unique we've seen
+				unless ( $mode eq 'none' ) {
+					foreach my $i (@levels) {
+						my @ref = getID( $i, $ref_id );
+						foreach my $ref (@ref) {
+							$SEENi{$i}{$ref} = 1;
+						}
+					}
+				}
+			}
+		}
+	}
+	else {
+		$notInCoordFile++;
+	}
+	$prev_insert = $insert;
+	$prev_read   = $read;
+}
+close IN
+  or die("ERROR & EXIT: Problem with input pipe: $!");
+
+#Process final block
+print STDERR getLoggingTime() ." Profiling :: Processing final block...\n";
+
+#### last
+
+# PE filter (insert)
+my %INTERSECT = ();
+unless ( $mode eq 'none' ) {
+	if ( $PE_filter eq 'yes' ) {
+		foreach my $i (@levels) {
+			my $b1 = scalar keys %{ $SEEN1{$i} };
+			my $b2 = scalar keys %{ $SEEN2{$i} };
+
+			if ( $b1 > 0 && $b2 > 0 ) {
+				my %intersect;
+				foreach my $k ( keys %{ $SEEN1{$i} } ) {
+					if ( $SEEN2{$i}{$k} ) {
+						$intersect{$k} = 1;
+					}
+				}
+				my $intersect = scalar keys %intersect;
+				if ( ( $intersect < $b1 || $intersect < $b2 ) && $intersect > 0 ) {
+					%{ $INTERSECT{$i} } = %intersect;
+					my %justSeen = ();
+					foreach my $ref_id_index ( keys %hash ) {
+						my $ref_id = extract_ref_id($ref_id_index);
+						if ( exists $justSeen{$ref_id} ) { last }
+						$justSeen{$ref_id} = 1;
+						my @ref = getID( $i, $ref_id );
+						foreach my $ref (@ref) {
+							if ( $intersect{$ref} ) {
+								$INTERSECT{'insert_count'}{$i} += $SEENi{$i}{$ref};
+							}
+						}
+					}
+					%justSeen = ();
+					foreach my $ref_id_index ( keys %base1 ) {
+						my $ref_id = extract_ref_id($ref_id_index);
+						if ( exists $justSeen{$ref_id} ) { last }
+						$justSeen{$ref_id} = 1;
+						my @ref = getID( $i, $ref_id );
+						foreach my $ref (@ref) {
+							if ( $intersect{$ref} ) {
+								$INTERSECT{'base1_count'}{$i} += $SEEN1{$i}{$ref};
+							}
+						}
+					}
+					%justSeen = ();
+					foreach my $ref_id_index ( keys %base2 ) {
+						my $ref_id = extract_ref_id($ref_id_index);
+						if ( exists $justSeen{$ref_id} ) { last }
+						$justSeen{$ref_id} = 1;
+						my @ref = getID( $i, $ref_id );
+						foreach my $ref (@ref) {
+							if ( $intersect{$ref} ) {
+								$INTERSECT{'base2_count'}{$i} += $SEEN2{$i}{$ref};
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+$insertCounter++;
+if ( $seen_this_insert == 1 ) {
+	$total_seen_inserts++;
+}
+
+#my $count = scalar keys %hash;    #how many different ref_ids have I seen?
+my $count = scalar( keys %hash );
+
+foreach my $ref_id_index ( keys %hash ) {
+	$count_sum = $count_sum + ( 1 / $count );
+	@{ $position{$ref_id_index} }[2] += ( 1 / $count );
+
+	# Taxonomy
+	unless ( $mode eq 'none' ) {
+		my $ref_id = extract_ref_id($ref_id_index);
+		my $one    = getPreID($ref_id);
+		$total_inserts_covered_norm{$one} += 1 / $count;
+		my $count_tax     = $count;
+		my $countThisTaxa = 1;
+		foreach my $i (@levels) {
+			my @ref = getID( $i, $ref_id );
+			my $length = $len{$one};
+			foreach my $ref (@ref) {
+				my $i_ref = "$i.$ref";
+				unless ( $taxInsert{$i_ref} ) {
+					@{ $taxInsert{$i_ref} } = ( 0, 0, 0, 0, 0, 0 );
+				}
+
+				# PE filter
+				if ( exists $INTERSECT{$i} ) {
+					$countThisTaxa = exists $INTERSECT{$i}{$ref};
+					$count_tax     = $INTERSECT{'insert_count'}{$i};
+					%{ $SEENi{$i} } = %{ $INTERSECT{$i} };
+				}
+
+				# Continue with taxa
+				if ($countThisTaxa) {
+					@{ $taxInsert{$i_ref} }[0] += 1 / $count_tax;
+					@{ $taxInsert{$i_ref} }[1] += 1 / $count_tax / $length;
+					my $c = scalar keys %{ $SEENi{$i} };
+					if ( $c == 1 ) {
+						$uniqueTaxa{'insert'}{$i_ref} = 1;
+						@{ $taxInsert{$i_ref} }[2] += 1 / $count_tax;
+						@{ $taxInsert{$i_ref} }[3] += 1 / $count_tax / $length;
+					}
+					else {
+						%{ $multipleMapper{'insert'}{$i}{$insertCounter} } = %{ $SEENi{$i} };
+						$multipleMapperValue{'insert'}{$i}{$insertCounter} += 1 / $count_tax;
+					}
+					#print STDERR "LAST SAVE insert - $i : $i_ref : $count_tax\n"; #TEXT#
+				}
+			}
+		}
+	}
+}
+%hash = ();
+
+$insertCounter++;
+
+#$count = scalar keys %base1;
+$count = scalar( keys %base1 );
+
+foreach my $ref_id_index ( keys %base1 ) {
+	my $ref_id = extract_ref_id($ref_id_index);
+	$total_bases_covered += ( 1 / $count ) * $base1{$ref_id_index};
+	@{ $position{$ref_id_index} }[3] += ( 1 / $count ) * $base1{$ref_id_index};
+
+	# Taxonomy
+	unless ( $mode eq 'none' ) {
+		my $one = getPreID($ref_id);
+		$total_bases_covered_norm{$one} += 1 / $count * $base1{$ref_id_index};
+		my $count_tax     = $count;
+		my $countThisTaxa = 1;
+		foreach my $i (@levels) {
+			my @ref = getID( $i, $ref_id );
+			my $length = $len{$one};
+			foreach my $ref (@ref) {
+				my $i_ref = "$i.$ref";
+				unless ( $taxBase{$i_ref} ) {
+					@{ $taxBase{$i_ref} } = ( 0, 0, 0, 0, 0, 0 );
+				}
+
+				# PE filter
+				if ( $INTERSECT{$i} ) {
+					$countThisTaxa = exists $INTERSECT{$i}{$ref};
+					$count_tax     = $INTERSECT{'base1_count'}{$i};
+					%{ $SEEN1{$i} } = %{ $INTERSECT{$i} };
+				}
+
+				# Continue with taxa
+				if ($countThisTaxa) {
+					my $value = 1 / $count_tax * $base1{$ref_id_index};
+					@{ $taxBase{$i_ref} }[0] += $value;
+					@{ $taxBase{$i_ref} }[1] += $value / $length;
+					my $c = scalar keys %{ $SEEN1{$i} };
+					#print "I'm giving $value to $i_ref || $length ||  | $insert\n";
+					
+					if ( $c == 1 ) {
+						$uniqueTaxa{'base1'}{$i_ref} = 1;
+						@{ $taxBase{$i_ref} }[2] += $value;
+						@{ $taxBase{$i_ref} }[3] += $value / $length;
+					}
+					else {
+						%{ $multipleMapper{'base1'}{$i}{$insertCounter} } = %{ $SEEN1{$i} };
+						$multipleMapperValue{'base1'}{$i}{$insertCounter} += $value;
+					}
+					#print STDERR "LAST SAVE base1 - $i : $i_ref : $value\n"; #TEXT#
+				}
+			}
+		}
+	}
+}
+%base1 = ();
+$base1 = 0;
+
+$insertCounter++;
+$count = scalar( keys %base2 );
+
+foreach my $ref_id_index ( keys %base2 ) {
+	$total_bases_covered += ( 1 / $count ) * $base2{$ref_id_index};
+	@{ $position{$ref_id_index} }[3] += ( 1 / $count ) * $base2{$ref_id_index};
+
+	# Taxonomy
+	unless ( $mode eq 'none' ) {
+		my $ref_id = extract_ref_id($ref_id_index);
+		my $one    = getPreID($ref_id);
+		$total_bases_covered_norm{$one} += 1 / $count * $base2{$ref_id_index};
+		my $count_tax     = $count;
+		my $countThisTaxa = 1;
+		foreach my $i (@levels) {
+			my @ref = getID( $i, $ref_id );
+			my $length = $len{$one};
+			foreach my $ref (@ref) {
+				my $i_ref = "$i.$ref";
+				unless ( $taxBase{$i_ref} ) {
+					@{ $taxBase{$i_ref} } = ( 0, 0, 0, 0, 0, 0 );
+				}
+
+				# PE filter
+				if ( $INTERSECT{$i} ) {
+					$countThisTaxa = exists $INTERSECT{$i}{$ref};
+					$count_tax     = $INTERSECT{'base2_count'}{$i};
+					%{ $SEEN2{$i} } = %{ $INTERSECT{$i} };
+				}
+
+				# Continue with taxa
+				if ($countThisTaxa) {
+					my $value = 1 / $count_tax * $base2{$ref_id_index};
+					@{ $taxBase{$i_ref} }[0] += $value;
+					@{ $taxBase{$i_ref} }[1] += $value / $length;
+					my $c = scalar keys %{ $SEEN2{$i} };
+					
+					#print "I'm giving $value to $i_ref || $length ||  | $insert\n";
+									
+					if ( $c == 1 ) {
+						$uniqueTaxa{'base2'}{$i_ref} = 1;
+						@{ $taxBase{$i_ref} }[2] += $value;
+						@{ $taxBase{$i_ref} }[3] += $value / $length;
+					}
+					else {
+						%{ $multipleMapper{'base2'}{$i}{$insertCounter} } = %{ $SEEN2{$i} };
+						$multipleMapperValue{'base2'}{$i}{$insertCounter} += $value;
+					}
+					#print STDERR "LAST SAVE base2 - $i : $i_ref : $value\n"; #TEXT#
+				}
+			}
+		}
+	}
+}
+%base2 = ();
+$base2 = 0;
+
+#### last
+my $mapped_inserts = $total_seen_inserts;
+
+print STDERR getLoggingTime() ." Profiling :: finished pqrsing\n"; 
+
+print STDERR <<"EOF";
+Profiling :: Number of reads not counted, because their matching ref_id was not in the .coord file: $notInCoordFile
+Profiling :: Number of reads counted, with matching ref_id in the .coord file: $inCoordFile
+Profiling :: Done parsing. Writing stats...
+Profiling :: total bases covered $total_bases_covered
+Profiling :: total insert count sum $count_sum
+Profiling :: mapped inserts $mapped_inserts
+Profiling :: total inserts $total_inserts
+Profiling :: stats file is $coverage_file
+
+EOF
+
+my $not_mapped_bases;
+my $not_mapped_inserts;
+my $fraction_mapped_bases = 0;
+if ( $total_bases > 0 ) {
+	$fraction_mapped_bases = $total_bases_covered / $total_bases;
+}
+
+# bfr not correctly calculated. Also not obvious what it'd be useful for.
+my $bfr = 0;
+if ( $total_length_matched > 0 ) {
+	$bfr = $total_bases_covered / $total_length_matched;
+}
+$not_mapped_bases   = $total_bases - $total_bases_covered;
+$not_mapped_inserts = $total_inserts - $mapped_inserts;
+
+# Taxonomy, For scaled
+unless ( $mode eq 'none' ) {
+	print STDERR "Profiling :: calculating total and weighted sums for taxa summaries\n";
+	my $total_sum_inserts    = 0;    #$not_mapped_inserts;
+	my $total_sum_bases      = 0;    #$not_mapped_bases;
+	my $weighted_sum_inserts = 0;
+	my $weighted_sum_bases   = 0;
+
+	# Add -1
+	if ( $mode eq 'RefMG' ) {
+		$total_bases_covered_norm{'-1'}   = $not_mapped_bases;
+		$total_inserts_covered_norm{'-1'} = $not_mapped_inserts;
+		$len{'-1'}                        = $all_tax_avg_len;
+	}
+
+	foreach my $ref ( keys %total_bases_covered_norm ) {
+		$total_sum_bases += $total_bases_covered_norm{$ref} / $len{$ref};
+		$weighted_sum_bases += $total_bases_covered_norm{$ref};
+	}
+	foreach my $ref ( keys %total_inserts_covered_norm ) {
+		$total_sum_inserts += $total_inserts_covered_norm{$ref} / $len{$ref};
+		$weighted_sum_inserts += $total_inserts_covered_norm{$ref};
+	}
+	if ( $total_sum_bases == 0 ) {
+		die "ERROR & EXIT: Total number of bases covered is 0. Most likely no reads were mapped to the databases because the dataset was small (possibly less than 100,000 reads).";
+	}
+	$weighted_base_avg   = $weighted_sum_bases / $total_sum_bases;       #THESE ONES CALCULATED HERE ARE ONLY USED IN THE profile files FILES. THERE ARE NEW WEIGHTS CALCULATED FURTHER DOWN THAT ARE SAVED IN THE 'gene' FILES
+	$weighted_insert_avg = $weighted_sum_inserts / $total_sum_inserts;
+	print STDERR "Profiling :: BASE DIV : $weighted_sum_bases / $total_sum_bases = $weighted_base_avg\n";
+	print STDERR "Profiling :: INS DIV  : $weighted_sum_inserts / $total_sum_inserts = $weighted_insert_avg\n";
+	print STDERR "Profiling :: not mapped inserts $not_mapped_inserts\n";
+}
+
+print STDERR "Profiling :: Print output...\n";
+open OUT,      '>', "$cwd/$sample/insert.$output.insert.coverage.count.tmp"  or die "ERROR & EXIT: Cannot open output file $cwd/$sample/insert.$output.insert.coverage.count";
+open NORM,     '>', "$cwd/$sample/insert.$output.insert.coverage.norm.tmp"   or die "ERROR & EXIT: Cannot open output file $cwd/$sample/insert.$output.insert.coverage.norm";
+open ISCALED,  '>', "$cwd/$sample/insert.$output.insert.coverage.scaled.tmp" or die "ERROR & EXIT: Cannot open output file $cwd/$sample/insert.$output.insert.coverage.scaled";
+open BASE,     '>', "$cwd/$sample/base.$output.base.coverage.count.tmp"      or die "ERROR & EXIT: Cannot open output file $cwd/$sample/base.$output.base.coverage.count";
+open BASENORM, '>', "$cwd/$sample/base.$output.base.coverage.norm.tmp"       or die "ERROR & EXIT: Cannot open output file $cwd/$sample/base.$output.base.coverage.count";
+open BSCALED,  '>', "$cwd/$sample/base.$output.base.coverage.scaled.tmp"     or die "ERROR & EXIT: Cannot open output file $cwd/$sample/base.$output.base.coverage.scaled";
+
+my $printrownames = 0;
+if ( $print_rownames eq 'yes' ) {
+	$printrownames = 1;
+	open HEADER,     '>', "$cwd/$sample/rownames.$output.rownames"      or die "ERROR & EXIT: Cannot open output file $cwd/$sample/rownames.$output.rownames";
+	open HEADERUNIQ, '>', "$cwd/$sample/rownames.$output.rownames.uniq" or die "ERROR & EXIT: Cannot open output file $cwd/$sample/rownames.$output.rownames.uniq";
+}
+else {
+	if ( $printOnlyIfSample0 == 0 ) {
+		$printrownames = 1;
+		open HEADER,     '>', "$print_rownames"      or die "ERROR & EXIT: Cannot open output file $print_rownames";
+		open HEADERUNIQ, '>', "$print_rownames.uniq" or die "ERROR & EXIT: Cannot open output file $print_rownames.uniq";
+
+	}
+}
+
+print OUT "$sample\n";
+print BASE "$sample\n";
+print BASENORM "$sample\n";
+print NORM "$sample\n";
+print ISCALED "$sample\n";
+print BSCALED "$sample\n";
+
+if ($printrownames) {
+	print HEADER "ref_id\n";
+	print HEADERUNIQ "ref_id\n";
+	print HEADER "-1\n";
+	print HEADERUNIQ "-1\n";
+}
+if ( !( -e "$insert_stats_file.stats" ) ) {
+	print BASE "missing_insert_file_not_calculated\n";
+}
+else {
+	print BASE "$not_mapped_bases\n";
+}
+
+my $fraction = $not_mapped_bases / $db_average_gene_length;
+
+print BASENORM "NA\n";
+if ( !( -e "$insert_stats_file.stats" ) ) {
+	print OUT "missing_insert_file_not_calculated\n";
+}
+else {
+	print OUT "$not_mapped_inserts\n";
+}
+$fraction = $not_mapped_inserts / $db_average_gene_length;
+
+print NORM "NA\n";
+my $total_bases_covered_n   = 0;
+my $total_inserts_covered_n = 0;
+foreach my $ref_id_index ( sort keys %position ) {
+	my $ref_id    = extract_ref_id($ref_id_index);
+	my @bounds    = @{ $position{$ref_id_index} };
+	my $count     = $bounds[2];
+	my $basecount = $bounds[3];
+	my $length    = $bounds[1] - $bounds[0] + 1;
+	my $norm      = $count / $length;
+	my $basenorm  = $basecount / $length;
+	print BASE "$basecount\n";
+	print BASENORM "$basenorm\n";
+	print OUT "$count\n";
+	print NORM "$norm\n";
+	$total_bases_covered_n   += $basenorm;
+	$total_inserts_covered_n += $norm;
+
+	if ($printrownames) {
+		print HEADER "$ref_id\n";
+		print HEADERUNIQ "$ref_id\_$bounds[0]\_$bounds[1]\n";
+	}
+}
+
+########### Repeat for scaled #################
+my $weighted_sum_bases2   = $total_bases_covered;
+my $weighted_sum_inserts2 = $count_sum;
+my $total_sum_bases2      = $total_bases_covered_n;
+my $total_sum_inserts2    = $total_inserts_covered_n;
+my $weighted_base_avg2;
+my $weighted_insert_avg2;
+
+if ( $total_sum_bases2 == 0 ) {
+	$weighted_base_avg2 = 0;
+}
+else {
+	$weighted_base_avg2 = $weighted_sum_bases2 / $total_sum_bases2;
+}
+if ( $total_sum_inserts2 == 0 ) {
+	$weighted_insert_avg2 = 0;
+}
+else {
+	$weighted_insert_avg2 = $weighted_sum_inserts2 / $total_sum_inserts2;
+}
+
+print STDERR "Profiling :: BASE DIV (used in abundance files) : $weighted_sum_bases2 / $total_sum_bases2 = $weighted_base_avg2\n";
+print STDERR "Profiling :: INS DIV (used in abundance files)  : $weighted_sum_inserts2 / $total_sum_inserts2 = $weighted_insert_avg2\n";
+
+if ( !( -e "$insert_stats_file.stats" ) ) {
+}
+else {
+	print BSCALED $not_mapped_bases . "\n";
+	print ISCALED $not_mapped_inserts . "\n";
+}
+foreach my $ref_id_index ( sort keys %position ) {
+	my $ref_id    = extract_ref_id($ref_id_index);
+	my @bounds    = @{ $position{$ref_id_index} };
+	my $count     = $bounds[2];
+	my $basecount = $bounds[3];
+	my $length    = $bounds[1] - $bounds[0] + 1;
+	my $norm      = $count / $length;
+	my $basenorm  = $basecount / $length;
+	print BSCALED $basenorm * $weighted_base_avg2 . "\n";
+	print ISCALED $norm * $weighted_insert_avg2 . "\n";
+}
+########### Repeat for scaled #################
+
+close OUT;
+close NORM;
+close HEADER;
+close HEADERUNIQ;
+close BASENORM;
+close BASE;
+close ISCALED;
+close BSCALED;
+
+system "ln -fs $print_rownames $cwd/$sample/base.$output.rownames";
+system "ln -fs $print_rownames.uniq $cwd/$sample/base.$output.rownames.uniq";
+system "ln -fs $print_rownames $cwd/$sample/insert.$output.rownames";
+system "ln -fs $print_rownames.uniq $cwd/$sample/insert.$output.rownames.uniq";
+
+# Post process taxa to generate third files
+print STDERR "Profiling :: Distributing multiple mappers...\n";
+unless ( $mode eq 'none' ) {
+	foreach my $i (@levels) {
+		foreach my $BOI ( 'insert', 'base1', 'base2' ) {
+			foreach my $insert ( keys %{ $multipleMapper{$BOI}{$i} } ) {
+				my @tot_sum = ( 0, 0 );
+				my %giveTo = ();
+				foreach my $taxa ( keys %{ $multipleMapper{$BOI}{$i}{$insert} } ) {
+					my $i_taxa = "$i.$taxa";
+					if ( $uniqueTaxa{$BOI}{$i_taxa} ) {
+						if ( $BOI eq 'insert' ) {
+							$tot_sum[0] += $taxInsert{$i_taxa}[2];
+							$tot_sum[1] += $taxInsert{$i_taxa}[3];
+							$giveTo{$taxa} = 1;
+						}
+						else {
+							$tot_sum[0] += $taxBase{$i_taxa}[2];
+							$tot_sum[1] += $taxBase{$i_taxa}[3];
+							$giveTo{$taxa} = 1;
+						}
+					}
+				}
+				my $numberOfGiveToTaxa = scalar keys %giveTo;
+				if ( $numberOfGiveToTaxa == 0 ) {
+					@tot_sum = ( 0, 0 );
+					%giveTo = %{ $multipleMapper{$BOI}{$i}{$insert} };
+					foreach my $taxa ( keys %giveTo ) {
+						my $i_taxa = "$i.$taxa";
+						if ( $BOI eq 'insert' ) {
+							( exists $taxInsert{$i_taxa} ) or die("Could not find '$i_taxa'.");
+							$tot_sum[0] += $taxInsert{$i_taxa}[0];
+							$tot_sum[1] += $taxInsert{$i_taxa}[1];
+						}
+						else {
+							$tot_sum[0] += $taxBase{$i_taxa}[0];
+							$tot_sum[1] += $taxBase{$i_taxa}[1];
+						}
+					}
+					foreach my $giveToTaxa ( keys %giveTo ) {
+						my $i_taxa = "$i.$giveToTaxa";
+						if ( $BOI eq 'insert' ) {
+							$taxInsert{$i_taxa}[4] += $taxInsert{$i_taxa}[0] / $tot_sum[0] * $multipleMapperValue{$BOI}{$i}{$insert};
+							unless ( $mode eq 'identifier' || $mode eq 'functional' ) {
+								my @ref = @{ $revmap{$i}{$giveToTaxa} };
+								foreach my $ref (@ref) {
+									$taxInsert{$i_taxa}[5] += $taxInsert{$i_taxa}[1] / $tot_sum[1] * $multipleMapperValue{$BOI}{$i}{$insert} / $len{$ref};
+								}
+							}
+							else {
+								$taxInsert{$i_taxa}[5] += $taxInsert{$i_taxa}[1] / $tot_sum[1] * $multipleMapperValue{$BOI}{$i}{$insert} / $len{$giveToTaxa};
+							}
+						}
+						else {
+							#$taxBase{$i_taxa}[4] += $taxBase{$i_taxa}[0] / $tot_sum[0] * $multipleMapperValue{$BOI}{$i}{$insert};
+							
+							#print "$giveToTaxa $i $taxBase{$i_taxa}[4] += $taxBase{$i_taxa}[0] / $tot_sum[0] * $multipleMapperValue{$BOI}{$i}{$insert};\n";
+
+
+									#print "$taxBase{$i_taxa}[5] += $taxBase{$i_taxa}[3] / $tot_sum[1] * $multipleMapperValue{$BOI}{$i}{$insert} / $len{$giveToTaxa}=" .($taxBase{$i_taxa}[3] / $tot_sum[1] * $multipleMapperValue{$BOI}{$i}{$insert} / $len{$giveToTaxa}). "\n";
+
+
+							unless ( $mode eq 'identifier' || $mode eq 'functional' ) {
+								my @ref = @{ $revmap{$i}{$giveToTaxa} };
+								foreach my $ref (@ref) {
+									$taxBase{$i_taxa}[5] += $taxBase{$i_taxa}[1] / $tot_sum[1] * $multipleMapperValue{$BOI}{$i}{$insert} / $len{$ref};
+								}
+							}
+							else {
+								$taxBase{$i_taxa}[5] += $taxBase{$i_taxa}[1] / $tot_sum[1] * $multipleMapperValue{$BOI}{$i}{$insert} / $len{$giveToTaxa};
+							}
+
+						}
+					}
+				}
+				else {
+					foreach my $giveToTaxa ( keys %giveTo ) {
+						my $i_taxa = "$i.$giveToTaxa";
+						if ( $BOI eq 'insert' ) {
+							$taxInsert{$i_taxa}[4] += $taxInsert{$i_taxa}[2] / $tot_sum[0] * $multipleMapperValue{$BOI}{$i}{$insert};
+							unless ( $mode eq 'identifier' || $mode eq 'functional' ) {
+								my @ref = @{ $revmap{$i}{$giveToTaxa} };
+								foreach my $ref (@ref) {
+									$taxInsert{$i_taxa}[5] += $taxInsert{$i_taxa}[3] / $tot_sum[1] * $multipleMapperValue{$BOI}{$i}{$insert} / $len{$ref};
+								}
+							}
+							else {
+								$taxInsert{$i_taxa}[5] += $taxInsert{$i_taxa}[3] / $tot_sum[1] * $multipleMapperValue{$BOI}{$i}{$insert} / $len{$giveToTaxa};
+							}
+						}
+						else {
+							$taxBase{$i_taxa}[4] += $taxBase{$i_taxa}[2] / $tot_sum[0] * $multipleMapperValue{$BOI}{$i}{$insert};
+							
+							#print "$giveToTaxa $i $taxBase{$i_taxa}[4] += $taxBase{$i_taxa}[2] / $tot_sum[0] * $multipleMapperValue{$BOI}{$i}{$insert};\n";
+
+
+							unless ( $mode eq 'identifier' || $mode eq 'functional' ) {
+								my @ref = @{ $revmap{$i}{$giveToTaxa} };
+								foreach my $ref (@ref) {
+									$taxBase{$i_taxa}[5] += $taxBase{$i_taxa}[3] / $tot_sum[1] * $multipleMapperValue{$BOI}{$i}{$insert} / $len{$ref};
+									#print "$taxBase{$i_taxa}[5] += $taxBase{$i_taxa}[3] / $tot_sum[1] * multipleMapperValue{$BOI}{$i}{$insert} / len{$giveToTaxa}=$len{$ref}  || " .($taxBase{$i_taxa}[3] / $tot_sum[1] * $multipleMapperValue{$BOI}{$i}{$insert} / $len{$ref}). "\n";
+									
+								}
+							}
+							else {
+								$taxBase{$i_taxa}[5] += $taxBase{$i_taxa}[3] / $tot_sum[1] * $multipleMapperValue{$BOI}{$i}{$insert} / $len{$giveToTaxa};
+							}
+
+						}
+					}
+				}
+			}
+		}
+	}
+
+	# OPEN STATS
+	print STDERR "Profiling :: multiple mapper file is $mm_file\n";
+	print STDERR "Profiling :: Print multiple mapper stats...\n";
+	open STATS, '>', "$mm_file" or die "ERROR & EXIT: Could not open $mm_file for output.";
+	print STATS "level\t-1 base raw\t-1 base norm\t-1 base scaled\tsum all raw bases\tsum all norm bases\tsum all scaled bases\tsum unique raw bases\tsum unique norm bases\tsum unique scaled bases\tsum unique adjusted raw bases\tsum unique adjusted norm bases\tsum unique adjusted scaled bases\t";
+	print STATS "-1 insert raw\t-1 insert norm\t-1 insert scaled\tsum all raw inserts\tsum all norm inserts\tsum all scaled inserts\tsum unique raw inserts\tsum unique norm inserts\tsum unique scaled inserts\tsum unique adjusted raw inserts\tsum unique adjusted norm inserts\tsum unique adjusted scaled inserts\ttotal number of mapped inserts\tinserts which were paired end corrected\n";
+
+	# re-reset levels to all levels
+	if ( $mode eq 'functional' ) {
+		@levels = ( 'cog', 'ko', 'module', 'pathway' );
+	}
+
+	# Print tax
+	foreach my $i (@levels) {
+
+		my %taxa = buildTaxa($i);
+
+		# Here we need to convert from gene identifier summaries to funcitonal summaries
+		#my %taxInsert2;  # for now we try and store the new level info in the same hash, and the original gene data is also there, but we have re-defined the levels array to not include gene
+		#my %taxBase2;
+
+		if ( $mode eq 'functional' ) {
+			print STDERR "Profiling :: convert identifier abundances into $i abundances\n";
+			foreach my $ref_id_index ( keys %taxInsert ) {
+				if ( $ref_id_index =~ /gene\.(.*)$/ ) {
+					my $gene = $1;
+					my @ref = getID( $i, $gene, 'force' );
+					foreach my $ref (@ref) {
+						my $i_ref = "$i.$ref";
+						unless ( exists $taxInsert{$i_ref} ) {
+							@{ $taxInsert{$i_ref} } = ( 0, 0, 0, 0, 0, 0 );
+						}
+						unless ( exists $taxBase{$i_ref} ) {
+							@{ $taxBase{$i_ref} } = ( 0, 0, 0, 0, 0, 0 );
+						}
+						for my $k ( 0 .. 5 ) {
+							@{ $taxInsert{$i_ref} }[$k] += @{ $taxInsert{$ref_id_index} }[$k];
+							@{ $taxBase{$i_ref} }[$k]   += @{ $taxBase{$ref_id_index} }[$k];
+						}
+						#print STDERR "SAVE : ref_id_index=$ref_id_index : gene=$gene : ref=$ref :: " . @{ $taxBase{$ref_id_index} }[0] ."\n"; ##
+						
+					}
+				}
+			}
+			%taxa = buildTaxa( $i, "force" );
+
+			#%taxBase   = %taxBase2;
+			#%taxInsert = %taxInsert2;
+			$PEaffectedInserts{$i} = $PEaffectedInserts{'gene'};
+			print STDERR "Profiling :: continuing summarizing $i abundances\n";
+		}
+
+		# Here we need to convert from gene identifier summaries to funcitonal summaries
+
+		if ( $mode eq 'RefMG' ) {
+			print STATS "$i\t" . $not_mapped_bases . "\t" . $not_mapped_bases / $all_tax_avg_len . "\t" . $weighted_base_avg * $not_mapped_bases / $all_tax_avg_len . "\t";
+		}
+		if ( $mode eq 'mOTU' ) {
+			print STATS "$i\tnot_calculated_in_mOTU_mode\tnot_calculated_in_mOTU_mode\tnot_calculated_in_mOTU_mode\t";
+		}
+		if ( $mode eq 'functional' || $mode eq 'identifier' ) {
+			print STATS "$i\t" . $not_mapped_bases . "\tnot_calculated_in_functional_mode\tnot_calculated_in_functional_mode\t";
+		}
+		my @baseSum   = ( 0, 0, 0, 0, 0, 0 );
+		my @insertSum = ( 0, 0, 0, 0, 0, 0 );
+
+		for my $j ( 0 .. 5 ) {
+			foreach my $taxa ( keys %taxa ) {
+				my $i_taxa = "$i.$taxa";
+				if ( exists $taxInsert{$i_taxa} ) {
+					$insertSum[$j] += $taxInsert{$i_taxa}[$j];
+				}
+				if ( exists $taxBase{$i_taxa} ) {
+					$baseSum[$j] += $taxBase{$i_taxa}[$j];
+					
+					#if ($j == 0) {
+					#print "j=$j taxa=$taxa : add $taxInsert{$i_taxa}[$j]\n";
+					#}
+					
+				}
+			}
+		}
+		#print "sum $insertSum[4] \n"; 
+
+		#%taxa = ();
+		print STATS $baseSum[0] . "\t" . $baseSum[1] . "\t" . ( $baseSum[1] * $weighted_base_avg ) . "\t" . $baseSum[2] . "\t" . $baseSum[3] . "\t" . ( $baseSum[3] * $weighted_base_avg ) . "\t" . ( $baseSum[2] + $baseSum[4] ) . "\t" . ( $baseSum[3] + $baseSum[5] ) . "\t" . ( ( $baseSum[3] + $baseSum[5] ) * $weighted_base_avg ) . "\t";
+
+		if ( $mode eq 'RefMG' ) {
+			print STATS $not_mapped_inserts . "\t" . ( $not_mapped_inserts / $all_tax_avg_len ) . "\t" . ( $weighted_insert_avg * $not_mapped_inserts / $all_tax_avg_len ) . "\t";
+		}
+		if ( $mode eq 'mOTU' ) {
+			print STATS "not_calculated_in_mOTU_mode\tnot_calculated_in_mOTU_mode\tnot_calculated_in_mOTU_mode\t";
+		}
+		if ( $mode eq 'functional' || $mode eq 'identifier' ) {
+			print STATS $not_mapped_inserts . "\tnot_calculated_in_functional_mode\tnot_calculated_in_functional_mode\t";
+		}
+		print STATS $insertSum[0] . "\t" . $insertSum[1] . "\t" . ( $insertSum[1] * $weighted_insert_avg ) . "\t" . $insertSum[2] . "\t" . $insertSum[3] . "\t" . ( $insertSum[3] * $weighted_insert_avg ) . "\t" . ( $insertSum[2] + $insertSum[4] ) . "\t" . ( $insertSum[3] + $insertSum[5] ) . "\t" . ( ( $insertSum[3] + $insertSum[5] ) * $weighted_insert_avg ) . "\t";
+		print STATS $mapped_inserts . "\t" . $PEaffectedInserts{$i} . "\n";
+
+		print STDERR "Profiling :: Printing $i abundances...\n";
+		open B,   ">$output_tax.base.raw.$i.tmp"                  or die "$!";
+		open Bn,  ">$output_tax.base.norm.$i.tmp"                 or die "$!";
+		open Bu,  ">$output_tax.base.only.unique.raw.$i.tmp"      or die "$!";
+		open Bun, ">$output_tax.base.only.unique.norm.$i.tmp"     or die "$!";
+		open I,   ">$output_tax.insert.raw.$i.tmp"                or die "$!";
+		open In,  ">$output_tax.insert.norm.$i.tmp"               or die "$!";
+		open Iu,  ">$output_tax.insert.only.unique.raw.$i.tmp"    or die "$!";
+		open Iun, ">$output_tax.insert.only.unique.norm.$i.tmp"   or die "$!";
+		open Bs,  ">$output_tax.base.scaled.$i.tmp"               or die "$!";
+		open Bsu, ">$output_tax.base.only.unique.scaled.$i.tmp"   or die "$!";
+		open Is,  ">$output_tax.insert.scaled.$i.tmp"             or die "$!";
+		open Isu, ">$output_tax.insert.only.unique.scaled.$i.tmp" or die "$!";
+
+		open I3,  ">$output_tax.insert.mm.dist.among.unique.raw.$i.tmp"    or die "$!";
+		open I3n, ">$output_tax.insert.mm.dist.among.unique.norm.$i.tmp"   or die "$!";
+		open I3s, ">$output_tax.insert.mm.dist.among.unique.scaled.$i.tmp" or die "$!";
+		open B3,  ">$output_tax.base.mm.dist.among.unique.raw.$i.tmp"      or die "$!";
+		open B3n, ">$output_tax.base.mm.dist.among.unique.norm.$i.tmp"     or die "$!";
+		open B3s, ">$output_tax.base.mm.dist.among.unique.scaled.$i.tmp"   or die "$!";
+
+		print Bs "$sample\n";
+		print Bsu "$sample\n";
+		print Is "$sample\n";
+		print Isu "$sample\n";
+		print B "$sample\n";
+		print Bn "$sample\n";
+		print Bu "$sample\n";
+		print Bun "$sample\n";
+		print I "$sample\n";
+		print In "$sample\n";
+		print Iu "$sample\n";
+		print Iun "$sample\n";
+
+		print I3 "$sample\n";
+		print I3n "$sample\n";
+		print I3s "$sample\n";
+
+		print B3 "$sample\n";
+		print B3n "$sample\n";
+		print B3s "$sample\n";
+
+		if ( $printOnlyIfSample0 == 0 ) {
+			open TAXHEADER, ">$print_rownamesTax.$i.rownames" or die "ERROR & EXIT: Cannot print to output file $print_rownamesTax.$i.rownames";
+			print TAXHEADER "$i\n";
+			if ( $mode eq 'RefMG' ) {
+				print TAXHEADER "-1\n";
+			}
+			if ( $mode eq 'identifier' ) {
+				print TAXHEADER "-1\n";
+			}
+			if ( $mode eq 'functional' ) {
+				print TAXHEADER "total_inserts_or_bases\n";
+				print TAXHEADER "mapped_inserts_or_bases\n";
+				print TAXHEADER "sum_not_annotated_and_annotated\n";
+				print TAXHEADER "sum_not_annotated\n";
+				print TAXHEADER "sum_annotated\n";
+
+			}
+		}
+
+		if ( $mode eq 'RefMG' ) {
+			print B "$not_mapped_bases\n";
+			print Bs $weighted_base_avg * $not_mapped_bases / $all_tax_avg_len . "\n";
+			print Bn $not_mapped_bases / $all_tax_avg_len . "\n";
+
+			print B3 "$not_mapped_bases\n";
+			print B3s $weighted_base_avg * $not_mapped_bases / $all_tax_avg_len . "\n";
+			print B3n $not_mapped_bases / $all_tax_avg_len . "\n";
+
+			print I "$not_mapped_inserts\n";
+			print Is $weighted_insert_avg * $not_mapped_inserts / $all_tax_avg_len . "\n";
+			print In $not_mapped_inserts / $all_tax_avg_len . "\n";
+
+			print I3 $not_mapped_inserts . "\n";
+			print I3n $not_mapped_inserts / $all_tax_avg_len . "\n";
+			print I3s $weighted_insert_avg * $not_mapped_inserts / $all_tax_avg_len . "\n";
+
+			print Isu "NA\n";
+			print Bsu "NA\n";
+			print Bu "NA\n";
+			print Bun "NA\n";
+			print Iu "NA\n";
+			print Iun "NA\n";
+		}
+
+		if ( $mode eq 'identifier' ) {
+			print B "$not_mapped_bases\n";
+			print Bs $not_mapped_bases . "\n";
+			print Bn "NA\n";
+
+			print B3 "$not_mapped_bases\n";
+			print B3n "NA\n";
+			print B3s $not_mapped_bases . "\n";
+
+			print I "$not_mapped_inserts\n";
+			print Is $not_mapped_inserts . "\n";
+			print In "NA\n";
+
+			print I3 $not_mapped_inserts . "\n";
+			print I3n "NA\n";
+			print I3s $not_mapped_inserts . "\n";
+
+			print Isu "NA\n";
+			print Bsu "NA\n";
+			print Bu "NA\n";
+			print Bun "NA\n";
+			print Iu "NA\n";
+			print Iun "NA\n";
+		}
+
+		#my $weighted_base_avg_unique_adjusted = $weighted_base_avg;
+		#my $weighted_insert_avg_unique_adjusted = $weighted_insert_avg;
+		#my $weighted_base_avg_unique = $weighted_base_avg;
+		#my $weighted_insert_avg_unique = $weighted_insert_avg;
+
+		# Need different weights for each file type
+		$weighted_base_avg   = $baseSum[0] / $baseSum[1];
+		$weighted_insert_avg = $insertSum[0] / $insertSum[1];
+		my $weighted_base_avg_unique;
+		my $weighted_insert_avg_unique;
+		if ($baseSum[3]) {
+			if ($baseSum[3] == 0){
+				$weighted_base_avg_unique = 0;
+				$weighted_insert_avg_unique = 0;
+			} else {
+			$weighted_base_avg_unique            = $baseSum[2] / $baseSum[3];
+			$weighted_insert_avg_unique          = $insertSum[2] / $insertSum[3];
+			}
+		}
+		
+		# NOTE IN PREVIOUS VERSION THERE WAS A BUG THAT FOR $weighted_insert_avg_unique_adjusted AND $weighted_base_avg_unique_adjusted
+		# I HAD USED INDEX 4 + INDEX 0, AND INDEX 5+1, BUT IT SHOULD BE 4+2 AND 5+3
+		
+		my $weighted_base_avg_unique_adjusted   = ( $baseSum[4] + $baseSum[2] ) / ( $baseSum[5] + $baseSum[3] );
+		my $weighted_insert_avg_unique_adjusted = ( $insertSum[4] + $insertSum[2] ) / ( $insertSum[5] + $insertSum[3] );
+		print STDERR "Profiling :: $i :: BASE DIV : $baseSum[0] / $baseSum[1] = $weighted_base_avg\n";
+		print STDERR "Profiling :: $i :: INS DIV : $insertSum[0] / $insertSum[1] = $weighted_insert_avg\n";
+		print STDERR "Profiling :: $i :: BASE DIV unique : $baseSum[2] / $baseSum[3] = $weighted_base_avg_unique\n";
+		print STDERR "Profiling :: $i :: INS DIV unique : $insertSum[2] / $insertSum[3] = $weighted_insert_avg_unique\n";
+		print STDERR "Profiling :: $i :: BASE DIV unique adjusted : " . ( $baseSum[4] + $baseSum[2] ) . " / " .     ( $baseSum[5] + $baseSum[3] ) . " = $weighted_base_avg_unique_adjusted\n";
+		print STDERR "Profiling :: $i :: INS DIV unique adjusted : " .  ( $insertSum[4] + $insertSum[2] ) . " / " . ( $insertSum[5] + $insertSum[3] ) . " = $weighted_insert_avg_unique_adjusted\n";
+
+		if ( $mode eq 'functional' ) {
+
+			unless ($taxBase{"$i.not_annotated"}[0]) {
+				$taxBase{"$i.not_annotated"}[0] = 0;
+			}
+			unless ($taxBase{"$i.not_annotated"}[1]) {
+				$taxBase{"$i.not_annotated"}[1] = 0;
+			}
+			unless ($taxBase{"$i.not_annotated"}[2]) {
+				$taxBase{"$i.not_annotated"}[2] = 0;
+			}
+			unless ($taxBase{"$i.not_annotated"}[3]) {
+				$taxBase{"$i.not_annotated"}[3] = 0;
+			}
+			unless ($taxBase{"$i.not_annotated"}[4]) {
+				$taxBase{"$i.not_annotated"}[4] = 0;
+			}
+			unless ($taxBase{"$i.not_annotated"}[5]) {
+				$taxBase{"$i.not_annotated"}[5] = 0;
+			}
+			unless ($taxInsert{"$i.not_annotated"}[0]) {
+				$taxInsert{"$i.not_annotated"}[0] = 0;
+			}
+			unless ($taxInsert{"$i.not_annotated"}[1]) {
+				$taxInsert{"$i.not_annotated"}[1] = 0;
+			}
+			unless ($taxInsert{"$i.not_annotated"}[2]) {
+				$taxInsert{"$i.not_annotated"}[2] = 0;
+			}
+			unless ($taxInsert{"$i.not_annotated"}[3]) {
+				$taxInsert{"$i.not_annotated"}[3] = 0;
+			}
+			unless ($taxInsert{"$i.not_annotated"}[4]) {
+				$taxInsert{"$i.not_annotated"}[4] = 0;
+			}
+			unless ($taxInsert{"$i.not_annotated"}[5]) {
+				$taxInsert{"$i.not_annotated"}[5] = 0;
+			}
+
+			print B "$total_bases\n";
+			print B "$total_bases_covered\n";
+			print B "$baseSum[0]\n";
+			print B $taxBase{"$i.not_annotated"}[0] . "\n";
+			print B $baseSum[0] - $taxBase{"$i.not_annotated"}[0] . "\n";
+
+			print I "$total_inserts\n";
+			print I "$mapped_inserts\n";
+			print I "$insertSum[0]\n";
+			print I $taxInsert{"$i.not_annotated"}[0] . "\n";
+			print I $insertSum[0] - $taxInsert{"$i.not_annotated"}[0] . "\n";
+
+			print Bn "$total_bases\n";
+			print Bn "$total_bases_covered_n\n";
+			print Bn "$baseSum[1]\n";
+			print Bn $taxBase{"$i.not_annotated"}[1] . "\n";
+			print Bn $baseSum[1] - $taxBase{"$i.not_annotated"}[1] . "\n";
+
+			print In "$total_inserts\n";
+			print In "$total_inserts_covered_n\n";
+			print In "$insertSum[1]\n";
+			print In $taxInsert{"$i.not_annotated"}[1] . "\n";
+			print In $insertSum[1] - $taxInsert{"$i.not_annotated"}[1] . "\n";
+
+			print Bs "$total_bases\n";
+			print Bs "$total_bases_covered\n";
+			print Bs $baseSum[1] * $weighted_base_avg . "\n";
+			print Bs $taxBase{"$i.not_annotated"}[1] * $weighted_base_avg . "\n";
+			print Bs $baseSum[1] * $weighted_base_avg - $taxBase{"$i.not_annotated"}[1] * $weighted_base_avg . "\n";
+
+			print Is "$total_inserts\n";
+			print Is "$mapped_inserts\n";
+			print Is $insertSum[1] * $weighted_insert_avg . "\n";
+			print Is $taxInsert{"$i.not_annotated"}[1] * $weighted_insert_avg . "\n";
+			print Is $insertSum[1] * $weighted_insert_avg - $taxInsert{"$i.not_annotated"}[1] * $weighted_insert_avg . "\n";
+
+			print Bu "$total_bases\n";
+			print Bu "not_calculated\n";
+			print Bu "$baseSum[2]\n";
+			print Bu $taxBase{"$i.not_annotated"}[2] . "\n";
+			print Bu $baseSum[2] - $taxBase{"$i.not_annotated"}[2] . "\n";
+
+			print Iu "$total_inserts\n";
+			print Iu "not_calculated\n";
+			print Iu "$insertSum[2]\n";
+			print Iu $taxInsert{"$i.not_annotated"}[2] . "\n";
+			print Iu $insertSum[2] - $taxInsert{"$i.not_annotated"}[2] . "\n";
+
+			print Bun "$total_bases\n";
+			print Bun "not_calculated\n";
+			print Bun "$baseSum[3]\n";
+			print Bun $taxBase{"$i.not_annotated"}[3] . "\n";
+			print Bun $baseSum[3] - $taxBase{"$i.not_annotated"}[3] . "\n";
+
+			print Iun "$total_inserts\n";
+			print Iun "not_calculated\n";
+			print Iun "$insertSum[3]\n";
+			print Iun $taxInsert{"$i.not_annotated"}[3] . "\n";
+			print Iun $insertSum[3] - $taxInsert{"$i.not_annotated"}[3] . "\n";
+
+			print Bsu "$total_bases\n";
+			print Bsu "not_calculated\n";
+			print Bsu $baseSum[3] * $weighted_base_avg_unique . "\n";
+			print Bsu $taxBase{"$i.not_annotated"}[3] * $weighted_base_avg_unique . "\n";
+			print Bsu $baseSum[3] * $weighted_base_avg_unique - $taxBase{"$i.not_annotated"}[3] * $weighted_base_avg_unique . "\n";
+
+			print Isu "$total_inserts\n";
+			print Isu "not_calculated\n";
+			print Isu $insertSum[3] * $weighted_insert_avg_unique . "\n";
+			print Isu $taxInsert{"$i.not_annotated"}[3] * $weighted_insert_avg_unique . "\n";
+			print Isu $insertSum[3] * $weighted_insert_avg_unique - $taxInsert{"$i.not_annotated"}[3] * $weighted_insert_avg_unique . "\n";
+
+			print B3 "$total_bases\n";
+			print B3 "$total_bases_covered\n";
+			print B3 $baseSum[4] + $baseSum[2] . "\n";
+			# BUG
+			# previously print B3 $taxBase{"$i.not_annotated"}[4] + $baseSum[2] . "\n";
+			print B3 $taxBase{"$i.not_annotated"}[4] + $taxBase{"$i.not_annotated"}[2] . "\n";
+			print B3 $baseSum[4] - $taxBase{"$i.not_annotated"}[4] + $baseSum[2] - $taxBase{"$i.not_annotated"}[2] . "\n";
+
+			#print STDERR "SAVE : $baseSum[4] - ".$taxBase{"$i.not_annotated"}[4] ."+ $baseSum[2] - ". $taxBase{"$i.not_annotated"}[2] ." = ". $baseSum[4] - $taxBase{"$i.not_annotated"}[4] + $baseSum[2] - $taxBase{"$i.not_annotated"}[2] . "\n";			
+
+			print I3 "$total_inserts\n";
+			print I3 "$mapped_inserts\n";
+			print I3 $insertSum[4] + $insertSum[2] . "\n";
+			
+			#print "LOG $insertSum[4] + $insertSum[2]\n";
+			
+			print I3 $taxInsert{"$i.not_annotated"}[4] + $taxInsert{"$i.not_annotated"}[2] . "\n";
+			print I3 $insertSum[4] - $taxInsert{"$i.not_annotated"}[4] + $insertSum[2] - $taxInsert{"$i.not_annotated"}[2] . "\n";
+
+			print B3n "$total_bases\n";
+			print B3n "$total_bases_covered_n\n";
+			print B3n $baseSum[5] + $baseSum[3] . "\n";
+			print B3n $taxBase{"$i.not_annotated"}[5] + $taxBase{"$i.not_annotated"}[3] . "\n";
+			print B3n $baseSum[5] - $taxBase{"$i.not_annotated"}[5] + $baseSum[3] - $taxBase{"$i.not_annotated"}[3] . "\n";
+
+			print I3n "$total_inserts\n";
+			print I3n "$total_inserts_covered_n\n";
+			print I3n $insertSum[5] + $insertSum[3] . "\n";
+			print I3n $taxInsert{"$i.not_annotated"}[5] + $taxInsert{"$i.not_annotated"}[3] . "\n";
+			print I3n $insertSum[5] - $taxInsert{"$i.not_annotated"}[5] + $insertSum[3] - $taxInsert{"$i.not_annotated"}[3] . "\n";
+
+			print B3s "$total_bases\n";
+			print B3s "$total_bases_covered\n";
+			print B3s ( $baseSum[5] + $baseSum[3] ) * $weighted_base_avg_unique_adjusted . "\n";
+			print B3s ( $taxBase{"$i.not_annotated"}[5] + $taxBase{"$i.not_annotated"}[3] ) * $weighted_base_avg_unique_adjusted . "\n";
+			print B3s ( $baseSum[5] * $weighted_base_avg_unique_adjusted - $taxBase{"$i.not_annotated"}[5] * $weighted_base_avg_unique_adjusted ) + ( $baseSum[3] * $weighted_base_avg_unique_adjusted - $taxBase{"$i.not_annotated"}[3] * $weighted_base_avg_unique_adjusted ) . "\n";
+
+			print I3s "$total_inserts\n";
+			print I3s "$mapped_inserts\n";
+			print I3s ( $insertSum[5] + $insertSum[3] ) * $weighted_insert_avg_unique_adjusted . "\n";
+			print I3s ( $taxInsert{"$i.not_annotated"}[5] + $taxInsert{"$i.not_annotated"}[3] ) * $weighted_insert_avg_unique_adjusted . "\n";
+			print I3s ( $insertSum[5] * $weighted_insert_avg_unique_adjusted - $taxInsert{"$i.not_annotated"}[5] * $weighted_insert_avg_unique_adjusted ) + ( $insertSum[3] * $weighted_insert_avg_unique_adjusted - $taxInsert{"$i.not_annotated"}[3] * $weighted_insert_avg_unique_adjusted ) . "\n";
+
+			#$insertSum[1] * $weighted_insert_avg - $taxInsert{"$i.not_annotated"}[1] * $weighted_insert_avg . "\n";
+
+			# This is required, because we don't want them printed twice.
+			delete $taxa{not_annotated};
+		}
+
+		foreach my $taxa ( sort keys %taxa ) {
+			my $i_taxa = "$i.$taxa";
+			unless ( $taxBase{$i_taxa} ) {
+				@{ $taxBase{$i_taxa} } = ( 0, 0, 0, 0, 0, 0 );
+			}
+			unless ( $taxInsert{$i_taxa} ) {
+				@{ $taxInsert{$i_taxa} } = ( 0, 0, 0, 0, 0, 0 );
+			}
+
+			if ( $printOnlyIfSample0 == 0 ) {
+				print TAXHEADER "$taxa\n";
+			}
+
+			print B "$taxBase{$i_taxa}[0]\n";
+			print Bn "$taxBase{$i_taxa}[1]\n";
+			print Bu "$taxBase{$i_taxa}[2]\n";
+			print Bun "$taxBase{$i_taxa}[3]\n";
+			print Bs $taxBase{$i_taxa}[1] * $weighted_base_avg . "\n";
+			print Bsu $taxBase{$i_taxa}[3] * $weighted_base_avg_unique_adjusted . "\n";
+
+			print I "$taxInsert{$i_taxa}[0]\n";
+			print In "$taxInsert{$i_taxa}[1]\n";
+			print Iu "$taxInsert{$i_taxa}[2]\n";
+
+			print Iun "$taxInsert{$i_taxa}[3]\n";
+
+			print Is $taxInsert{$i_taxa}[1] * $weighted_insert_avg . "\n";
+			print Isu $taxInsert{$i_taxa}[3] * $weighted_insert_avg_unique_adjusted . "\n";
+
+			print I3 $taxInsert{$i_taxa}[2] + $taxInsert{$i_taxa}[4] . "\n";
+			print I3n $taxInsert{$i_taxa}[3] + $taxInsert{$i_taxa}[5] . "\n";
+			print I3s ( $taxInsert{$i_taxa}[3] + $taxInsert{$i_taxa}[5] ) * $weighted_insert_avg_unique_adjusted . "\n";
+
+			print B3 $taxBase{$i_taxa}[2] + $taxBase{$i_taxa}[4] . "\n";
+			
+			#print STDERR "SAVE : $taxBase{$i_taxa}[2] + $taxBase{$i_taxa}[4] = " . ($taxBase{$i_taxa}[2] + $taxBase{$i_taxa}[4]) . "\n";
+						
+			print B3n $taxBase{$i_taxa}[3] + $taxBase{$i_taxa}[5] . "\n";
+			print B3s ( $taxBase{$i_taxa}[3] + $taxBase{$i_taxa}[5] ) * $weighted_base_avg_unique_adjusted . "\n";
+		}
+
+		close TAXHEADER;
+		close B;
+		close Bn;
+		close Bu;
+		close Bun;
+		close I;
+		close In;
+		close Iu;
+		close Iun;
+		close Bs;
+		close Bsu;
+		close Is;
+		close Isu;
+
+		close I3;
+		close I3n;
+		close I3s;
+		close B3;
+		close B3n;
+		close B3s;
+
+		%taxa = ();
+		system "ln -sf $print_rownamesTax.$i.rownames $output_tax.$i.rownames";
+
+	}
+
+	# close stats
+	close STATS;
+}
+
+print STDERR "Profiling :: Print padded stats...\n";
+open STATS, '>', "$padded_stats_file" or die "ERROR & EXIT: Could not open $padded_stats_file for output.";
+print STATS "Reads\tBases\tMax\tAvg\tKmer\tInserts\tMin % identity\tMin length\tSOAP max mismatches\n";
+$padded_stats_file_data[0] = 'NA';
+$padded_stats_file_data[1] = $total_bases_covered;
+$padded_stats_file_data[5] = $mapped_inserts;
+unless ( $padded_stats_file_data[6] ) {
+	$padded_stats_file_data[6] = "NA";
+}
+unless ( $padded_stats_file_data[7] ) {
+	$padded_stats_file_data[7] = "NA";
+}
+unless ( $padded_stats_file_data[8] ) {
+	$padded_stats_file_data[8] = "NA";
+}
+unless($padded_stats_file_data[2]) {
+	$padded_stats_file_data[2] = "NA";
+}
+unless($padded_stats_file_data[3]) {
+	$padded_stats_file_data[3] = "NA";
+}
+unless($padded_stats_file_data[4]) {
+	$padded_stats_file_data[4] = "NA";
+}
+
+print STATS join( "\t", @padded_stats_file_data ) . "\n";
+close STATS;
+
+print STDERR "Profiling :: Print stats...\n";
+my $fr = 0;
+if ( $total_inserts > 0 ) {
+	$fr = $mapped_inserts / $total_inserts;
+}
+open STATS, '>', "$coverage_file" or die "ERROR & EXIT: Could not open $coverage_file for output.";
+print STATS "total_inserts\tmapped_inserts\tfraction_mapped_inserts\ttotal_bases\tmapped_bases\tfraction_mapped_bases\tdb_average_entry_length\n";
+print STATS "$total_inserts\t$mapped_inserts\t$fr\t$total_bases\t$total_bases_covered\t$fraction_mapped_bases\t$db_average_gene_length\n";
+close STATS;
+
+print STDERR "Profiling :: Moving files.\n";
+
+sub rename_or_die {
+	my $orig = shift;
+	my $dest = shift;
+	rename( $orig, $dest )
+	  or die("Rename failed ['$orig' -> '$dest']: $!");
+}
+
+# Now, we flush all the IO buffers before continuing.
+# In an NFS setting, we experienced that the renames below would otherwise fail
+# because the files did not (yet) exist.
+# There is a CPAN module called File::Sync, which exports this functionality as
+# a function; but it is not a standard feature in Perl.
+system("sync");
+
+rename_or_die( "$cwd/$sample/insert.$output.insert.coverage.count.tmp",  "$cwd/$sample/insert.$output.insert.coverage.count" );
+rename_or_die( "$cwd/$sample/insert.$output.insert.coverage.norm.tmp",   "$cwd/$sample/insert.$output.insert.coverage.norm" );
+rename_or_die( "$cwd/$sample/insert.$output.insert.coverage.scaled.tmp", "$cwd/$sample/insert.$output.insert.coverage.scaled" );
+rename_or_die( "$cwd/$sample/base.$output.base.coverage.count.tmp",      "$cwd/$sample/base.$output.base.coverage.count" );
+rename_or_die( "$cwd/$sample/base.$output.base.coverage.norm.tmp",       "$cwd/$sample/base.$output.base.coverage.norm" );
+rename_or_die( "$cwd/$sample/base.$output.base.coverage.scaled.tmp",     "$cwd/$sample/base.$output.base.coverage.scaled" );
+foreach my $i (@levels) {
+	rename_or_die( "$output_tax.base.raw.$i.tmp",                           "$output_tax.base.raw.$i" );
+	rename_or_die( "$output_tax.base.norm.$i.tmp",                          "$output_tax.base.norm.$i" );
+	rename_or_die( "$output_tax.base.only.unique.raw.$i.tmp",               "$output_tax.base.only.unique.raw.$i" );
+	rename_or_die( "$output_tax.base.only.unique.norm.$i.tmp",              "$output_tax.base.only.unique.norm.$i" );
+	rename_or_die( "$output_tax.insert.raw.$i.tmp",                         "$output_tax.insert.raw.$i" );
+	rename_or_die( "$output_tax.insert.norm.$i.tmp",                        "$output_tax.insert.norm.$i" );
+	rename_or_die( "$output_tax.insert.only.unique.raw.$i.tmp",             "$output_tax.insert.only.unique.raw.$i" );
+	rename_or_die( "$output_tax.insert.only.unique.norm.$i.tmp",            "$output_tax.insert.only.unique.norm.$i" );
+	rename_or_die( "$output_tax.base.scaled.$i.tmp",                        "$output_tax.base.scaled.$i" );
+	rename_or_die( "$output_tax.base.only.unique.scaled.$i.tmp",            "$output_tax.base.only.unique.scaled.$i" );
+	rename_or_die( "$output_tax.insert.scaled.$i.tmp",                      "$output_tax.insert.scaled.$i" );
+	rename_or_die( "$output_tax.insert.only.unique.scaled.$i.tmp",          "$output_tax.insert.only.unique.scaled.$i" );
+	rename_or_die( "$output_tax.insert.mm.dist.among.unique.raw.$i.tmp",    "$output_tax.insert.mm.dist.among.unique.raw.$i" );
+	rename_or_die( "$output_tax.insert.mm.dist.among.unique.norm.$i.tmp",   "$output_tax.insert.mm.dist.among.unique.norm.$i" );
+	rename_or_die( "$output_tax.insert.mm.dist.among.unique.scaled.$i.tmp", "$output_tax.insert.mm.dist.among.unique.scaled.$i" );
+	rename_or_die( "$output_tax.base.mm.dist.among.unique.raw.$i.tmp",      "$output_tax.base.mm.dist.among.unique.raw.$i" );
+	rename_or_die( "$output_tax.base.mm.dist.among.unique.norm.$i.tmp",     "$output_tax.base.mm.dist.among.unique.norm.$i" );
+	rename_or_die( "$output_tax.base.mm.dist.among.unique.scaled.$i.tmp",   "$output_tax.base.mm.dist.among.unique.scaled.$i" );
+}
+
+print STDERR "Profiling :: Done.\n";
+
+if ( $missingFile eq "missing_insert_file" ) {
+	die "ERROR & EXIT: INSERT FILE WAS MISSING. -1 FRACTION NOT CALCULATED, BUT OTHER VALUES CORRECT. CALCULATIONS HAVE FINISHED.";
+}
+elsif ( $not_mapped_inserts < 0 ) {
+	die "ERROR & EXIT: NUMBER OF MAPPED INSERTS IS $not_mapped_inserts. Something is wrong...";
+}
+
+### FUNCTIONS
+
+sub getID {
+	my $i      = $_[0];
+	my $ref_id = $_[1];
+	my $force  = "";
+	if ( $_[2] ) {
+		$force = $_[2];
+	}
+	my @ref;
+	my $one;
+	if ( $mode eq 'RefMG' ) {
+		$ref_id =~ m/^(\d+)\..*/;
+		$one = $1;
+		@ref = @{ $map{$i}{$one} };
+	}
+	elsif ( $mode eq 'mOTU' || $force eq 'force' ) {
+		$one = $ref_id;
+		@ref = @{ $map{$i}{$one} };
+	}
+	elsif ( $mode eq 'identifier' || $mode eq 'functional' ) {
+		$ref[0] = $ref_id;
+	}
+	return @ref;
+}
+
+sub extract_ref_id {
+	my $ref_id_index = shift;
+	$ref_id_index =~ /^(.*)\.[0-9]+$/;
+	return $1;
+}
+
+sub getPreID {
+	my $ref_id = shift;
+	if ( $mode eq 'RefMG' ) {
+		$ref_id =~ m/^(\d+)\..*/;
+		return $1;
+	}
+	elsif (      $mode eq 'mOTU'
+		|| $mode eq 'identifier'
+		|| $mode eq 'functional' )
+	{
+		return $ref_id;
+	}
+	else {
+		die "Do not call 'getPreID' when mode=$mode.\n";
+	}
+}
+
+sub buildTaxa {
+	my $i     = $_[0];
+	my $force = "";
+	if ( $_[1] ) {
+		$force = $_[1];
+	}
+	my %taxa = ();
+	if ( ( $mode eq 'identifier' || $mode eq 'functional' ) && $force ne 'force' ) {
+		foreach my $ref_id_index ( keys %position ) {
+			my $ref_id = extract_ref_id($ref_id_index);
+			$taxa{$ref_id} = 1;
+		}
+	}
+	else {
+		foreach my $ref ( keys %{ $map{$i} } ) {
+			foreach my $j ( @{ $map{$i}{$ref} } ) {
+				$taxa{$j} = 1;
+			}
+		}
+	}
+	return %taxa;
+}
+
+sub getLoggingTime {
+	my ( $sec, $min, $hour, $mday, $mon, $year, $wday, $yday, $isdst ) = localtime(time);
+	my $nice_timestamp = sprintf( "%04d%02d%02d %02d:%02d:%02d", $year + 1900, $mon + 1, $mday, $hour, $min, $sec );
+	return $nice_timestamp;
+}
+
+exit 0;
+

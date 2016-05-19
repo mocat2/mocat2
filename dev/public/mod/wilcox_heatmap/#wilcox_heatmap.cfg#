@@ -1,0 +1,57 @@
+# This is a MOCAT module cfg file
+# You can use this cfg to cerate your own modules.
+# Note that ALL options under MOCAT OPTIONS
+# must be present in the new module cfg file.
+
+
+#################
+# MOCAT OPTIONS #
+#################
+# MODULE_RUNS_SINGLE_JOB is set to TRUE if
+# the module processes all samples in one batch,
+# ie only starts one job. If set to FALSE
+# MOCAT expects it to run one jobs per sample
+MODULE_RUNS_SINGLE_JOB=TRUE
+
+
+####################################
+# MODULE REQUIRED OPTIONS BY MOCAT #
+####################################
+# The REQUEST fields are options the module
+# requires to run. Within barckets are the requested format
+# The exact formatting here is important, that REQUEST
+# is at the beginning of the line with a single space after
+# ALSO, it is important that the fields that should be entered
+# ie the name of a field or two groups do NOT contain any spaces.
+# AND, yes, technically type below is the same os 'mode' for profiling
+# but for technical reasons, 'mode' or any other already MOCAT specific
+# option cannot be specified here
+REQUEST grouping [Name of column in metadata file]
+REQUEST groups [grouping_varible1,grouping_variable2]
+REQUEST metadata [Location of metadata file]
+REQUEST type [functional, NCBI or mOTU]
+
+# The OPTIONAL fields can be entered, but are not required
+# These two variables are the same as specified below in under module specific
+# options, but whatever the user specifies on the command line will replace the settings below
+OPTIONAL filter_var [If specified, filter data based on this metadata column]
+OPTIONAL allowed_set [specify alloed variables: allowedVar1,allowedVar2]
+
+# These are important that the are here
+# type can be one of: base, insert
+# norm can be one of: norm, raw, scaled, mm.dist.among.unique.norm,
+# mm.dist.among.unique.raw, mm.dist.among.unique.scaled, unique.only.norm,
+# unique.only.raw, unique.only.scaled
+export type=base
+export norm=s.norm
+
+
+###########################
+# MODULE SPECIFIC OPTIONS #
+###########################
+# These options are used by various components of the internal
+# scripts. However, there is no check by MOCAT that they are
+# specified.
+export pathtoR="/g/bork2/kultima/bin/R-3.0.2/bin/" # This is the path to R
+export filter_low_abundant_features=0.0001
+

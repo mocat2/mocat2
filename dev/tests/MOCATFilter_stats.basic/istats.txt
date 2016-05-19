@@ -1,0 +1,2 @@
+Reads	Bases	Max	Avg	Kmer	Inserts
+339321024	30130167944	98	89	45	182039583

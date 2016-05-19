@@ -1,0 +1,5 @@
+FASTQ trim/filter. EMBL v5 (2014-08-04): using "solexaqa" method to trim and filter reads, quality format: "solexa"
+19608
+1228390
+71
+9838

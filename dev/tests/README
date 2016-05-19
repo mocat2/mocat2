@@ -1,0 +1,12 @@
+==============================
+Poor Man's Shell Based Testing
+==============================
+
+This is a simple method for testing scripts. It is a work-in-progress and may
+change at any time.
+
+It is based on zsh.
+
+Usage::
+
+    ./exec-test.zsh generate_mOTU_tables.basic
