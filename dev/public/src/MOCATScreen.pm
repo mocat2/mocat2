@@ -21,13 +21,14 @@ sub create_job
   print localtime() . ": Creating $job jobs...\n";
   my ( $max, $avg, $kmer );
   my $mapping_mode;
-  my $screen_source;
+  #my $screen_source;
   my $screen_save;
   my $basename;
   my $temp_dir      = MOCATCore::determine_temp( ( 200 * 1024 * 1024 ) );
   my $read_type     = 'screened';
   my $assembly_type = 'assembly';
   my $end;
+  my $readsMultipleAllowed;
 
   if ($use_extracted_reads)
   {
@@ -48,13 +49,17 @@ sub create_job
   }
   if ( $reads eq 'reads.processed' )
   {
-    $screen_source = "reads.processed";
+    #$screen_source = "reads.processed";
     $screen_save   = "reads.processed";
+    $readsMultipleAllowed = $reads;
   } else
   {
-    $screen_source = "reads.$read_type.$reads";
-    $screen_save   = "$read_type.$reads";
+    $readsMultipleAllowed = MOCATCore::checkAndReturnDB ( \@reads );
+    #$screen_source = "reads.$read_type.$reads";
+    $screen_save   = "$read_type.$readsMultipleAllowed";
   }
+
+
 
   # Check DB, only if not equal to s,c,f,r AND NOT as fasta file
   if (    !$SCREEN_FASTA_FILE
@@ -230,11 +235,15 @@ sub create_job
         chomp( our $systemType = `uname -s` );
         if ( $systemType =~ m/Darwin/ )
         {
-          print JOB "$ZCAT $cwd/$sample/$screen_source.$conf{MOCAT_data_type}/*pair*gz $cwd/$sample/$screen_source.$conf{MOCAT_data_type}/*single*gz > $inputfile && ";
+          print JOB " $ZCAT "; 
         } else
         {
-          print JOB "cat $cwd/$sample/$screen_source.$conf{MOCAT_data_type}/*pair*gz $cwd/$sample/$screen_source.$conf{MOCAT_data_type}/*single*gz > $inputfile && ";
+          print JOB " cat ";
         }
+        foreach my $r (@reads) {
+         print JOB " $cwd/$sample/reads.$read_type.$r.$conf{MOCAT_data_type}/*pair*gz $cwd/$sample/reads.$read_type.$r.$conf{MOCAT_data_type}/*single*gz ";
+        }
+        print JOB " > $inputfile && "; 
       }
     }
 
@@ -258,10 +267,10 @@ sub create_job
       {
         if ($SCREEN_FASTA_FILE)
         {
-          $db_on_db = "$read_type.$reads.on.$basename";
+          $db_on_db = "$read_type.$readsMultipleAllowed.on.$basename";
         } else
         {
-          $db_on_db = "$read_type.$reads.on.$screen";
+          $db_on_db = "$read_type.$readsMultipleAllowed.on.$screen";
         }
       }
       my $sf          = "$cwd/$sample/reads.screened.$db_on_db.$conf{MOCAT_data_type}";
@@ -272,11 +281,11 @@ sub create_job
       my $ids_file;
       if ($SCREEN_FASTA_FILE)
       {
-        $ids_file = "$temp_dir/$sample/temp/$sample.aligned.$reads.on.$basename.ids";
+        $ids_file = "$temp_dir/$sample/temp/$sample.aligned.$readsMultipleAllowed.on.$basename.ids";
       }
       if ( !$SCREEN_FASTA_FILE )
       {
-        $ids_file = "$temp_dir/$sample/temp/$sample.aligned.$reads.on.$screen.ids";
+        $ids_file = "$temp_dir/$sample/temp/$sample.aligned.$readsMultipleAllowed.on.$screen.ids";
       }
       my $stats_file  = "$cwd/$sample/stats/$sample.screened.$db_on_db.$conf{MOCAT_data_type}.stats";
       my $estats_file = "$cwd/$sample/stats/$sample.extracted.$db_on_db.$conf{MOCAT_data_type}.stats";
@@ -345,13 +354,22 @@ sub create_job
       }
 
       # Get lane IDs
-      my @lanes = `ls -1 $cwd/$sample/$screen_source.$conf{MOCAT_data_type}/*pair.1.fq.gz`;
+      my @lanes = ();
+      foreach my $r (@reads) {
+       push @lanes, `ls -1 $cwd/$sample/reads.$read_type.$r.$conf{MOCAT_data_type}/*pair.1.fq.gz`;
+      }
+      my @lanes2 = @lanes;
       foreach my $i ( 0 .. ( scalar @lanes - 1 ) )
       {
         chomp( $lanes[$i] );
         my @tmp = split /\//, $lanes[$i];
         $lanes[$i] = $tmp[-1];
         $lanes[$i] =~ s/.pair.1.fq.gz//;
+      }
+    foreach my $i ( 0 .. ( scalar @lanes2 - 1 ) )
+      {
+        chomp( $lanes2[$i] );
+        $lanes2[$i] =~ s/.pair.1.fq.gz//;
       }
 
       # Get lanes in the sample folder, for fasta file screen
@@ -509,14 +527,17 @@ sub create_job
       # Create the screened and extracted files
       print JOB " && $scr_dir/MOCATScreen_filter.pl -zip \'$ZIP\' -ziplevel $ziplevel ";
       print JOB " -in ";
-      foreach my $lane (@lanes)
+      
+      foreach my $lane (@lanes2)
       {
-        print JOB " $cwd/$sample/$screen_source.$conf{MOCAT_data_type}/$lane ";
+        print JOB " $lane ";
       }
+      
+      
       if ($screened_files)
       {
         print JOB " -out ";
-        foreach my $lane (@lanes)
+        foreach my $lane (@lanes2)
         {
           if ($SCREEN_FASTA_FILE)
           {
@@ -530,7 +551,7 @@ sub create_job
       if ($extracted_files)
       {
         print JOB " -ex ";
-        foreach my $lane (@lanes)
+        foreach my $lane (@lanes2)
         {
           if ($SCREEN_FASTA_FILE)
           {

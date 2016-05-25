@@ -31,8 +31,8 @@ use MOCATGenePredictionMetaGeneMark;
 use MOCATUnpublished;    #DEV VER#
 
 $MOCAT_DESCRIPTION_FILE = "~/MOCAT.versions";
-$MOCAT_DESCRIPTION      = "Version 2.0";
-$INTERNAL_MOCAT_VERSION = "v2.0.0";
+$MOCAT_DESCRIPTION      = "Version 2.1";
+$INTERNAL_MOCAT_VERSION = "v2.1.0";
 $version                = $INTERNAL_MOCAT_VERSION;
 my $space = " ";
 $INTERNAL_NCBI_VERSION       = "4";        #20150928: updated ncbi map to v3, #20151002: updated ncbi map to v4 because v3 had bugs and this version should have correct names.dmp names (except 5)
@@ -57,7 +57,6 @@ $INTERNAL_Z_VERSION          = "Z3";
 
 ##DEV VER#
 $MOCAT_DESCRIPTION      = "Major updates";                            #DEV VER#
-$MOCAT_DESCRIPTION_FILE = "/g/bork5/kultima/MOCAT/MOCAT_versions";    #DEV VER#
 
 ### DEFINE VARIABLES AND LOG ###
 our @args = @ARGV;
@@ -464,6 +463,9 @@ if ($memory)
   $conf{MOCAT_SGE_qsub_add_param} = $conf{MOCAT_SGE_qsub_add_param} . " -l h_vmem=$memory ";
   $conf{MOCAT_LSF_memory_limit}   = $memory;
   $conf{MOCAT_LSF_memory_limit} =~ s/G/000/;
+  my $mem2 = $memory;
+  $mem2 =~ s/G/000/;
+  $conf{MOCAT_SLURM_qsub_add_param} = $conf{MOCAT_SLURM_qsub_add_param} . " --mem=$mem2 ";
   my $tmem = $memory;
   $tmem =~ s/G//;
   $conf{filter_psort_buffer} = ( $tmem - 5 ) . "G";
