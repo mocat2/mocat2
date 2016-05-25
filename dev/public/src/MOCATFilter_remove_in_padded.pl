@@ -44,38 +44,51 @@ while (<STDIN>)
   if ($SAM)
   {
     $ref_id = $line[2];
-
     $first_base = $line[3];
-    my $cigar  = $line[5];
-    my $seen_M = 0;
-    while ( $cigar !~ /^$/ )
+
+    ##################### PROCESS CIGAR #####################
+    my $CIGAR             = $line[5];
+    my @CIGAR             = ( $CIGAR =~ /([0-9]+)([A-Z]+)/gi );
+    my $lengthBeforeMatch = 0;
+    my $matchLength       = 0;
+    my $match             = 0;
+    my $addToMatch        = 0;
+    for ( my $i = 0 ; $i < $#CIGAR ; $i += 2 )
     {
-      if ( $cigar =~ /^([0-9]+[MIDNSHP])/ )
+
+      if ( $CIGAR[ $i + 1 ] eq "M" || $CIGAR[ $i + 1 ] eq "=" )
       {
-        my $cigar_part = $1;
-        if ( $cigar_part =~ /(\d+)M/ )
-        {
-          $length = $1;
-          $seen_M = 1;
-        } elsif ( $cigar_part =~ /(\d+)I/ || $cigar_part =~ /(\d+)D/ || $cigar_part =~ /(\d+)N/ || $cigar_part =~ /(\d+)S/ || $cigar_part =~ /(\d+)H/ || $cigar_part =~ /(\d+)P/ )
-        {
-          unless ($seen_M)
-          {
-            $first_base += $1;
-          }
-        }
-        $cigar =~ s/^$cigar_part//;
+        $match++;
+        $matchLength = $CIGAR[$i] + $addToMatch + $matchLength;
+        $addToMatch  = 0;
       } else
       {
-        die "ERROR & EXIT: Unexpected cigar = $cigar\n";
-      }
-    }
-
-    # old length
-    #$length     = length $line[9];
-    # new length
-    #$line[5] =~ /.*(\d+)M.*/;
-    #$length = $1;
+        if ( $match > 0 )
+        {
+          if ( ( $CIGAR[ $i + 1 ] eq "I" ) )
+          {
+            $addToMatch += $CIGAR[$i];
+          } elsif ( $CIGAR[ $i + 1 ] eq "D" || $CIGAR[ $i + 1 ] eq "H" || $CIGAR[ $i + 1 ] eq "S" )
+          {
+            # no nothing
+          } else
+          {
+            die "INTERNAL ERROR 1: No support for CIGAR letter $CIGAR[$i+1] ($i+1; $CIGAR[$i]$CIGAR[$i+1]). Please correct MOCAT2 accordingly. CIGAR=$CIGAR match=$match";
+          }
+        }    # end match
+        else
+        {    # this is before matching begins
+          if ( !( $CIGAR[ $i + 1 ] eq "H" || $CIGAR[ $i + 1 ] eq "S" || $CIGAR[ $i + 1 ] eq "I" ) )
+          {
+            die "INTERNAL ERROR 2: No support for CIGAR letter $CIGAR[$i+1] ($i+1; $CIGAR[$i]$CIGAR[$i+1]). Please correct MOCAT2 accordingly. CIGAR=$CIGAR match=$match";
+          }
+          $lengthBeforeMatch += $CIGAR[$i];
+        }    # end not matched yet
+      }    # end not matching M or =
+    }    # end loop over cigar
+    $length     = $matchLength;
+    $first_base = $first_base + $lengthBeforeMatch;
+##################### PROCESS CIGAR #####################
 
     # continue
     $last_base = $first_base + $length - 1;    # read will be revcomp if direction is "-", so $first_base is always left-most base
@@ -102,8 +115,9 @@ while (<STDIN>)
     {
       $keep++;
       print STDOUT "$line";
-    } else {
-     #print STDOUT "THROW AWAY $first_base->$last_base  AND $lowb->$upb  $line";
+    } else
+    {
+      #print STDOUT "THROW AWAY $first_base->$last_base  AND $lowb->$upb  $line";
     }
   }
 }

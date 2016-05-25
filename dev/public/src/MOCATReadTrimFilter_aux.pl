@@ -6,6 +6,7 @@ use Getopt::Long;
 # This code is part of the MOCAT analysis pipeline
 # Code is (c) Copyright EMBL, 2012-2016
 # This code is released under GNU GPL v3.
+
 my ( @allFiles, $use3files, %saved_qual_cutoff, %saved_first_cycle, $length_cutoff, $qual_cutoff, $paired_end_data, $use_5prime_file, $trim_5prime_end, $src_dir, $bin_dir, $solexaqa_or_fastx, $cwd, $temp_dir, $file_formats_array, $ZCAT, $sample, $trim_5_prime_end );
 my $TOTmax            = 0;
 my $TOTlength         = 0;

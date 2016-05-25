@@ -315,7 +315,7 @@ sub create_job
       print JOB " | grep -v '\^\@' ";
       if ( $conf{filter_paired_end_filtering} eq 'yes' && $conf{MOCAT_paired_end} eq "yes")
       {
-        print JOB "| $scr_dir/MOCATbwa_process.pl ";
+        print JOB "| $scr_dir/MOCATBowtie2_process.pl ";
       } else
       {
         print JOB "| perl -F\"\\t\" -lane 'if (\$F[2] ne \"*\" && \$F[5] ne \"*\"){ unless (\$F[0] =~ m/\\/1\$/){\$F[0]=\"\$F[0]/1\"}; print join \"\\t\", \@F}' ";
@@ -327,7 +327,7 @@ sub create_job
 
       # WRONG print JOB " | perl -F\"\\t\" -lane '\$len=length(\$F[9]);\$matches = \$F[9] =~ tr/=/=/;\$as = \$matches/\$len*100; if (\$as >= $conf{screen_percent_cutoff} && \$len >= $conf{screen_length_cutoff}){\$F[0] =~ /(.+)\\/[12]/;\$ins = \$1;\$inserts{\$ins}++; print STDERR \"\$_\"; print STDOUT \"\$ins\"}' >> $ids_file  ";
       # WRONG print JOB " | perl -F\"\\t\" -lane 'unless (\$_ =~ m/.*\\s*NM:i:(\\d+)\\s.*/){die \"ERROR & EXIT: Missing NM field\"}; \$mm=\$1; \$len=eval join \"+\", split(/[a-zA-Z]+/, \$F[5]);\$as = 100-(\$mm/\$len)*100; if (\$as >= $conf{screen_percent_cutoff} && \$len >= $conf{screen_length_cutoff}){\$F[0] =~ /(.+)\\/[12]/;\$ins = \$1;\$inserts{\$ins}++; print STDERR \"\$_\"; print STDOUT \"\$ins\"}' >> $ids_file  ";
-      print JOB " | perl -F\"\\t\" -lane 'unless (\$_ =~ m/.*\\s*NM:i:(\\d+)\\s.*/){die \"ERROR & EXIT: Missing NM field\"}; \$mm=\$1; \$F[5] =~ /(\\d+)M/; \$len=\$1; \$as = 100-(\$mm/\$len)*100; if (\$as >= $conf{screen_percent_cutoff} && \$len >= $conf{screen_length_cutoff}){\$F[0] =~ /(.+)\\/[12]/;\$ins = \$1;\$inserts{\$ins}++; print STDOUT \"\$_\"; print STDERR \"\$ins\"}' 2>> $ids_file  ";
+      print JOB " | perl $src_dir/MOCATbwa_filter.pl $conf{screen_percent_cutoff} $conf{screen_length_cutoff} 2>> $ids_file  ";
       print JOB " | $scr_dir/MOCATFilter_stats.pl -db $screen -format SAM -length $conf{filter_length_cutoff} -identity $conf{filter_percent_cutoff} -stats $stats $LOG2 ";
       if ( $conf{filter_paired_end_filtering} eq 'yes' && $conf{MOCAT_paired_end} eq "yes")
       {
