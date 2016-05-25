@@ -92,9 +92,9 @@ sub create_job
       }
 
       $counter++;
-      if ( -e "$data_dir/$screen.bwa.1.bt2" || -e "$data_dir/$screen.bwa.1.bt2l" )
+      if ( -e "$data_dir/$screen.bwt" )
       {
-        print localtime() . ": DATABASE status: Found $screen.bwa.1.bt2 in $data_dir = ALL OK!\n";
+        print localtime() . ": DATABASE status: Found $screen.bwt in $data_dir = ALL OK!\n";
         print localtime() . ": Continuing creating $job jobs...\n";
         unless ( -e "$data_dir/$screen.len" ) {
 							print localtime() . ": Creating length file $data_dir/$screen.len...";
@@ -107,7 +107,7 @@ sub create_job
         if ( -e "$data_dir/$screen" )
         {
           print localtime() . ": DATABASE status: Found $screen, but not $screen.bwa in $data_dir\n";
-          die "\nERROR & EXIT: $data_dir/$screen.bwa.1.bt2 does not exist, please index the database by running: $bin_dir/bwa-build $data_dir/$screen $data_dir/$screen.bwa";
+          die "\nERROR & EXIT: $data_dir/$screen.bwt does not exist, please index the database by running: $bin_dir/bwa index $data_dir/$screen $data_dir/$screen";
         } elsif ( -e "$screen.bwa" )
         {
           print localtime() . ": DATABASE status: Found external database $screen, but it wasn't imported into $data_dir.\n";
@@ -133,7 +133,7 @@ sub create_job
           print localtime() . ": DATABASE status: Found external database $screen, but it wasn't indexed.\n";
           chomp( my $base = `basename $screen` );
           my $dirn = dirname($screen);
-          die "\nERROR & EXIT: $data_dir/$screen.bwa does not exist, please index and link the database by running: $bin_dir/bwa-build $screen $screen.bwa && ln -fs $dirn/$base.bwa $data_dir/ && ln -fs $dirn/$base $data_dir/";
+          die "\nERROR & EXIT: $data_dir/$screen.bwa does not exist, please index and link the database by running: $bin_dir/bwa index $screen $screen.bwa && ln -fs $dirn/$base.bwa $data_dir/ && ln -fs $dirn/$base $data_dir/";
         } else
         {
           die "\nERROR & EXIT: $screen is not a valid database path";
@@ -268,9 +268,9 @@ sub create_job
         # If file not indexed, index it
         unless ($only_regenerate_reads)
         {
-          unless ( -e "$database.bwa" )
+          unless ( -e "$database.bwt" )
           {
-            print JOB " && $bin_dir/bwa-build $cwd/$sample/$assembly_type.$reads.$conf{MOCAT_data_type}.K$kmer/$sample.$assembly_type.$reads.$conf{MOCAT_data_type}.K$kmer.$end $cwd/$sample/$assembly_type.$reads.$conf{MOCAT_data_type}.K$kmer/$sample.$assembly_type.$reads.$conf{MOCAT_data_type}.K$kmer.$end.bwa $LOG ";
+            print JOB " && $bin_dir/bwa index $cwd/$sample/$assembly_type.$reads.$conf{MOCAT_data_type}.K$kmer/$sample.$assembly_type.$reads.$conf{MOCAT_data_type}.K$kmer.$end $cwd/$sample/$assembly_type.$reads.$conf{MOCAT_data_type}.K$kmer/$sample.$assembly_type.$reads.$conf{MOCAT_data_type}.K$kmer.$end.bwa $LOG ";
           }
         }
 
@@ -310,7 +310,7 @@ sub create_job
       print JOB " mkdir -p $output_folder && cat $data_dir/" . join( ".len $data_dir/", @screen ) . ".len | sort -u > $len_file ";
 
       # bwa mapping
-      print JOB " && $bin_dir/bwa $conf{bwa_options} -p $processors2 -x $database.bwa -1 $cwd/$sample/$screen_source.$conf{MOCAT_data_type}/*pair.1.fq.gz -2 $cwd/$sample/$screen_source.$conf{MOCAT_data_type}/*pair.2.fq.gz -U $cwd/$sample/$screen_source.$conf{MOCAT_data_type}/*single*gz $LOG2";
+      print JOB " && gunzip -c $cwd/$sample/$screen_source.$conf{MOCAT_data_type}/*pair.1.fq.gz $cwd/$sample/$screen_source.$conf{MOCAT_data_type}/*pair.2.fq.gz $cwd/$sample/$screen_source.$conf{MOCAT_data_type}/*single*gz | $bin_dir/bwa mem $conf{bwa_options} -t $processors2 $database /dev/stdin $LOG2";
 
       print JOB " | grep -v '\^\@' ";
       if ( $conf{filter_paired_end_filtering} eq 'yes' && $conf{MOCAT_paired_end} eq "yes")

@@ -927,7 +927,7 @@ EOF
         chomp(my $return = `$cmd`);
         $return =~ m/.* (\d+)/;
         my $id = $1;
-        print localtime() . ": SLURM Job ID is $id\n";
+        print localtime() . ": SLURM Job ID is $id - $ID\n";
         system ("touch $cwd/logs/SLURM_specific/$job.$date.status");
         sleep 10;
         print localtime() . ": Waiting for jobs to finish...\n";

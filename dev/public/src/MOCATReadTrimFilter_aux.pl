@@ -134,7 +134,7 @@ foreach my $j (@allFiles) {
 # Post process pair-end files
 if ( $paired_end_data eq "yes" && $use3files == 0 ) {
 	for ( my $count = 0 ; $count <= scalar @allFiles - 1 ; $count = $count + 2 ) {
-		$allFiles[$count] =~ m/^(.+)\.1.fq/;
+		$allFiles[$count] =~ m/^(.+)[\.|R]1.fq/;
 		my $base_name = $1;
 		$format_counter = $count;
 		( my $format, my $sanger ) = get_format();

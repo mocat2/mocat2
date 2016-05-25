@@ -61,7 +61,7 @@ It is important with the .1. and .2. to identify the two paired end reads files.
 EOF
 				}
 				foreach my $fq (@fqs) {
-					$fq =~ m/(\S+)\.(1|2)\.(fq.gz|fq.bz2|fq)$/;
+					$fq =~ m/(\S+)[\.|R](1|2)\.(fq.gz|fq.bz2|fq)$/;
 					unless ( defined $1 && defined $2 && defined $3 ) {
 						die <<"EOF";
 ERROR & EXIT: Files located in sample folder $sample seem to not be in format:
@@ -75,20 +75,20 @@ EOF
 
 					}
 					if ( $2 eq '1' ) {
-						unless ( -e "$1.1.$3" ) {
+						unless ( -e "$1.1.$3" || -e "${1}R1.$3" ) {
 							die "ERROR & EXIT: Could not read file  $1.1.$3";
 						}
-						unless ( -e "$1.2.$3" ) {
-							die "ERROR & EXIT: Found file:   $fq, also expected to be able to read file: $1.2.$3";
+						unless ( -e "$1.2.$3" || -e "${1}R2.$3" ) {
+							die "ERROR & EXIT: Found file: $fq, also expected to be able to read file: $1.2.$3";
 						}
 					}
 
 					if ( $2 eq '2' ) {
-						unless ( -e "$1.2.$3" ) {
+						unless ( -e "$1.2.$3" || -e "${1}R2.$3" ) {
 							die "ERROR & EXIT: Could not read file  $1.2.$3";
 						}
-						unless ( -e "$1.1.$3" ) {
-							die "ERROR & EXIT: Found file:   $fq, also expected to be able to read file: $1.1.$3";
+						unless ( -e "$1.1.$3" || -e "${1}R1.$3" ) {
+							die "ERROR & EXIT: Found file: $fq, also expected to be able to read file: $1.1.$3";
 						}
 					}
 				}
