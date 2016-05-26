@@ -5,7 +5,7 @@ $a=scalar reverse sprintf "%b", $F[1];
 $a=substr $a, 6,1;
 if($a eq "0"){$a="2"};
  if ($F[0] eq $LAST || $LAST eq ""){
-if ($F[2] ne "*" && $F[5] ne "*") {push @{$H{$a}}, $line;};
+if ($F[2] ne "*") {push @{$H{$a}}, $line;};
 } else {
 for $r ((1,2)) {
 foreach $str (@{$H{$r}}) {
@@ -14,7 +14,7 @@ print $str;
 }
 }
 %H=();
-if ($F[2] ne "*" && $F[5] ne "*") {push @{$H{$a}}, $line;};
+if ($F[2] ne "*") {push @{$H{$a}}, $line;};
 }
 $LAST=$F[0];
 END{

@@ -310,7 +310,14 @@ sub create_job
       print JOB " mkdir -p $output_folder && cat $data_dir/" . join( ".len $data_dir/", @screen ) . ".len | sort -u > $len_file ";
 
       # Bowtie2 mapping
-      print JOB " && $bin_dir/bowtie2 $conf{bowtie2_options} -p $processors2 -x $database.bowtie2 -1 $cwd/$sample/$screen_source.$conf{MOCAT_data_type}/*pair.1.fq.gz -2 $cwd/$sample/$screen_source.$conf{MOCAT_data_type}/*pair.2.fq.gz -U $cwd/$sample/$screen_source.$conf{MOCAT_data_type}/*single*gz $LOG2";
+      chomp(my @ONES = `ls $cwd/$sample/$screen_source.$conf{MOCAT_data_type}/*pair.1.fq.gz`);
+      my $ONES = join ",", @ONES;
+      chomp(my @TWOS = `ls $cwd/$sample/$screen_source.$conf{MOCAT_data_type}/*pair.2.fq.gz`);
+      my $TWOS = join ",", @TWOS;
+      chomp(my @UNIQUES = `ls $cwd/$sample/$screen_source.$conf{MOCAT_data_type}/*single.fq.gz`);
+      my $UNIQUES = join ",", @UNIQUES;
+      
+      print JOB " && $bin_dir/bowtie2 $conf{bowtie2_options} -p $processors2 -x $database.bowtie2 -1 $ONES -2 $TWOS -U $UNIQUES $LOG2";
 
       print JOB " | grep -v '\^\@' ";
       if ( $conf{filter_paired_end_filtering} eq 'yes' && $conf{MOCAT_paired_end} eq "yes")

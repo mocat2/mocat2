@@ -96,11 +96,12 @@ sub create_job
       {
         print localtime() . ": DATABASE status: Found $screen.bwt in $data_dir = ALL OK!\n";
         print localtime() . ": Continuing creating $job jobs...\n";
-        unless ( -e "$data_dir/$screen.len" ) {
-							print localtime() . ": Creating length file $data_dir/$screen.len...";
-							system "$scr_dir/MOCATFilter_falen.pl -infile $data_dir/$screen -outfile $data_dir/$screen.len";
-							print " OK!\n";
-							print localtime() . ": Continuing creating $job jobs...";
+        unless ( -e "$data_dir/$screen.len" )
+        {
+          print localtime() . ": Creating length file $data_dir/$screen.len...";
+          system "$scr_dir/MOCATFilter_falen.pl -infile $data_dir/$screen -outfile $data_dir/$screen.len";
+          print " OK!\n";
+          print localtime() . ": Continuing creating $job jobs...";
         }
       } else
       {
@@ -310,30 +311,35 @@ sub create_job
       print JOB " mkdir -p $output_folder && cat $data_dir/" . join( ".len $data_dir/", @screen ) . ".len | sort -u > $len_file ";
 
       # bwa mapping
-      print JOB " && gunzip -c $cwd/$sample/$screen_source.$conf{MOCAT_data_type}/*pair.1.fq.gz $cwd/$sample/$screen_source.$conf{MOCAT_data_type}/*pair.2.fq.gz $cwd/$sample/$screen_source.$conf{MOCAT_data_type}/*single*gz | $bin_dir/bwa mem $conf{bwa_options} -t $processors2 $database /dev/stdin $LOG2";
+      chomp( my @ONES = `ls $cwd/$sample/$screen_source.$conf{MOCAT_data_type}/*pair.1.fq.gz $cwd/$sample/$screen_source.$conf{MOCAT_data_type}/*single.fq.gz` );
+      my $ONES = join " ", @ONES;
+      chomp( my @TWOS = `ls $cwd/$sample/$screen_source.$conf{MOCAT_data_type}/*pair.2.fq.gz` );
+      my $TWOS = join " ", @TWOS;
 
-      print JOB " | grep -v '\^\@' ";
-      if ( $conf{filter_paired_end_filtering} eq 'yes' && $conf{MOCAT_paired_end} eq "yes")
-      {
-        print JOB "| $scr_dir/MOCATBowtie2_process.pl ";
-      } else
-      {
-        print JOB "| perl -F\"\\t\" -lane 'if (\$F[2] ne \"*\" && \$F[5] ne \"*\"){ unless (\$F[0] =~ m/\\/1\$/){\$F[0]=\"\$F[0]/1\"}; print join \"\\t\", \@F}' ";
-      }
+      print JOB " && $bin_dir/bwa.fixed mem $conf{bwa_options} -t $processors2 $database <($src_dir/MOCATbwa_load.pl $ONES) <($src_dir/MOCATbwa_load.pl $TWOS) $LOG2";
+
+      print JOB " | grep -v '\^\@' | awk '{if(\$6 != \"*\"){print}}' ";
+
+      # This was initially added for Bowtie2, but because we hacked the source code and added bwa_load it's not needed here anymore
+      #      if ( $conf{filter_paired_end_filtering} eq 'yes' && $conf{MOCAT_paired_end} eq "yes")
+      #      {
+      #        print JOB "| $scr_dir/MOCATBowtie2_process.pl ";
+      #      } else
+      #      {
+      #        print JOB "| perl -F\"\\t\" -lane 'if (\$F[2] ne \"*\"){ unless (\$F[0] =~ m/\\/1\$/){\$F[0]=\"\$F[0]/1\"}; print join \"\\t\", \@F}' ";
+      #      }
+
       if ( -e "$database.coord" )
       {
         print JOB " | perl $scr_dir/MOCATFilter_remove_in_padded.pl -db $database -sam $LOG2";
       }
-
-      # WRONG print JOB " | perl -F\"\\t\" -lane '\$len=length(\$F[9]);\$matches = \$F[9] =~ tr/=/=/;\$as = \$matches/\$len*100; if (\$as >= $conf{screen_percent_cutoff} && \$len >= $conf{screen_length_cutoff}){\$F[0] =~ /(.+)\\/[12]/;\$ins = \$1;\$inserts{\$ins}++; print STDERR \"\$_\"; print STDOUT \"\$ins\"}' >> $ids_file  ";
-      # WRONG print JOB " | perl -F\"\\t\" -lane 'unless (\$_ =~ m/.*\\s*NM:i:(\\d+)\\s.*/){die \"ERROR & EXIT: Missing NM field\"}; \$mm=\$1; \$len=eval join \"+\", split(/[a-zA-Z]+/, \$F[5]);\$as = 100-(\$mm/\$len)*100; if (\$as >= $conf{screen_percent_cutoff} && \$len >= $conf{screen_length_cutoff}){\$F[0] =~ /(.+)\\/[12]/;\$ins = \$1;\$inserts{\$ins}++; print STDERR \"\$_\"; print STDOUT \"\$ins\"}' >> $ids_file  ";
-      print JOB " | perl $src_dir/MOCATbwa_filter.pl $conf{screen_percent_cutoff} $conf{screen_length_cutoff} 2>> $ids_file  ";
-      print JOB " | $scr_dir/MOCATFilter_stats.pl -db $screen -format SAM -length $conf{filter_length_cutoff} -identity $conf{filter_percent_cutoff} -stats $stats $LOG2 ";
-      if ( $conf{filter_paired_end_filtering} eq 'yes' && $conf{MOCAT_paired_end} eq "yes")
+      print JOB " | perl $src_dir/MOCATbwa_filter.pl $conf{screen_percent_cutoff} $conf{screen_length_cutoff} $LOG2 ";
+      if ( $conf{filter_paired_end_filtering} eq 'yes' && $conf{MOCAT_paired_end} eq "yes" )
       {
         print JOB "| $scr_dir/MOCATFilter_filterPE.pl $LOG2 ";
       }
       print JOB " | $scr_dir/MOCATFilter_besthit.pl $LOG2 ";
+      print JOB " | $scr_dir/MOCATFilter_stats.pl -db $screen -format SAM -length $conf{filter_length_cutoff} -identity $conf{filter_percent_cutoff} -stats $stats $LOG2 ";
       print JOB " | $bin_dir/msamtools$OSX -Sb -m merge -t $len_file - $LOG2 > $output_file.bam.tmp";
       print JOB " && sync  && test -e $output_file.bam.tmp && mv $output_file.bam.tmp $output_file.bam && test -e $output_file.bam ";
 
@@ -360,7 +366,7 @@ sub create_job
           print JOB " $ef/$lane.extracted.$screen ";
         }
       }
-      print JOB " -toremove $ids_file -stats $stats_file -estats $estats_file -identity $conf{screen_percent_cutoff} -length $conf{screen_length_cutoff} -soapmaxmm NA $LOG ";
+      print JOB " -srcdir \"$src_dir\" -bwa $output_file.bam -toremove $ids_file -stats $stats_file -estats $estats_file -identity $conf{screen_percent_cutoff} -length $conf{screen_length_cutoff} -soapmaxmm NA $LOG ";
 
       # Remove ids file, it can get really big
       print JOB " && rm -f $ids_file";
