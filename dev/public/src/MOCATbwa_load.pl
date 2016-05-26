@@ -9,11 +9,12 @@ use Getopt::Long;
 
 my ( $line, $read );
 
-foreach my $file (@ARGV)
+foreach my $file ( @ARGV[ 1 .. $#ARGV ] )
 {
   open my $IN, "gunzip -c $file | ";
-  while ( chomp( $line = <$IN> ) )
+  while (<$IN>)
   {
+    chomp( $line = $_ );
     if ( $. % 4 == 1 )
     {
       if ( $line =~ m/^\S+\/([12])$/ )
@@ -23,6 +24,12 @@ foreach my $file (@ARGV)
       {
         die "INTERNAL ERROR: FastQ format '$line' not supported. Please coorect MOCAT2 source code.";
       }
+    } elsif ( $. % 4 == 2 && $ARGV[0] == 2 )
+    {
+      print "N\n";
+    } elsif ( $. % 4 == 0 && $ARGV[0] == 2 )
+    {
+      print "E\n";
     } else
     {
       print "$line\n";

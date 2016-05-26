@@ -17,7 +17,7 @@ my $Esum     = 0;
 my $inserts  = 0;
 my $Einserts = 0;
 my $bwa;
-my $srcdir;
+my $bindir;
 
 print STDERR "MOCATScreen_filter.pl: STARTING.\n";
 
@@ -34,7 +34,7 @@ GetOptions(
             'identity=s'  => \$identity,
             'length=s'    => \$minlength,
             'bwa=s'       => \$bwa,
-            'srcdir=s'    => \$srcdir
+            'bindir=s'    => \$bindir
 );
 
 unless ($bwa)
@@ -52,10 +52,10 @@ unless ($bwa)
 } else
 {
  print STDERR "MOCATScreen_filter.pl: processing BWA hash...\n";
-  open my $IN, "$srcdir/samtools view $bwa | ";
+  open my $IN, "$bindir/samtools view $bwa | " or die "ERROR & EXIT: Cannor execute: $bindir/samtools view $bwa | ";
   while ( my $line = <$IN> )
   {
-    unless ( $line =~ m/^(\S+)\/[12]$/ )
+    unless ( $line =~ m/^(\S+)\/[12]\t/ )
     {
       die "INTERNAL ERROR: Please update MOCAT2 to support read names on the form '$line'";
     }

@@ -194,7 +194,7 @@ sub create_job
       my $file_output   = "$mf/$sample.mapped.$screen_save.on.$screen.$conf{MOCAT_data_type}.$conf{MOCAT_mapping_mode}";
       my $database      = "$data_dir/$screen";
       my $output_folder = "$cwd/$sample/reads.filtered.$screen.$conf{MOCAT_data_type}";
-      my $output_file   = "$output_folder/$sample.filtered.$read_type.$reads.on.$screen.$conf{MOCAT_data_type}.$conf{MOCAT_mapping_mode}.l$conf{filter_length_cutoff}.p$conf{filter_percent_cutoff}";
+      my $output_file   = "$output_folder/$sample.filtered.$read_type.$reads.on.$screen.$conf{MOCAT_data_type}.$conf{MOCAT_mapping_mode}.l$conf{bwa_length_cutoff}.p$conf{bwa_percent_cutoff}";
 
       my $ids_file;
       if ($SCREEN_FASTA_FILE)
@@ -249,7 +249,7 @@ sub create_job
         $estats_file = "$cwd/$sample/stats/$sample.extracted.$end.$assembly_type.K$kmer$addon.stats";
 
         $output_folder = "$cwd/$sample/reads.filtered.$end.$assembly_type.K$kmer.$conf{MOCAT_data_type}";
-        $output_file   = "$output_folder/$sample.filtered.$reads.on.$end.$assembly_type.K$kmer.$conf{MOCAT_data_type}.$conf{MOCAT_mapping_mode}.l$conf{filter_length_cutoff}.p$conf{filter_percent_cutoff}";
+        $output_file   = "$output_folder/$sample.filtered.$reads.on.$end.$assembly_type.K$kmer.$conf{MOCAT_data_type}.$conf{MOCAT_mapping_mode}.l$conf{bwa_length_cutoff}.p$conf{bwa_percent_cutoff}";
 
         # Check if files exist
         unless ( -e "$cwd/$sample/$assembly_type.$reads.$conf{MOCAT_data_type}.K$kmer/$sample.$assembly_type.$reads.$conf{MOCAT_data_type}.K$kmer.$end" || -e "$cwd/$sample/$assembly_type.$reads.$conf{MOCAT_data_type}.K$kmer/$sample.$assembly_type.$reads.$conf{MOCAT_data_type}.K$kmer.$end.gz" )
@@ -275,7 +275,7 @@ sub create_job
           }
         }
 
-        if ( $conf{filter_make_unique_sorted} eq 'yes' )
+        if ( $conf{bwa_make_unique_sorted} eq 'yes' )
         {
 
           # Get input file, and check if it exists, also create .len file
@@ -311,17 +311,18 @@ sub create_job
       print JOB " mkdir -p $output_folder && cat $data_dir/" . join( ".len $data_dir/", @screen ) . ".len | sort -u > $len_file ";
 
       # bwa mapping
-      chomp( my @ONES = `ls $cwd/$sample/$screen_source.$conf{MOCAT_data_type}/*pair.1.fq.gz $cwd/$sample/$screen_source.$conf{MOCAT_data_type}/*single.fq.gz` );
-      my $ONES = join " ", @ONES;
+      chomp( my @ONES = `ls $cwd/$sample/$screen_source.$conf{MOCAT_data_type}/*pair.1.fq.gz` );
+      my $ONES = join ",", @ONES;
       chomp( my @TWOS = `ls $cwd/$sample/$screen_source.$conf{MOCAT_data_type}/*pair.2.fq.gz` );
-      my $TWOS = join " ", @TWOS;
+      my $TWOS = join ",", @TWOS;
+      chomp( my @UNIQUES = `ls $cwd/$sample/$screen_source.$conf{MOCAT_data_type}/*single.fq.gz` );
+      my $UNIQUES = join ",", @UNIQUES;
 
-      print JOB " && $bin_dir/bwa.fixed mem $conf{bwa_options} -t $processors2 $database <($src_dir/MOCATbwa_load.pl $ONES) <($src_dir/MOCATbwa_load.pl $TWOS) $LOG2";
-
+      print JOB " && $bin_dir/bwa.fixed mem $conf{bwa_options} -t $processors2 $database <($src_dir/MOCATbwa_load.pl 1 $ONES $UNIQUES) <($src_dir/MOCATbwa_load.pl 2 $TWOS $UNIQUES) $LOG2 ";
       print JOB " | grep -v '\^\@' | awk '{if(\$6 != \"*\"){print}}' ";
 
       # This was initially added for Bowtie2, but because we hacked the source code and added bwa_load it's not needed here anymore
-      #      if ( $conf{filter_paired_end_filtering} eq 'yes' && $conf{MOCAT_paired_end} eq "yes")
+      #      if ( $conf{bwa_paired_end_filtering} eq 'yes' && $conf{MOCAT_paired_end} eq "yes")
       #      {
       #        print JOB "| $scr_dir/MOCATBowtie2_process.pl ";
       #      } else
@@ -333,13 +334,17 @@ sub create_job
       {
         print JOB " | perl $scr_dir/MOCATFilter_remove_in_padded.pl -db $database -sam $LOG2";
       }
-      print JOB " | perl $src_dir/MOCATbwa_filter.pl $conf{screen_percent_cutoff} $conf{screen_length_cutoff} $LOG2 ";
-      if ( $conf{filter_paired_end_filtering} eq 'yes' && $conf{MOCAT_paired_end} eq "yes" )
+
+      #print JOB " | perl $src_dir/MOCATbwa_filter.pl $conf{screen_percent_cutoff} $conf{screen_length_cutoff} $LOG2 ";
+      print JOB " | $bin_dir/msamtools$OSX -S --besthit -m filter -l $conf{bwa_length_cutoff} -p $conf{bwa_percent_cutoff} -z $conf{bwa_min_perc_query_aligned} -t $len_file - $LOG2 ";
+      
+      if ( $conf{bwa_paired_end_filtering} eq 'yes' && $conf{MOCAT_paired_end} eq "yes" )
       {
         print JOB "| $scr_dir/MOCATFilter_filterPE.pl $LOG2 ";
       }
-      print JOB " | $scr_dir/MOCATFilter_besthit.pl $LOG2 ";
-      print JOB " | $scr_dir/MOCATFilter_stats.pl -db $screen -format SAM -length $conf{filter_length_cutoff} -identity $conf{filter_percent_cutoff} -stats $stats $LOG2 ";
+
+      #print JOB " | $scr_dir/MOCATFilter_besthit.pl $LOG2 ";
+      print JOB " | $scr_dir/MOCATFilter_stats_bwa.pl -length $conf{filter_length_cutoff} -identity $conf{filter_percent_cutoff} -db $screen -format SAM -stats $stats $LOG2 ";
       print JOB " | $bin_dir/msamtools$OSX -Sb -m merge -t $len_file - $LOG2 > $output_file.bam.tmp";
       print JOB " && sync  && test -e $output_file.bam.tmp && mv $output_file.bam.tmp $output_file.bam && test -e $output_file.bam ";
 
@@ -366,7 +371,7 @@ sub create_job
           print JOB " $ef/$lane.extracted.$screen ";
         }
       }
-      print JOB " -srcdir \"$src_dir\" -bwa $output_file.bam -toremove $ids_file -stats $stats_file -estats $estats_file -identity $conf{screen_percent_cutoff} -length $conf{screen_length_cutoff} -soapmaxmm NA $LOG ";
+      print JOB " -bindir $bin_dir -bwa $output_file.bam -toremove $ids_file -stats $stats_file -estats $estats_file -identity $conf{bwa_percent_cutoff} -length $conf{bwa_length_cutoff} -soapmaxmm NA $LOG ";
 
       # Remove ids file, it can get really big
       print JOB " && rm -f $ids_file";
@@ -520,7 +525,7 @@ sub post_check_files
         #$mf          = "$cwd/$sample/reads.mapped.$end.$assembly_type.K$kmer.$addon$conf{MOCAT_data_type}";
         #$file_output = "$mf/$sample.mapped.$reads.on.$end.$assembly_type.K$kmer.$addon$conf{MOCAT_data_type}.$conf{MOCAT_mapping_mode}.soap.gz";
         $mf          = "$cwd/$sample/reads.filtered.$screen.$conf{MOCAT_data_type}";
-        $file_output = "$mf/$sample.filtered.$read_type.$reads.on.$screen.$conf{MOCAT_data_type}.$conf{MOCAT_mapping_mode}.l$conf{filter_length_cutoff}.p$conf{filter_percent_cutoff}.bam";
+        $file_output = "$mf/$sample.filtered.$read_type.$reads.on.$screen.$conf{MOCAT_data_type}.$conf{MOCAT_mapping_mode}.l$conf{bwa_length_cutoff}.p$conf{bwa_percent_cutoff}.bam";
       } else
       {
         $sf = "$cwd/$sample/reads.screened.$db_on_db.$conf{MOCAT_data_type}";
@@ -529,7 +534,7 @@ sub post_check_files
         #$mf          = "$cwd/$sample/reads.mapped.$db_on_db.$conf{MOCAT_data_type}";
         #$file_output = "$mf/$sample.mapped.$screen_before.on.$screen.$conf{MOCAT_data_type}.$conf{MOCAT_mapping_mode}.soap.gz";
         $mf          = "$cwd/$sample/reads.filtered.$screen.$conf{MOCAT_data_type}";
-        $file_output = "$mf/$sample.filtered.$read_type.$reads.on.$screen.$conf{MOCAT_data_type}.$conf{MOCAT_mapping_mode}.l$conf{filter_length_cutoff}.p$conf{filter_percent_cutoff}.bam";
+        $file_output = "$mf/$sample.filtered.$read_type.$reads.on.$screen.$conf{MOCAT_data_type}.$conf{MOCAT_mapping_mode}.l$conf{bwa_length_cutoff}.p$conf{bwa_percent_cutoff}.bam";
 
       }
 
