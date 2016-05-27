@@ -194,7 +194,7 @@ sub create_job
       my $file_output   = "$mf/$sample.mapped.$screen_save.on.$screen.$conf{MOCAT_data_type}.$conf{MOCAT_mapping_mode}";
       my $database      = "$data_dir/$screen";
       my $output_folder = "$cwd/$sample/reads.filtered.$screen.$conf{MOCAT_data_type}";
-      my $output_file   = "$output_folder/$sample.filtered.$read_type.$reads.on.$screen.$conf{MOCAT_data_type}.$conf{MOCAT_mapping_mode}.l$conf{bwa_length_cutoff}.p$conf{bwa_percent_cutoff}";
+      my $output_file   = "$output_folder/$sample.filtered.$read_type.$reads.on.$screen.$conf{MOCAT_data_type}.$conf{MOCAT_mapping_mode}.l$conf{bwa_length_cutoff}.p$conf{bwa_percent_cutoff}.z$conf{bwa_min_perc_query_aligned}";
 
       my $ids_file;
       if ($SCREEN_FASTA_FILE)
@@ -249,7 +249,7 @@ sub create_job
         $estats_file = "$cwd/$sample/stats/$sample.extracted.$end.$assembly_type.K$kmer$addon.stats";
 
         $output_folder = "$cwd/$sample/reads.filtered.$end.$assembly_type.K$kmer.$conf{MOCAT_data_type}";
-        $output_file   = "$output_folder/$sample.filtered.$reads.on.$end.$assembly_type.K$kmer.$conf{MOCAT_data_type}.$conf{MOCAT_mapping_mode}.l$conf{bwa_length_cutoff}.p$conf{bwa_percent_cutoff}";
+        $output_file   = "$output_folder/$sample.filtered.$reads.on.$end.$assembly_type.K$kmer.$conf{MOCAT_data_type}.$conf{MOCAT_mapping_mode}.l$conf{bwa_length_cutoff}.p$conf{bwa_percent_cutoff}.z$conf{bwa_min_perc_query_aligned}";
 
         # Check if files exist
         unless ( -e "$cwd/$sample/$assembly_type.$reads.$conf{MOCAT_data_type}.K$kmer/$sample.$assembly_type.$reads.$conf{MOCAT_data_type}.K$kmer.$end" || -e "$cwd/$sample/$assembly_type.$reads.$conf{MOCAT_data_type}.K$kmer/$sample.$assembly_type.$reads.$conf{MOCAT_data_type}.K$kmer.$end.gz" )
@@ -525,7 +525,7 @@ sub post_check_files
         #$mf          = "$cwd/$sample/reads.mapped.$end.$assembly_type.K$kmer.$addon$conf{MOCAT_data_type}";
         #$file_output = "$mf/$sample.mapped.$reads.on.$end.$assembly_type.K$kmer.$addon$conf{MOCAT_data_type}.$conf{MOCAT_mapping_mode}.soap.gz";
         $mf          = "$cwd/$sample/reads.filtered.$screen.$conf{MOCAT_data_type}";
-        $file_output = "$mf/$sample.filtered.$read_type.$reads.on.$screen.$conf{MOCAT_data_type}.$conf{MOCAT_mapping_mode}.l$conf{bwa_length_cutoff}.p$conf{bwa_percent_cutoff}.bam";
+        $file_output = "$mf/$sample.filtered.$read_type.$reads.on.$screen.$conf{MOCAT_data_type}.$conf{MOCAT_mapping_mode}.l$conf{bwa_length_cutoff}.p$conf{bwa_percent_cutoff}.z$conf{bwa_min_perc_query_aligned}.bam";
       } else
       {
         $sf = "$cwd/$sample/reads.screened.$db_on_db.$conf{MOCAT_data_type}";
@@ -534,7 +534,7 @@ sub post_check_files
         #$mf          = "$cwd/$sample/reads.mapped.$db_on_db.$conf{MOCAT_data_type}";
         #$file_output = "$mf/$sample.mapped.$screen_before.on.$screen.$conf{MOCAT_data_type}.$conf{MOCAT_mapping_mode}.soap.gz";
         $mf          = "$cwd/$sample/reads.filtered.$screen.$conf{MOCAT_data_type}";
-        $file_output = "$mf/$sample.filtered.$read_type.$reads.on.$screen.$conf{MOCAT_data_type}.$conf{MOCAT_mapping_mode}.l$conf{bwa_length_cutoff}.p$conf{bwa_percent_cutoff}.bam";
+        $file_output = "$mf/$sample.filtered.$read_type.$reads.on.$screen.$conf{MOCAT_data_type}.$conf{MOCAT_mapping_mode}.l$conf{bwa_length_cutoff}.p$conf{bwa_percent_cutoff}.z$conf{bwa_min_perc_query_aligned}.bam";
 
       }
 

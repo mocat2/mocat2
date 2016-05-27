@@ -24,10 +24,10 @@ foreach my $file ( @ARGV[ 1 .. $#ARGV ] )
       {
         die "INTERNAL ERROR: FastQ format '$line' not supported. Please coorect MOCAT2 source code.";
       }
-    } elsif ( $. % 4 == 2 && $ARGV[0] == 2 )
+    } elsif ( $. % 4 == 2 && $ARGV[0] == 2 && $file =~ /.single.fq./ )
     {
       print "N\n";
-    } elsif ( $. % 4 == 0 && $ARGV[0] == 2 )
+    } elsif ( $. % 4 == 0 && $ARGV[0] == 2 && $file =~ /.single.fq./ )
     {
       print "E\n";
     } else

@@ -25,6 +25,19 @@ sub system_2
 sub paste2
 {
 
+### BWA SUPPORT ###
+  my $bwaAddon = "";
+  if ( $do_profiling_bwa[0] )
+  {
+    unless ( $conf{bwa_options} ) { $conf{bwa_options} = "" }
+    my $tmp = $conf{bwa_options};
+    $tmp =~ s/ //g;
+    $tmp =~ s/\t//g;
+    $conf{MOCAT_mapping_mode} = "bwa$tmp";
+    $bwaAddon = ".z$conf{bwa_min_perc_query_aligned}";
+  }
+### BWA SUPPORT ###
+
   ### DEFINE VARIABLES AND OPEN OUTPUT FILE ###
   my $job        = $_[0];
   my $processors = $_[1];
@@ -437,28 +450,32 @@ sub paste2
         }
 
         $counter1++;
-        if ( !$assembly )
+        
+        
+  if ( !$assembly )
         {
-          $folder_old   = "$cwd/$sample/$sample.$profiling_mode.profile.$read_type.$reads.on.$databases_old.$conf{MOCAT_data_type}.$conf{MOCAT_mapping_mode}.l$conf{filter_length_cutoff}.p$conf{filter_percent_cutoff}";
-          $file         = "$sample.$profiling_mode.profile.$read_type.$reads.on.$databases.$conf{MOCAT_data_type}.$conf{MOCAT_mapping_mode}.l$conf{filter_length_cutoff}.p$conf{filter_percent_cutoff}.$full_end";
-          $file_old     = "$sample.$profiling_mode.profile.$read_type.$reads.on.$databases_old.$conf{MOCAT_data_type}.$conf{MOCAT_mapping_mode}.l$conf{filter_length_cutoff}.p$conf{filter_percent_cutoff}.$full_end";
-          $folder       = "$cwd/$sample/$sample.$profiling_mode.profile.$read_type.$reads.on.$databases.$conf{MOCAT_data_type}.$conf{MOCAT_mapping_mode}.l$conf{filter_length_cutoff}.p$conf{filter_percent_cutoff}";
-          $fileOut      = "$sample.$profiling_mode.profile.$read_type.$reads.on.$databases.$conf{MOCAT_data_type}.$conf{MOCAT_mapping_mode}.l$conf{filter_length_cutoff}.p$conf{filter_percent_cutoff}.$full_end";
-          $rownamesOut  = "$sample.$profiling_mode.profile.$read_type.$reads.on.$databases.$conf{MOCAT_data_type}.$conf{MOCAT_mapping_mode}.l$conf{filter_length_cutoff}.p$conf{filter_percent_cutoff}.$i.rownames$uniq";
-          $rownames_old = "$sample.$profiling_mode.profile.$read_type.$reads.on.$databases_old.$conf{MOCAT_data_type}.$conf{MOCAT_mapping_mode}.l$conf{filter_length_cutoff}.p$conf{filter_percent_cutoff}.$i.rownames$uniq";
-          $rownames     = "$sample.$profiling_mode.profile.$read_type.$reads.on.$databases.$conf{MOCAT_data_type}.$conf{MOCAT_mapping_mode}.l$conf{filter_length_cutoff}.p$conf{filter_percent_cutoff}.$i.rownames$uniq";
+          $folder_old   = "$cwd/$sample/$sample.$profiling_mode.profile.$read_type.$reads.on.$databases_old.$conf{MOCAT_data_type}.$conf{MOCAT_mapping_mode}.l$conf{filter_length_cutoff}.p$conf{filter_percent_cutoff}$bwaAddon";
+          $file         = "$sample.$profiling_mode.profile.$read_type.$reads.on.$databases.$conf{MOCAT_data_type}.$conf{MOCAT_mapping_mode}.l$conf{filter_length_cutoff}.p$conf{filter_percent_cutoff}$bwaAddon.$full_end";
+          $file_old     = "$sample.$profiling_mode.profile.$read_type.$reads.on.$databases_old.$conf{MOCAT_data_type}.$conf{MOCAT_mapping_mode}.l$conf{filter_length_cutoff}.p$conf{filter_percent_cutoff}$bwaAddon.$full_end";
+          $folder       = "$cwd/$sample/$sample.$profiling_mode.profile.$read_type.$reads.on.$databases.$conf{MOCAT_data_type}.$conf{MOCAT_mapping_mode}.l$conf{filter_length_cutoff}.p$conf{filter_percent_cutoff}$bwaAddon";
+          $fileOut      = "$sample.$profiling_mode.profile.$read_type.$reads.on.$databases.$conf{MOCAT_data_type}.$conf{MOCAT_mapping_mode}.l$conf{filter_length_cutoff}.p$conf{filter_percent_cutoff}$bwaAddon.$full_end";
+          $rownamesOut  = "$sample.$profiling_mode.profile.$read_type.$reads.on.$databases.$conf{MOCAT_data_type}.$conf{MOCAT_mapping_mode}.l$conf{filter_length_cutoff}.p$conf{filter_percent_cutoff}$bwaAddon.$i.rownames$uniq";
+          $rownames_old = "$sample.$profiling_mode.profile.$read_type.$reads.on.$databases_old.$conf{MOCAT_data_type}.$conf{MOCAT_mapping_mode}.l$conf{filter_length_cutoff}.p$conf{filter_percent_cutoff}$bwaAddon.$i.rownames$uniq";
+          $rownames     = "$sample.$profiling_mode.profile.$read_type.$reads.on.$databases.$conf{MOCAT_data_type}.$conf{MOCAT_mapping_mode}.l$conf{filter_length_cutoff}.p$conf{filter_percent_cutoff}$bwaAddon.$i.rownames$uniq";
 
         } elsif ($assembly)
         {
           ( my $max, my $avg, my $kmer ) = MOCATCore::get_kmer( $sample, $reads, "-r" );
-          $folder      = "$cwd/$sample/$sample.$profiling_mode.profile.$reads.on.$end.$assembly_type.K$kmer.$conf{MOCAT_data_type}.$conf{MOCAT_mapping_mode}.l$conf{filter_length_cutoff}.p$conf{filter_percent_cutoff}";
-          $file        = "$sample.$profiling_mode.profile.$reads.on.$end.$assembly_type.K$kmer.$conf{MOCAT_data_type}.$conf{MOCAT_mapping_mode}.l$conf{filter_length_cutoff}.p$conf{filter_percent_cutoff}.$full_end";
-          $rownamesOut = "$sample.$profiling_mode.profile.$reads.on.$end.$assembly_type.K$kmer.$conf{MOCAT_data_type}.$conf{MOCAT_mapping_mode}.l$conf{filter_length_cutoff}.p$conf{filter_percent_cutoff}.$i.rownames$uniq";
-          $fileOut     = "$sample.$profiling_mode.profile.$reads.on.$end.$assembly_type.K$kmer.$conf{MOCAT_data_type}.$conf{MOCAT_mapping_mode}.l$conf{filter_length_cutoff}.p$conf{filter_percent_cutoff}.$full_end";
-          $rownames    = "$sample.$profiling_mode.profile.$reads.on.$end.$assembly_type.K$kmer.$conf{MOCAT_data_type}.$conf{MOCAT_mapping_mode}.l$conf{filter_length_cutoff}.p$conf{filter_percent_cutoff}.$i.rownames$uniq";
+          $folder      = "$cwd/$sample/$sample.$profiling_mode.profile.$reads.on.$end.$assembly_type.K$kmer.$conf{MOCAT_data_type}.$conf{MOCAT_mapping_mode}.l$conf{filter_length_cutoff}.p$conf{filter_percent_cutoff}$bwaAddon";
+          $file        = "$sample.$profiling_mode.profile.$reads.on.$end.$assembly_type.K$kmer.$conf{MOCAT_data_type}.$conf{MOCAT_mapping_mode}.l$conf{filter_length_cutoff}.p$conf{filter_percent_cutoff}$bwaAddon.$full_end";
+          $rownamesOut = "$sample.$profiling_mode.profile.$reads.on.$end.$assembly_type.K$kmer.$conf{MOCAT_data_type}.$conf{MOCAT_mapping_mode}.l$conf{filter_length_cutoff}.p$conf{filter_percent_cutoff}$bwaAddon.$i.rownames$uniq";
+          $fileOut     = "$sample.$profiling_mode.profile.$reads.on.$end.$assembly_type.K$kmer.$conf{MOCAT_data_type}.$conf{MOCAT_mapping_mode}.l$conf{filter_length_cutoff}.p$conf{filter_percent_cutoff}$bwaAddon.$full_end";
+          $rownames    = "$sample.$profiling_mode.profile.$reads.on.$end.$assembly_type.K$kmer.$conf{MOCAT_data_type}.$conf{MOCAT_mapping_mode}.l$conf{filter_length_cutoff}.p$conf{filter_percent_cutoff}$bwaAddon.$i.rownames$uniq";
           $folder_old  = "";
           $file_old    = "";
         }
+   
+
 
         # In MOCAT v1.4+ the data files are in zip format. Two options: 1. extract all files for all samples,
         # but this would use A LOT of disk space. Instead we extract the files one by one. This is slower, but hopefully still feasible.
@@ -517,29 +534,29 @@ sub paste2
       my $norm2 = $norm;
 
       #my $name          = "$temp_dir/out/$profiling_mode2.profiles/$databases/$read_type.$reads.$conf{MOCAT_data_type}.$conf{MOCAT_mapping_mode}.l$conf{filter_length_cutoff}.p$conf{filter_percent_cutoff}/$sample_file_basename.$profiling_mode2.profile.$read_type.$reads.on.$databases.$conf{MOCAT_data_type}.$conf{MOCAT_mapping_mode}.l$conf{filter_length_cutoff}.p$conf{filter_percent_cutoff}.$boi.$norm.$i";
-      my $name = "$temp_dir/out/$sample_file_basename.$profiling_mode2.profile.$read_type.$reads.on.$databases.$conf{MOCAT_data_type}.$conf{MOCAT_mapping_mode}.l$conf{filter_length_cutoff}.p$conf{filter_percent_cutoff}.$full_end";
+      my $name = "$temp_dir/out/$sample_file_basename.$profiling_mode2.profile.$read_type.$reads.on.$databases.$conf{MOCAT_data_type}.$conf{MOCAT_mapping_mode}.l$conf{filter_length_cutoff}.p$conf{filter_percent_cutoff}$bwaAddon.$full_end";
       if ( $assembly == 1 )
       {
-        $name = "$temp_dir/out/$sample_file_basename.$profiling_mode2.profile.$read_type.$reads.on.$databases.$conf{MOCAT_data_type}.$conf{MOCAT_mapping_mode}.l$conf{filter_length_cutoff}.p$conf{filter_percent_cutoff}.$boi.$norm.$profiling_mode_folder";
+        $name = "$temp_dir/out/$sample_file_basename.$profiling_mode2.profile.$read_type.$reads.on.$databases.$conf{MOCAT_data_type}.$conf{MOCAT_mapping_mode}.l$conf{filter_length_cutoff}.p$conf{filter_percent_cutoff}$bwaAddon.$boi.$norm.$profiling_mode_folder";
       }
-      my $original_name = "$OUTFOLDER/$sample_file_basename.$profiling_mode2.profile.$read_type.$reads.on.$databases.$conf{MOCAT_data_type}.$conf{MOCAT_mapping_mode}.l$conf{filter_length_cutoff}.p$conf{filter_percent_cutoff}.$full_end";
+      my $original_name = "$OUTFOLDER/$sample_file_basename.$profiling_mode2.profile.$read_type.$reads.on.$databases.$conf{MOCAT_data_type}.$conf{MOCAT_mapping_mode}.l$conf{filter_length_cutoff}.p$conf{filter_percent_cutoff}$bwaAddon.$full_end";
       if ( $assembly == 1 )
       {
-        $original_name = "$OUTFOLDER/$sample_file_basename.$profiling_mode2.profile.$read_type.$reads.on.$databases.$conf{MOCAT_data_type}.$conf{MOCAT_mapping_mode}.l$conf{filter_length_cutoff}.p$conf{filter_percent_cutoff}.$boi.$norm.$profiling_mode2";
+        $original_name = "$OUTFOLDER/$sample_file_basename.$profiling_mode2.profile.$read_type.$reads.on.$databases.$conf{MOCAT_data_type}.$conf{MOCAT_mapping_mode}.l$conf{filter_length_cutoff}.p$conf{filter_percent_cutoff}$bwaAddon.$boi.$norm.$profiling_mode2";
       }
       if ( $profiling_mode eq 'functional' )
       {
-        $original_name = "$OUTFOLDER*/$sample_file_basename.$profiling_mode2.profile.$read_type.$reads.on.$databases.$conf{MOCAT_data_type}.$conf{MOCAT_mapping_mode}.l$conf{filter_length_cutoff}.p$conf{filter_percent_cutoff}.$full_end";
+        $original_name = "$OUTFOLDER*/$sample_file_basename.$profiling_mode2.profile.$read_type.$reads.on.$databases.$conf{MOCAT_data_type}.$conf{MOCAT_mapping_mode}.l$conf{filter_length_cutoff}.p$conf{filter_percent_cutoff}$bwaAddon.$full_end";
       }
 
       if ( $i eq 'gene' && $profiling_mode eq 'functional' )
       {
-        $name          = "$temp_dir/out/$sample_file_basename.gene.profile.$read_type.$reads.on.$databases.$conf{MOCAT_data_type}.$conf{MOCAT_mapping_mode}.l$conf{filter_length_cutoff}.p$conf{filter_percent_cutoff}.$full_end";
-        $original_name = "$OUTFOLDER*/$sample_file_basename.gene.profile.$read_type.$reads.on.$databases.$conf{MOCAT_data_type}.$conf{MOCAT_mapping_mode}.l$conf{filter_length_cutoff}.p$conf{filter_percent_cutoff}.$full_end";
+        $name          = "$temp_dir/out/$sample_file_basename.gene.profile.$read_type.$reads.on.$databases.$conf{MOCAT_data_type}.$conf{MOCAT_mapping_mode}.l$conf{filter_length_cutoff}.p$conf{filter_percent_cutoff}$bwaAddon.$full_end";
+        $original_name = "$OUTFOLDER*/$sample_file_basename.gene.profile.$read_type.$reads.on.$databases.$conf{MOCAT_data_type}.$conf{MOCAT_mapping_mode}.l$conf{filter_length_cutoff}.p$conf{filter_percent_cutoff}$bwaAddon.$full_end";
       }
 
-      my $COG_name          = "$temp_dir/out/COGs/$sample_file_basename.$profiling_mode2.profile.$read_type.$reads.on.$databases.$conf{MOCAT_data_type}.$conf{MOCAT_mapping_mode}.l$conf{filter_length_cutoff}.p$conf{filter_percent_cutoff}.$full_end";
-      my $original_COG_name = "$OUTFOLDER/$sample_file_basename.$profiling_mode2.profile.$read_type.$reads.on.$databases.$conf{MOCAT_data_type}.$conf{MOCAT_mapping_mode}.l$conf{filter_length_cutoff}.p$conf{filter_percent_cutoff}.$full_end";
+      my $COG_name          = "$temp_dir/out/COGs/$sample_file_basename.$profiling_mode2.profile.$read_type.$reads.on.$databases.$conf{MOCAT_data_type}.$conf{MOCAT_mapping_mode}.l$conf{filter_length_cutoff}.p$conf{filter_percent_cutoff}$bwaAddon.$full_end";
+      my $original_COG_name = "$OUTFOLDER/$sample_file_basename.$profiling_mode2.profile.$read_type.$reads.on.$databases.$conf{MOCAT_data_type}.$conf{MOCAT_mapping_mode}.l$conf{filter_length_cutoff}.p$conf{filter_percent_cutoff}$bwaAddon.$full_end";
       system_("cp `cat $temp_dir/in/$rownamesOut` $name.tmp1");
 
       foreach my $f ( sort { $a <=> $b } keys %hash )
@@ -612,7 +629,7 @@ sub paste2
     system_("rm -r $temp_dir/in");
 
     # create final zip file
-    my $name = "$OUTFOLDER/$sample_file_basename.$profiling_mode2.profiles.$read_type.$reads.on.$databases.$conf{MOCAT_data_type}.$conf{MOCAT_mapping_mode}.l$conf{filter_length_cutoff}.p$conf{filter_percent_cutoff}";
+    my $name = "$OUTFOLDER/$sample_file_basename.$profiling_mode2.profiles.$read_type.$reads.on.$databases.$conf{MOCAT_data_type}.$conf{MOCAT_mapping_mode}.l$conf{filter_length_cutoff}.p$conf{filter_percent_cutoff}$bwaAddon";
     print localtime() . ": zipping output files\n";
 
     # split gene files and functional files
@@ -660,7 +677,7 @@ sub paste2
         $ran       = 1;
         $OUTFOLDER = "$cwd/PROFILES/gene.profiles/$sample_file_basename/";
         system_("mkdir -p $OUTFOLDER");
-        $name = "$OUTFOLDER/$sample_file_basename.gene.profiles.$read_type.$reads.on.$databases.$conf{MOCAT_data_type}.$conf{MOCAT_mapping_mode}.l$conf{filter_length_cutoff}.p$conf{filter_percent_cutoff}";
+        $name = "$OUTFOLDER/$sample_file_basename.gene.profiles.$read_type.$reads.on.$databases.$conf{MOCAT_data_type}.$conf{MOCAT_mapping_mode}.l$conf{filter_length_cutoff}.p$conf{filter_percent_cutoff}$bwaAddon";
         system_("rm -f $name.zip && cd $temp_dir/out && ls *.gene > ../filelist && cat ../filelist | $bin_dir/zip -@ -q -y -D -4 $name.zip && for f in `cat ../filelist`; do rm -f \$f; done && rm -fr ../filelist");
       }
 
@@ -669,7 +686,7 @@ sub paste2
       {
         $OUTFOLDER = "$cwd/PROFILES/$profiling_mode_folder.profiles/$sample_file_basename/";
         system_("mkdir -p $OUTFOLDER");
-        my $name = "$OUTFOLDER/$sample_file_basename.functional.profiles.$read_type.$reads.on.$databases.$conf{MOCAT_data_type}.$conf{MOCAT_mapping_mode}.l$conf{filter_length_cutoff}.p$conf{filter_percent_cutoff}";
+        my $name = "$OUTFOLDER/$sample_file_basename.functional.profiles.$read_type.$reads.on.$databases.$conf{MOCAT_data_type}.$conf{MOCAT_mapping_mode}.l$conf{filter_length_cutoff}.p$conf{filter_percent_cutoff}$bwaAddon";
         system_("rm -f $name.zip && cd $temp_dir/out && ls > ../filelist && cat ../filelist | $bin_dir/zip -@ -q -y -D -4 $name.zip");
 
       }
@@ -702,9 +719,9 @@ sub paste2
       my $LOG = "$cwd/logs/motu_profiles/jobs/MOCATJob_motu_species_profiles\_$date.log";
       MOCATCore::mkdir_or_die("$cwd/logs/motu_profiles/jobs/");
       print localtime() . ": mode is mOTO, generating mOTU profiles...\n";
-      my $name = "$temp_dir/out/$sample_file_basename.$profiling_mode2.profile.$read_type.$reads.on.$databases.$conf{MOCAT_data_type}.$conf{MOCAT_mapping_mode}.l$conf{filter_length_cutoff}.p$conf{filter_percent_cutoff}.insert.mm.dist.among.unique.scaled.mOTU";
+      my $name = "$temp_dir/out/$sample_file_basename.$profiling_mode2.profile.$read_type.$reads.on.$databases.$conf{MOCAT_data_type}.$conf{MOCAT_mapping_mode}.l$conf{filter_length_cutoff}.p$conf{filter_percent_cutoff}$bwaAddon.insert.mm.dist.among.unique.scaled.mOTU";
       my $pre  = "";
-      my $file = "$sample_file_basename.$profiling_mode2.profile.$read_type.$reads.on.$databases.$conf{MOCAT_data_type}.$conf{MOCAT_mapping_mode}.l$conf{filter_length_cutoff}.p$conf{filter_percent_cutoff}";
+      my $file = "$sample_file_basename.$profiling_mode2.profile.$read_type.$reads.on.$databases.$conf{MOCAT_data_type}.$conf{MOCAT_mapping_mode}.l$conf{filter_length_cutoff}.p$conf{filter_percent_cutoff}$bwaAddon";
       my $db   = "$temp_dir/out";
       if ( -e "$data_dir/$databases.motu.linkage.map" )
       {
@@ -788,7 +805,7 @@ sub paste2
         system_("ln -sf $p1[$i] $OUTPUT_FOLDER/$p2[$i]");
       }
       print localtime() . ": zipping COG output files\n";
-      $name = "$OUTFOLDER/$sample_file_basename.$profiling_mode2.profiles.$read_type.$reads.on.$databases.$conf{MOCAT_data_type}.$conf{MOCAT_mapping_mode}.l$conf{filter_length_cutoff}.p$conf{filter_percent_cutoff}";
+      $name = "$OUTFOLDER/$sample_file_basename.$profiling_mode2.profiles.$read_type.$reads.on.$databases.$conf{MOCAT_data_type}.$conf{MOCAT_mapping_mode}.l$conf{filter_length_cutoff}.p$conf{filter_percent_cutoff}$bwaAddon";
       system_("rm -f $name.COGs.zip && cd $temp_dir/out/COGs && $bin_dir/zip -q -y -D -4 $name.COGs.zip *");
       print localtime() . ": COG output files zipped\n";
     }
@@ -796,12 +813,12 @@ sub paste2
     if ( $profiling_mode eq 'NCBI' )
     {
       print localtime() . ": creating fraction files\n";
-      my $file = "$temp_dir/out/$sample_file_basename.$profiling_mode2.profile.$read_type.$reads.on.$databases.$conf{MOCAT_data_type}.$conf{MOCAT_mapping_mode}.l$conf{filter_length_cutoff}.p$conf{filter_percent_cutoff}.insert.mm.dist.among.unique.scaled.species";
+      my $file = "$temp_dir/out/$sample_file_basename.$profiling_mode2.profile.$read_type.$reads.on.$databases.$conf{MOCAT_data_type}.$conf{MOCAT_mapping_mode}.l$conf{filter_length_cutoff}.p$conf{filter_percent_cutoff}$bwaAddon.insert.mm.dist.among.unique.scaled.species";
       if ( -e $file )
       {
         system_("$scr_dir/MOCATFraction.pl -in $file -out $file.fraction");
         @input_files1 = ( "$file.fraction",                                                                                                                                                                                                                                            $file );
-        @input_files2 = ( "$OUTFOLDER/$sample_file_basename.$profiling_mode2.profile.$read_type.$reads.on.$databases.$conf{MOCAT_data_type}.$conf{MOCAT_mapping_mode}.l$conf{filter_length_cutoff}.p$conf{filter_percent_cutoff}.insert.mm.dist.among.unique.scaled.species.fraction", "$OUTFOLDER/$sample_file_basename.$profiling_mode2.profile.$read_type.$reads.on.$databases.$conf{MOCAT_data_type}.$conf{MOCAT_mapping_mode}.l$conf{filter_length_cutoff}.p$conf{filter_percent_cutoff}.insert.mm.dist.among.unique.scaled.species" );
+        @input_files2 = ( "$OUTFOLDER/$sample_file_basename.$profiling_mode2.profile.$read_type.$reads.on.$databases.$conf{MOCAT_data_type}.$conf{MOCAT_mapping_mode}.l$conf{filter_length_cutoff}.p$conf{filter_percent_cutoff}$bwaAddon.insert.mm.dist.among.unique.scaled.species.fraction", "$OUTFOLDER/$sample_file_basename.$profiling_mode2.profile.$read_type.$reads.on.$databases.$conf{MOCAT_data_type}.$conf{MOCAT_mapping_mode}.l$conf{filter_length_cutoff}.p$conf{filter_percent_cutoff}.insert.mm.dist.among.unique.scaled.species" );
         @output_files = ( 'NCBI.species.abundances',                                                                                                                                                                                                                                   'NCBI.species.counts' );
       }
     }

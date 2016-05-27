@@ -91,6 +91,18 @@ sub create_job
   print " OK!\n";
   #############################################################################################################################################
 
+### BWA SUPPORT ###
+  my $BWA;
+  if ( $do_profiling_bwa[0] )
+  {
+    unless ( $conf{bwa_options} ) { $conf{bwa_options} = "" }
+    my $tmp = $conf{bwa_options};
+    $tmp =~ s/ //g;
+    $tmp =~ s/\t//g;
+    $BWA = "bwa$tmp";
+  }
+### BWA SUPPORT ###
+
   my $samples_counter = 0;
   foreach my $sample (@samples)
   {
@@ -139,18 +151,43 @@ sub create_job
 
       # Define input file
       $input_folder = "$cwd/$sample/reads.filtered.$end.$assembly_type.K$kmer.$conf{MOCAT_data_type}";
-      $input_file   = "$input_folder/$sample.filtered.$reads.on.$end.$assembly_type.K$kmer.$conf{MOCAT_data_type}.$conf{MOCAT_mapping_mode}.l$conf{filter_length_cutoff}.p$conf{filter_percent_cutoff}.bam";
+      die "$do_profiling_bwa[0]";
+      if ( $do_profiling_bwa[0] )
+      {
+        $input_file = "$input_folder/$sample.filtered.$reads.on.$end.$assembly_type.K$kmer.$conf{MOCAT_data_type}.$BWA.l$conf{filter_length_cutoff}.p$conf{filter_percent_cutoff}.z$conf{bwa_min_perc_query_aligned}.bam";
+      } else
+      {
+        $input_file = "$input_folder/$sample.filtered.$reads.on.$end.$assembly_type.K$kmer.$conf{MOCAT_data_type}.$conf{MOCAT_mapping_mode}.l$conf{filter_length_cutoff}.p$conf{filter_percent_cutoff}.bam";
+      }
 
       my @parts = split '/', $input_file;
 
       # Define output files
-      $output_gene_folder   = "coverage.$sample.$assembly_type.$reads.$conf{MOCAT_data_type}.K$kmer.$end";
-      $output_gene_file     = "$sample.filtered.$reads.on.$end.$assembly_type.K$kmer.$conf{MOCAT_data_type}.$conf{MOCAT_mapping_mode}.l$conf{filter_length_cutoff}.p$conf{filter_percent_cutoff}";
-      $output_file          = "$sample.$profiling_mode.profile.$reads.on.$end.$assembly_type.K$kmer.$conf{MOCAT_data_type}.$conf{MOCAT_mapping_mode}.l$conf{filter_length_cutoff}.p$conf{filter_percent_cutoff}";
-      $output_file_rownames = "$sample_file_basename.$profiling_mode.profile.$reads.on.$end.$assembly_type.K$kmer.$conf{MOCAT_data_type}.$conf{MOCAT_mapping_mode}.l$conf{filter_length_cutoff}.p$conf{filter_percent_cutoff}.rownames";
+
+      if ( $do_profiling_bwa[0] )
+      {
+        $output_gene_folder   = "coverage.$sample.$assembly_type.$reads.$conf{MOCAT_data_type}.K$kmer.$end";
+        $output_gene_file     = "$sample.filtered.$reads.on.$end.$assembly_type.K$kmer.$conf{MOCAT_data_type}.$BWA.l$conf{filter_length_cutoff}.p$conf{filter_percent_cutoff}.z$conf{bwa_min_perc_query_aligned}";
+        $output_file          = "$sample.$profiling_mode.profile.$reads.on.$end.$assembly_type.K$kmer.$conf{MOCAT_data_type}.$BWA.l$conf{filter_length_cutoff}.p$conf{filter_percent_cutoff}.z$conf{bwa_min_perc_query_aligned}";
+        $output_file_rownames = "$sample_file_basename.$profiling_mode.profile.$reads.on.$end.$assembly_type.K$kmer.$conf{MOCAT_data_type}.$BWA.l$conf{filter_length_cutoff}.p$conf{filter_percent_cutoff}.z$conf{bwa_min_perc_query_aligned}.rownames";
+
+      } else
+      {
+        $output_gene_folder   = "coverage.$sample.$assembly_type.$reads.$conf{MOCAT_data_type}.K$kmer.$end";
+        $output_gene_file     = "$sample.filtered.$reads.on.$end.$assembly_type.K$kmer.$conf{MOCAT_data_type}.$conf{MOCAT_mapping_mode}.l$conf{filter_length_cutoff}.p$conf{filter_percent_cutoff}";
+        $output_file          = "$sample.$profiling_mode.profile.$reads.on.$end.$assembly_type.K$kmer.$conf{MOCAT_data_type}.$conf{MOCAT_mapping_mode}.l$conf{filter_length_cutoff}.p$conf{filter_percent_cutoff}";
+        $output_file_rownames = "$sample_file_basename.$profiling_mode.profile.$reads.on.$end.$assembly_type.K$kmer.$conf{MOCAT_data_type}.$conf{MOCAT_mapping_mode}.l$conf{filter_length_cutoff}.p$conf{filter_percent_cutoff}.rownames";
+
+      }
 
       # Define other files
-      $out_stats_file = "$cwd/$sample/stats/$sample.coverage.$reads.on.$end.$assembly_type.$conf{MOCAT_data_type}.$conf{MOCAT_mapping_mode}.l$conf{filter_length_cutoff}.p$conf{filter_percent_cutoff}.stats";
+      if ( $do_profiling_bwa[0] )
+      {
+        $out_stats_file = "$cwd/$sample/stats/$sample.coverage.$reads.on.$end.$assembly_type.$conf{MOCAT_data_type}.$BWA.l$conf{filter_length_cutoff}.p$conf{filter_percent_cutoff}.z$conf{bwa_min_perc_query_aligned}.stats";
+      } else
+      {
+        $out_stats_file = "$cwd/$sample/stats/$sample.coverage.$reads.on.$end.$assembly_type.$conf{MOCAT_data_type}.$conf{MOCAT_mapping_mode}.l$conf{filter_length_cutoff}.p$conf{filter_percent_cutoff}.stats";
+      }
 
       # Check len and coord file
       my $assembly_file = "$cwd/$sample/$assembly_type.$reads.$conf{MOCAT_data_type}.K$kmer/$sample.$assembly_type.$reads.$conf{MOCAT_data_type}.K$kmer.$end";
@@ -268,27 +305,40 @@ $scr_dir/MOCATFilter_falen.pl -infile $data_dir/$databases -outfile $data_dir/$d
 
       #$output_folder        = "$profiling_mode.profiles.$databases.$conf{MOCAT_data_type}";
       # original v1.3 # $output_gene_file     = "$sample.filtered.$read_type.$reads.on.$databases.$conf{MOCAT_data_type}.$conf{MOCAT_mapping_mode}.l$conf{filter_length_cutoff}.p$conf{filter_percent_cutoff}";
-      $output_gene_file     = "$sample.gene.profile.$read_type.$reads.on.$databases.$conf{MOCAT_data_type}.$conf{MOCAT_mapping_mode}.l$conf{filter_length_cutoff}.p$conf{filter_percent_cutoff}";
-      $output_file          = "$sample.$profiling_mode.profile.$read_type.$reads.on.$databases.$conf{MOCAT_data_type}.$conf{MOCAT_mapping_mode}.l$conf{filter_length_cutoff}.p$conf{filter_percent_cutoff}";
-      $output_file_rownames = "$sample_file_basename.$profiling_mode.profile.$read_type.$reads.on.$databases.$conf{MOCAT_data_type}.$conf{MOCAT_mapping_mode}.l$conf{filter_length_cutoff}.p$conf{filter_percent_cutoff}";
-
-      # Define input file
-      my $input     = "$sample.filtered.$read_type.$reads.on.$databases.$conf{MOCAT_data_type}.$conf{MOCAT_mapping_mode}.l$conf{filter_length_cutoff}.p$conf{filter_percent_cutoff}";
-      my $input_old = "$sample.filtered.$read_type.$reads.on.$databases_old.$conf{MOCAT_data_type}.$conf{MOCAT_mapping_mode}.l$conf{filter_length_cutoff}.p$conf{filter_percent_cutoff}";
-      $input_folder     = "$cwd/$sample/reads.filtered.$databases.$conf{MOCAT_data_type}";
-      $input_folder_old = "$cwd/$sample/reads.filtered.$databases_old.$conf{MOCAT_data_type}";
-      if ( $conf{MOCAT_mapping_mode} eq "allbest" || $conf{MOCAT_mapping_mode} =~ "^bowtie2" || $conf{MOCAT_mapping_mode} =~ "^bwa" )
+      my ( $input, $input_old );
+      if ( $do_profiling_bwa[0] )
       {
-        $input_file     = "$input_folder/$input.bam";
-        $input_file_old = "$input_folder_old/$input_old.bam";
-      } elsif (    $conf{MOCAT_mapping_mode} eq "unique"
-                || $conf{MOCAT_mapping_mode} eq "random" )
-      {
-        $input_file = "$input_folder/$input.soap.gz";
-        $input_file = "$input_folder_old/$input_old.soap.gz";
+        $output_gene_file     = "$sample.gene.profile.$read_type.$reads.on.$databases.$conf{MOCAT_data_type}.$BWA.l$conf{filter_length_cutoff}.p$conf{filter_percent_cutoff}";
+        $output_file          = "$sample.$profiling_mode.profile.$read_type.$reads.on.$databases.$conf{MOCAT_data_type}.$BWA.l$conf{filter_length_cutoff}.p$conf{filter_percent_cutoff}.z$conf{bwa_min_perc_query_aligned}";
+        $output_file_rownames = "$sample_file_basename.$profiling_mode.profile.$read_type.$reads.on.$databases.$conf{MOCAT_data_type}.$BWA.l$conf{filter_length_cutoff}.p$conf{filter_percent_cutoff}.z$conf{bwa_min_perc_query_aligned}";
+        $input                = "$sample.filtered.$read_type.$reads.on.$databases.$conf{MOCAT_data_type}.$BWA.l$conf{filter_length_cutoff}.p$conf{filter_percent_cutoff}.z$conf{bwa_min_perc_query_aligned}";
+        $input_old            = "$sample.filtered.$read_type.$reads.on.$databases_old.$conf{MOCAT_data_type}.$BWA.l$conf{filter_length_cutoff}.p$conf{filter_percent_cutoff}.z$conf{bwa_min_perc_query_aligned}";
+        $input_folder         = "$cwd/$sample/reads.filtered.$databases.$conf{MOCAT_data_type}";
+        $input_file           = "$input_folder/$input.bam";
+        $input_file_old       = "$input_folder/$input.bam";
       } else
       {
-        die "ERROR & EXIT: Unrecognized MOCAT mapping mode '$conf{MOCAT_mapping_mode}'";
+        $output_gene_file     = "$sample.gene.profile.$read_type.$reads.on.$databases.$conf{MOCAT_data_type}.$conf{MOCAT_mapping_mode}.l$conf{filter_length_cutoff}.p$conf{filter_percent_cutoff}";
+        $output_file          = "$sample.$profiling_mode.profile.$read_type.$reads.on.$databases.$conf{MOCAT_data_type}.$conf{MOCAT_mapping_mode}.l$conf{filter_length_cutoff}.p$conf{filter_percent_cutoff}";
+        $output_file_rownames = "$sample_file_basename.$profiling_mode.profile.$read_type.$reads.on.$databases.$conf{MOCAT_data_type}.$conf{MOCAT_mapping_mode}.l$conf{filter_length_cutoff}.p$conf{filter_percent_cutoff}";
+        $input                = "$sample.filtered.$read_type.$reads.on.$databases.$conf{MOCAT_data_type}.$conf{MOCAT_mapping_mode}.l$conf{filter_length_cutoff}.p$conf{filter_percent_cutoff}";
+        $input_old            = "$sample.filtered.$read_type.$reads.on.$databases_old.$conf{MOCAT_data_type}.$conf{MOCAT_mapping_mode}.l$conf{filter_length_cutoff}.p$conf{filter_percent_cutoff}";
+        $input_folder         = "$cwd/$sample/reads.filtered.$databases.$conf{MOCAT_data_type}";
+        $input_folder_old     = "$cwd/$sample/reads.filtered.$databases_old.$conf{MOCAT_data_type}";
+        if ( $conf{MOCAT_mapping_mode} eq "allbest" )
+        {
+          $input_file     = "$input_folder/$input.bam";
+          $input_file_old = "$input_folder_old/$input_old.bam";
+        } elsif (    $conf{MOCAT_mapping_mode} eq "unique"
+                  || $conf{MOCAT_mapping_mode} eq "random" )
+        {
+          $input_file = "$input_folder/$input.soap.gz";
+          $input_file = "$input_folder_old/$input_old.soap.gz";
+        } else
+        {
+          die "ERROR & EXIT: Unrecognized MOCAT mapping mode '$conf{MOCAT_mapping_mode}'";
+        }
+
       }
       $columnName = "";    # set to nothing, because only applies to scaftigs, contigs, ...
     }
@@ -299,14 +349,25 @@ $scr_dir/MOCATFilter_falen.pl -infile $data_dir/$databases -outfile $data_dir/$d
     #############################################################################################################################################
 
     # Define other files
-    $out_stats_file = "$cwd/$sample/stats/$sample.coverage.$read_type.$reads.on.$databases.$conf{MOCAT_data_type}.$conf{MOCAT_mapping_mode}.l$conf{filter_length_cutoff}.p$conf{filter_percent_cutoff}.stats";
-    if ( $reads eq 'reads.processed' )
+    if ( $do_profiling_bwa[0] )
     {
-      $out_PE_stats_file = "$cwd/$sample/stats/$sample.extracted.$databases.after.PE.filter.and.within.padded.region.$conf{MOCAT_mapping_mode}.$conf{MOCAT_data_type}.stats";
+      $out_stats_file = "$cwd/$sample/stats/$sample.coverage.$read_type.$reads.on.$databases.$conf{MOCAT_data_type}.$BWA.l$conf{filter_length_cutoff}.p$conf{filter_percent_cutoff}.z$conf{bwa_min_perc_query_aligned}.stats";
+      if ( $reads eq 'reads.processed' )
+      {
+        $out_PE_stats_file = "$cwd/$sample/stats/$sample.extracted.$databases.after.PE.filter.and.within.padded.region.$BWA.$conf{MOCAT_data_type}.stats";
+      } else
+      {
+        $out_PE_stats_file = "$cwd/$sample/stats/$sample.extracted.screened.$reads.on.$databases.after.PE.filter.and.within.padded.region.$BWA.$conf{MOCAT_data_type}.stats";
+      }
     } else
     {
-      $out_PE_stats_file = "$cwd/$sample/stats/$sample.extracted.screened.$reads.on.$databases.after.PE.filter.and.within.padded.region.$conf{MOCAT_mapping_mode}.$conf{MOCAT_data_type}.stats";
-
+      if ( $reads eq 'reads.processed' )
+      {
+        $out_PE_stats_file = "$cwd/$sample/stats/$sample.extracted.$databases.after.PE.filter.and.within.padded.region.$conf{MOCAT_mapping_mode}.$conf{MOCAT_data_type}.stats";
+      } else
+      {
+        $out_PE_stats_file = "$cwd/$sample/stats/$sample.extracted.screened.$reads.on.$databases.after.PE.filter.and.within.padded.region.$conf{MOCAT_mapping_mode}.$conf{MOCAT_data_type}.stats";
+      }
     }
 
     # Check input file
@@ -346,26 +407,55 @@ $scr_dir/MOCATFilter_falen.pl -infile $data_dir/$databases -outfile $data_dir/$d
     #$covfile = "$cwd/$sample/stats/$sample.coverage.$reads.on.$end.$assembly_type.$conf{MOCAT_data_type}.$conf{MOCAT_mapping_mode}.l$conf{filter_length_cutoff}.p$conf{filter_percent_cutoff}.stats";
 
     # Define input stats file
-    if ($calculateTaxonomy_previous_calc_coverage_stats_file)
+
+    if ( $do_profiling_bwa[0] )
     {
-      if ( $reads eq 'reads.processed' )
+      if ($calculateTaxonomy_previous_calc_coverage_stats_file)
       {
-        $stats_file = "$cwd/$sample/stats/$sample.readtrimfilter.after.PE.filter.and.within.padded.region.$conf{MOCAT_mapping_mode}.$conf{MOCAT_data_type}.stats";
+        if ( $reads eq 'reads.processed' )
+        {
+          $stats_file = "$cwd/$sample/stats/$sample.readtrimfilter.after.PE.filter.and.within.padded.region.$BWA.$conf{MOCAT_data_type}.stats";
+        } else
+        {
+          $stats_file = "$cwd/$sample/stats/$sample.$read_type.$reads.after.PE.filter.and.within.padded.region.$BWA.$conf{MOCAT_data_type}.stats";
+        }
+      } elsif ($calculateTaxonomy_manual_stats_file)
+      {
+        $stats_file = "$calculateTaxonomy_manual_stats_file.$sample";
       } else
       {
-        $stats_file = "$cwd/$sample/stats/$sample.$read_type.$reads.after.PE.filter.and.within.padded.region.$conf{MOCAT_mapping_mode}.$conf{MOCAT_data_type}.stats";
+        if ( $reads eq 'reads.processed' )
+        {
+          $stats_file = "$cwd/$sample/stats/$sample.readtrimfilter.$conf{MOCAT_data_type}.stats";
+        } else
+        {
+          $stats_file = "$cwd/$sample/stats/$sample.$read_type.$reads.$conf{MOCAT_data_type}.stats";
+        }
       }
-    } elsif ($calculateTaxonomy_manual_stats_file)
-    {
-      $stats_file = "$calculateTaxonomy_manual_stats_file.$sample";
     } else
     {
-      if ( $reads eq 'reads.processed' )
+
+      if ($calculateTaxonomy_previous_calc_coverage_stats_file)
       {
-        $stats_file = "$cwd/$sample/stats/$sample.readtrimfilter.$conf{MOCAT_data_type}.stats";
+        if ( $reads eq 'reads.processed' )
+        {
+          $stats_file = "$cwd/$sample/stats/$sample.readtrimfilter.after.PE.filter.and.within.padded.region.$conf{MOCAT_mapping_mode}.$conf{MOCAT_data_type}.stats";
+        } else
+        {
+          $stats_file = "$cwd/$sample/stats/$sample.$read_type.$reads.after.PE.filter.and.within.padded.region.$conf{MOCAT_mapping_mode}.$conf{MOCAT_data_type}.stats";
+        }
+      } elsif ($calculateTaxonomy_manual_stats_file)
+      {
+        $stats_file = "$calculateTaxonomy_manual_stats_file.$sample";
       } else
       {
-        $stats_file = "$cwd/$sample/stats/$sample.$read_type.$reads.$conf{MOCAT_data_type}.stats";
+        if ( $reads eq 'reads.processed' )
+        {
+          $stats_file = "$cwd/$sample/stats/$sample.readtrimfilter.$conf{MOCAT_data_type}.stats";
+        } else
+        {
+          $stats_file = "$cwd/$sample/stats/$sample.$read_type.$reads.$conf{MOCAT_data_type}.stats";
+        }
       }
     }
 

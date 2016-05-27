@@ -248,7 +248,8 @@ GetOptions(
   'o|output:s'                      => \$OUTPUT_FOLDER,
   'verbose'                         => \$VERBOSE,
   'no_horizontal'                   => \$NO_CALCULATE_HORIZONTAL_COVERAGE,
-
+  'pbwa:s{,}'                => \@do_profiling_bwa,
+  
 );
 
 # module support
@@ -345,6 +346,10 @@ if ( $do_assembly_revision eq "NOTSET" )
 } elsif ( $do_assembly_revision eq "" )
 {
   $do_assembly_revision = "1";
+}
+
+if ($do_profiling_bwa[0]) {
+ @do_profiling = @do_profiling_bwa;
 }
 
 ### CHECK IF WE WANT TO PRINT HELP ###
@@ -445,6 +450,8 @@ if ( $PERCENT_CUTOFF ne "" )
 {
   $conf{screen_percent_cutoff} = $PERCENT_CUTOFF;
   $conf{filter_percent_cutoff} = $PERCENT_CUTOFF;
+  $conf{bwa_percent_cutoff} = $PERCENT_CUTOFF;
+  $conf{bowtie2_percent_cutoff} = $PERCENT_CUTOFF;
 }
 
 #DEV OVERRIDES# #DEV VER#
