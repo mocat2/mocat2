@@ -3,6 +3,7 @@ use warnings;
 use strict;
 use MOCATVariables;
 use MOCATUsage2;
+use File::Basename;
 
 # This code is part of the MOCAT analysis pipeline
 # Code is (c) Copyright EMBL, 2012-2016
@@ -161,6 +162,11 @@ sub read_config
     {
       die "ERROR & EXIT: Missing MOCAT_dir in config file. Have you specified a correct config file?";
     }
+
+    if ( $conf{MOCAT_dir} eq "AUTO" ) {
+      $conf{MOCAT_dir} = dirname(dirname(__FILE__));
+    }
+
     unless ( $conf{MOCAT_data_dir} )
     {
       $conf{MOCAT_data_dir} = "$conf{MOCAT_dir}/data";
