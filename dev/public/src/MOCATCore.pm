@@ -883,6 +883,14 @@ EOF
     system "mkdir -p $cwd/logs/SLURM_specific/";
     system "touch $cwd/logs/SLURM_specific/$job.$date.status";
 
+    if ( $conf{MOCAT_SLURM_max_concurrent} ne '' )
+    {
+      $conf{MOCAT_SLURM_max_concurrent} = "\%$conf{MOCAT_SLURM_max_concurrent}";
+    } else
+    {
+      $conf{MOCAT_SLURM_max_concurrent} = "";
+    }
+
     my $SGEEXTRAPARAMS = $conf{MOCAT_SLURM_qsub_add_param};
     unless ( defined $SGEEXTRAPARAMS )
     {
@@ -905,7 +913,7 @@ EOF
                 sed -i 's/RJB/MOCATJob_$job.$date/' $cwd/MOCATJobArraySLURM.$job.$date.sh &&
                 sed -i 's/SLURMJOBID/$date/' $cwd/MOCATJobArraySLURM.$job.$date.sh &&
                 sed -i 's/SLURMARRAY/$job/g' $cwd/MOCATJobArraySLURM.$job.$date.sh &&
-                sed -i 's/MAXJOBS/$numberJobs/' $cwd/MOCATJobArraySLURM.$job.$date.sh &&
+                sed -i 's/MAXJOBS/$numberJobs$conf{MOCAT_SLURM_max_concurrent}/' $cwd/MOCATJobArraySLURM.$job.$date.sh &&
                 sed -i 's/SLURMDATE/$date/' $cwd/MOCATJobArraySLURM.$job.$date.sh &&
                 sed -i 's|CWD|$cwd|g' $cwd/MOCATJobArraySLURM.$job.$date.sh &&
                 rm $cwd/MOCATExecuteJob.$date.pl
@@ -924,15 +932,16 @@ EOF
       {
         print OUT "$cmd\n";
         print OUT "\n\nQSUB STATUS:\n";
-        chomp(my $return = `$cmd`);
+        chomp( my $return = `$cmd` );
         $return =~ m/.* (\d+)/;
         my $id = $1;
         print localtime() . ": SLURM Job ID is $id - $ID\n";
-        system ("touch $cwd/logs/SLURM_specific/$job.$date.status");
+        system("touch $cwd/logs/SLURM_specific/$job.$date.status");
         sleep 10;
         print localtime() . ": Waiting for jobs to finish...\n";
         my $continue = 1;
-        $error = 0; 
+        $error = 0;
+
         while ($continue)
         {
           unless ( -e "$cwd/logs/SLURM_specific/$job.$date.status" )
@@ -940,9 +949,9 @@ EOF
             $continue = 0;
             $error    = 1;
           }
-          chomp(my $FAILED    = `sacct -j $id | grep $JOB | grep -c 'FAILED'`);
-          chomp(my $COMPLETED = `sacct -j $id | grep $JOB | grep -c 'COMPLETED'`);
-          if ( ( $FAILED ) + ( $COMPLETED ) == $numberJobs )
+          chomp( my $FAILED    = `sacct -j $id | grep $JOB | grep -c 'FAILED'` );
+          chomp( my $COMPLETED = `sacct -j $id | grep $JOB | grep -c 'COMPLETED'` );
+          if ( ($FAILED) + ($COMPLETED) == $numberJobs )
           {
             $continue = 0;
           }
@@ -1052,7 +1061,7 @@ EOF
     close OUT;
     die "ERROR & EXIT: Expected 'qsub_system' in config file to be either 'SGE', 'PBS', 'LSF', 'SLURM' or 'none'.";
   }
-  
+
   if ($only_print)
   {
     open OUT, ">>", "$cwd/logs/$job/commands/MOCATJob_$job.$date.command.log" or die "ERROR & EXIT: Cannot write $cwd/logs/$job/commands/MOCATJob_$job.$date.command.log";

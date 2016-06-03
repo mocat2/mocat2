@@ -8,6 +8,7 @@ use MOCATProfiling::Variables;
 use File::Sync qw(fsync sync);
 use Math::Round qw(round);
 use List::Util qw[min max];
+use Scalar::Util qw[looks_like_number];
 use Storable;
 
 # this is the routine started for each thread
@@ -127,16 +128,16 @@ sub main
         $last_base = $first_base + $length - 1;    # read will be revcomp if direction is "-", so $first_base is always left-most base
         if ( $mode eq 'NCBI' )
         {
-          $NCBI{taxaid}        = $line[13];
-          $NCBI{kingdom}       = $line[14];
-          $NCBI{phylum}        = $line[15];
-          $NCBI{class}         = $line[16];
-          $NCBI{order}         = $line[17];
-          $NCBI{family}        = $line[18];
-          $NCBI{genus}         = $line[19];
-          $NCBI{species}       = $line[20];
-          $NCBI{specI_cluster} = $line[21];
-          $NCBI{"length"}      = $line[22];
+          $NCBI{taxaid}        = $line[$#line-9];
+          $NCBI{kingdom}       = $line[$#line-8];
+          $NCBI{phylum}        = $line[$#line-7];
+          $NCBI{class}         = $line[$#line-6];
+          $NCBI{order}         = $line[$#line-5];
+          $NCBI{family}        = $line[$#line-4];
+          $NCBI{genus}         = $line[$#line-3];
+          $NCBI{species}       = $line[$#line-2];
+          $NCBI{specI_cluster} = $line[$#line-1];
+          $NCBI{"length"}      = $line[$#line];
         }
       } elsif ( $input_file_format eq 'SOAP' )
       {
@@ -319,6 +320,7 @@ sub main
               } else
               {
                 $length       = $miniNCBImap{"length"}{$ref_id_index};
+                die "\$miniNCBImap{length}{$ref_id_index} did not import number. Please check the map file." unless looks_like_number( $length );
                 $i_ref        = $miniNCBImap{$i}{$ref_id_index};
                 $taxaToGiveTo = scalar keys %{ $intersection{$type}{$i} };
                 if ( $preCount2{$type}{$i} )

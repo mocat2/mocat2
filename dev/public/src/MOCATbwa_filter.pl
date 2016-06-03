@@ -76,6 +76,8 @@ while ( my $line = <STDIN> )
   }    # end loop over cigar
   $totalLength = $lengthBeforeMatch + $matchLength + $addToMatchEnd;
   $as = 100 - ( $mm / $matchLength ) * 100;
+  
+  
   if ( $as >= $ARGV[0] && $totalLength >= $ARGV[1] )
   {
     print STDOUT "$line\n";
