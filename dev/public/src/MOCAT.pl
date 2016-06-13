@@ -54,6 +54,7 @@ $INTERNAL_Z_VERSION          = "Z3";
 # v1.5.4: fixed major bugs in new RTF using 3 files
 # v1.5.6: t18->t19; removed unnecessary code in the NCBI profiling steps
 # v1.5.7: Support for pair.1 pair.2 single in screen fasta file
+# v2.1.0: Added support for SLURM queue and BWA for mapping
 
 ##DEV VER#
 $MOCAT_DESCRIPTION      = "Major updates";                            #DEV VER#
@@ -155,14 +156,14 @@ GetOptions(
   'sf|sample_file:s'          => \$sample_file,
   'cpus:i'                    => \$cpu,
   'nt|no_temp'                => \$no_temp,
-  's|screen:s{,}'             => \@do_screen,
+  'soap:s{,}'             => \@do_screen,
   'sff|screen_fastafile:s{,}' => \@do_screen_fasta_file,
   'r|reads:s{,}'              => \@reads,
   'a|assembly'                => \$do_assembly,
   'ar|assembly_revision'      => \$do_assembly_revision,
   'gp|gene_prediction:s'      => \$do_gene_prediction,
   'fmg|fetch_mg:s'            => \$do_fetch_mg,
-  'f|filter:s{,}'             => \@do_filter,
+  'fsoap:s{,}'             => \@do_filter,
   'e|extracted'               => \$use_extracted_reads,
   'old'                       => \$use_old_version,
   'use_mem'                   => \$use_mem,
@@ -244,7 +245,7 @@ GetOptions(
   'memory:s'                        => \$memory,
   'tc:s'                            => \$TC,
   'noqueue'                         => \$no_queue,
-  'p|profiling:s{,}'                => \@do_profiling,
+  'psoap:s{,}'                => \@do_profiling,
   'o|output:s'                      => \$OUTPUT_FOLDER,
   'verbose'                         => \$VERBOSE,
   'no_horizontal'                   => \$NO_CALCULATE_HORIZONTAL_COVERAGE,
@@ -765,10 +766,10 @@ if ( defined $do_screen[0] )
   }
 }
 
-
 ### BOWTIE2 ###
 if ( defined $BOWTIE2[0] )
 {
+ die "The support for Bowtie2 hasn not been fully implemented and probably will not ever be. Sorry.";
   if ( $BOWTIE2[0] eq "" )
   {
     die "ERROR & EXIT: No database defined with the -bowtie2 option. Please specify -bowtie2 DATABASE (either as single file name, or full path)";
@@ -1197,53 +1198,81 @@ exit(0);
 
 sub Cite
 {
-  print "Latest information about MOCAT: http://www.bork.embl.de/mocat
+  print "Latest information about MOCAT: http://mocat.embl.de
 
 Citing MOCAT
 
+   If you have used MOCAT2 in your work, please cite:
+          Kultima, J. R., Coelho, L. P., Forslund, K., Huerta-Cepas, J., Li, S. S., Driessen, Bork, P. (2016).
+          MOCAT2: a metagenomic assembly, annotation and profiling framework. Bioinformatics . http://doi.org/10.1093/bioinformatics/btw183
+   
+   
    If you have used MOCAT in your work, please cite:
            Kultima JR, Sunagawa S, Li J, Chen W, Chen H, et al. (2012)
                MOCAT: A Metagenomics Assembly and Gene Prediction Toolkit. PLoS ONE 7(10): e47656. doi:10.1371/journal.pone.0047656
 
-   MOCAT is a wrapper for 3rd party software. Therefore we strongly suggest you also cite the following papers if you use MOCAT:
-       Initial read trimming and quality control
+   
+   MOCAT2 is a wrapper for 3rd party software. Therefore we strongly suggest you also cite the following papers if you use MOCAT2:
 
-           Cox MP, Peterson DA, Biggs PJ (2010)
-               SolexaQA: At-a-glance quality assessment of Illumina second-generation sequencing data. BMC bioinformatics 11: 485 doi:10.1186/1471-2105-11-485.
+   Initial read trimming and quality control
+      - Cox MP, Peterson DA, Biggs PJ (2010) SolexaQA: At-a-glance quality assessment of Illumina second-generation sequencing data. BMC bioinformatics 11: 485 doi:10.1186/1471-2105-11-485. FastX program
 
-           FastX program:
-               http://hannonlab.cshl.edu/fastx_toolkit/
+   Mapping reads
+     - Li R, Yu C, Li Y, Lam T-W, Yiu S-M, et al. (2009) SOAP2: an improved ultrafast tool for short read alignment. Bioinformatics (Oxford, England) 25: 1966–1967 doi:10.1093/bioinformatics/btp336. doi: 10.1093/bioinformatics/btp336
+     - Edgar RC (2010) Search and clustering orders of magnitude faster than BLAST. Bioinformatics. 2010 Oct 1;26(19):2460-1. doi: 10.1093/bioinformatics/btq461
 
-       Mapping reads
+   Assembly
+     - Li R, Zhu H, Ruan J, Qian W, Fang X, et al. (2010) De novo assembly of human genomes with massively parallel short read sequencing. Genome research 20: 265–272 doi:10.1101/gr.097261.109.
 
-           Li R, Yu C, Li Y, Lam T-W, Yiu S-M, et al. (2009)
-               SOAP2: an improved ultrafast tool for short read alignment. Bioinformatics (Oxford, England) 25: 1966 to 1967 doi:10.1093/bioinformatics/btp336.
+   Assembly revision
+     - Li H, Durbin R (2009) Fast and accurate short read alignment with Burrows-Wheeler transform. Bioinformatics (Oxford, England) 25: 1754–1760 doi:10.1093/bioinformatics/btp324.
 
-           Edgar RC (2010)
-               Search and clustering orders of magnitude faster than BLAST. Bioinformatics. 2010 Oct 1;26(19):2460-1. doi: 10.1093/bioinformatics/btq461
+   Gene Prediciton
+     - Hyatt D, Chen G-L, Locascio PF, Land ML, Larimer FW, et al. (2010) Prodigal: prokaryotic gene recognition and translation initiation site identification. BMC bioinformatics 11: 119 doi:10.1186/1471-2105-11-119. 
+     - Zhu W, Lomsadze A, Borodovsky M (2010) Ab initio gene identification in metagenomic sequences. Nucleic acids research 38: 1–15 doi:10.1093/nar/gkq275.
 
-       Assembly
+    Retrieving Marker Genes
+     - Sunagawa S., et al. (2013) Metagenomic species profiling using universal phylogenetic marker genes. Nature Methods 10, 1196–1199 doi:10.1038/nmeth.2693
 
-           Li R, Zhu H, Ruan J, Qian W, Fang X, et al. (2010)
-               De novo assembly of human genomes with massively parallel short read sequencing. Genome research 20: 265 to 272 doi:10.1101/gr.097261.109.
+   Clustering gene catalogs
+     - Limin Fu, et al. (2012) CD-HIT: accelerated for clustering the next generation sequencing data. Bioinformatics. doi: 10.1093/bioinformatics/bts565
 
-       Assembly revision
+   Annotating gene catalogs
+     - Buchfink, B., et al. (2014) Fast and sensitive protein alignment using DIAMOND. Nat. Methods, 12, 59–60.
+     - Arumugam M., et al. (2010) SmashCommunity: a metagenomic annotation and analysis tool. Bioinformatics. doi: 10.1093/bioinformatics/btq536.
 
-           Li H, Durbin R (2009)
-               Fast and accurate short read alignment with Burrows-Wheeler transform. Bioinformatics (Oxford, England) 25: 1754 to 1760 doi:10.1093/bioinformatics/btp324.
+   Taxnomic profiles
+     - mOTU-LG: Sunagawa,S. et al. (2013) Metagenomic species profiling using universal phylogenetic marker genes. Nat. Methods, 10, 1196–9
+     - specI & NCBI: Mende,D.R. et al. (2013) Accurate and universal delineation of prokaryotic species. Nat. Methods, 10, 881–4.
 
-       Gene Prediciton
+   Pre-compiled reference gene catalogs
+     - IGC (human gut): Li,J. et al. (2014) An integrated catalog of reference genes in the human gut microbiome. Nat. Biotechnol., 32, 834–41.
+     - CRC-RGC (human gut): Zeller,G. et al. (2014) Potential of fecal microbiota for early-stage detection of colorectal cancer. Mol. Syst. Biol., 10, 766.
+     - skin-RGC (human skin): Oh,J. et al. (2014) Biogeography and individuality shape function in the human skin metagenome. Nature, 514, 59–64.
+     - mouse-RGC (human skin): Xiao,L. et al. (2015) A catalog of the mouse gut metagenome. Nat Biotech, 33, 1103–1108.
+     - OM-RGC (ocean): Sunagawa,S. et al. (2015) Structure and function of the global ocean microbiome. Science, 348 (6237), 1:10
 
-           Hyatt D, Chen G-L, Locascio PF, Land ML, Larimer FW, et al. (2010)
-               Prodigal: prokaryotic gene recognition and translation initiation site identification. BMC bioinformatics 11: 119 doi:10.1186/1471 to 2105-11-119.
-
-           Zhu W, Lomsadze A, Borodovsky M (2010)
-               Ab initio gene identification in metagenomic sequences. Nucleic acids research 38: 1 to 15 doi:10.1093/nar/gkq275.
-
-       Retrieving Marker Genes
-
-           Sunagawa et al. (2013)
-               Metagenomic species profiling using universal phylogenetic marker genes. Nature Methods 10, 1196 to 1199 doi:10.1038/nmeth.2693
+   Functional profiles
+     - eggNOG: Huerta-Cepas, J., et al. eggNOG 4.5: a hierarchical orthology framework with improved functional annotations for eukaryotic, prokaryotic and viral sequences. Nucleic Acids Res 2015. 10.1093/nar/gkv1248.
+     - ARDB: Liu,B. and Pop,M. (2009) ARDB—Antibiotic Resistance Genes Database. Nucleic Acids Res. , 37 , D443–D447.
+     - CARD: McArthur, A.G., et al. The comprehensive antibiotic resistance database. Antimicrob Agents Chemother 2013;57(7):3348-3357. 10.1128/AAC.00419-13.
+     - DBETH: Chakraborty, A., et al. DBETH: a Database of Bacterial Exotoxins for Human. Nucleic Acid Res. 2012;40 Database issue):D615-20 0.1093/nar/gkr942
+     - dbCAN: Yin, Y., et al. dbCAN: a web resource for automated carbohydrate-active enzyme annotation. Nucleic Acids Res 2012;40(Web Server issue):W445-451. 10.1093/nar/gks479.
+     - DrugBank: Knox C., et al. DrugBank 3.0: a comprehensive resource for 'omics' research on drugs. Nucleic Acids Res 2011;39(Database issue):D1035-41. 10.1093/nar/gkq1126
+     - ICEberg: Bi D., et al. ICEberg: a web-based resource for integrative and conjugative elements found in Bacteria. Nucleic Acids Res. 2012 Jan;40(Database issue):D621-6. 10.1093/nar/gkr846.
+     - KEGG: Kanehisa, M., et al. Data, information, knowledge and principle: back to metabolism in KEGG. Nucleic Acids Res 2014;42(Database issue):D199-205. 10.1093/nar/gkt1076.
+     - MetaCyc: Caspi, R., et al. The MetaCyc database of metabolic pathways and enzymes and the BioCyc collection of pathway/genome databases. Nucleic Acids Res 2015. 10.1093/nar/gkv1164.
+     - MvirDB: Zhou, C.E., et al. MvirDB--a microbial database of protein toxins, virulence factors and antibiotic resistance genes for bio-defence applications. Nucleic Acids Res 2007;35(Database issue):D391-394. 10.1093/nar/gkl791.
+     - PATRIC: Mao, C., et al. Curation, integration and visualization of bacterial virulence factors in PATRIC. Bioinformatics 2015;31(2):252-258. 10.1093/bioinformatics/btu631.
+     - Pfam: Finn, R.D., et al. Pfam: the protein families database. Nucleic Acids Res 2014;42(Database issue):D222-230. 10.1093/nar/gkt1223.
+     - Prophages: Waller, A.S., et al. Classification and quantification of bacteriophage taxa in human gut metagenomes. ISME J 2014;8(7):1391-1402. 10.1038/ismej.2014.30.
+     - Resfams: Gibson, M.K., et al. Improved annotation of antibiotic resistance determinants reveals microbial resistomes cluster by ecology. ISME J 9(1). 10.1038/ismej.2014.106.
+     - SEED subsystems: Overbeek, R., et al. The SEED and the Rapid Annotation of microbial genomes using Subsystems Technology (RAST). Nucleic Acids Res 2014;42(Database issue):D206-214. 10.1093/nar/gkt1226.
+     - Superfamily: Gough, J., et al. Assignment of homology to genome sequences using a library of hidden Markov models that represent all proteins of known structure. J Mol Biol 2001;313(4):903-919. 10.1006/jmbi.2001.5080.
+     - vFam: Skewes-Cox, P., et al. Profile hidden Markov models for the detection of viruses within metagenomic sequence data. PLoS One 2014;9(8):e105067. 10.1371/journal.pone.0105067.
+     - VFDB: Chen, L., et al. VFDB 2012 update: toward the genetic diversity and molecular evolution of bacterial virulence factors. Nucleic Acids Res 2012;40(Database issue):D641-645. 10.1093/nar/gkr989.
+     - Victors: Mao, C., et al. Curation, integration and visualization of bacterial virulence factors in PATRIC. Bioinformatics 2015;31(2):252-258. 10.1093/bioinformatics/btu631.
+     
 ";
   exit 0;
 }
@@ -1301,7 +1330,7 @@ sub Usage
                             MOCAT.pl -sf my.samples -ss\n\n";
   print "Assemble and predict genes: MOCAT.pl -sf my.samples -rtf
   (remove eg. adapters      MOCAT.pl -sf my.samples -sff adapters.fa -screened_files
-   and then DB screen)      MOCAT.pl -sf my.samples -s hg19 -r adapters.fa  -screened_files
+   and then DB screen)      MOCAT.pl -sf my.samples -bwa hg19 -r adapters.fa  -screened_files
                             MOCAT.pl -sf my.samples -a -r screened.adapters.fa.on.hg19
                             MOCAT.pl -sf my.samples -gp assembly -r screened.adapters.fa.on.hg19
                             MOCAT.pl -sf my.samples -ss\n\n";
@@ -1337,11 +1366,11 @@ sub Usage
   print color 'reset';
   print "   Extracts marker genes among the predicted genes\n\n";
   print color 'bold';
-  print " -s|screen ['DB1 DB2 ...',s,c,f,r]\n";
+  print " -soap|bwa ['DB1 DB2 ...',s,c,f,r]\n";
   print color 'reset';
   print "   Screen, extract and map reads against a reference databse (hg19 is provided) or (s)acftigs,
    (c)ontigs, sca(f)folds from an assembly, or scaftigs from a (r)evised assembly.
-   This mapping step uses SOAPaligner2.
+   This mapping step uses SOAPaligner2 (soap) or BWA (bwa).
    Additional options:
     -screened_files : If set, screened read files are generated, these are reads not matching the DB
     -extracted_files : If set, extracted read files are generated, these are reads matching the DB
@@ -1351,21 +1380,22 @@ sub Usage
   print color 'reset';
   print "   Same as 's|screen' above, but uses USearch, rather than SOAPaligner2.\n\n";
   print color 'bold';
-  print " -f|filter ['DB1 DB2 ...',s,c,f,r]\n";
+  print " -fsoap ['DB1 DB2 ...',s,c,f,r]\n";
   print color 'reset';
   print "   Filter screened reads, (s)caftigs, (c)ontigs, sca(f)folds or (r)evised assembly scaftigs
-    at higher \%ID and length cutoff. This step has to be run before calculating coverage\n\n";
+    at higher \%ID and length cutoff. This step has to be run before calculating profiles if the option soap was used\n\n";
   print color 'reset';
   print "   Additional options:
     -shm   : If set, faster, but saves data for the filtering step in /dev/shm/<USER>
 	\n";
   print color 'bold';
-  print " -p|profiling ['DB1 DB2 ...',s,c,f,r] -m|mode [gene, NCBI, mOTU, functional] -o [OUTPUT FOLDER]\n";
+  print " -psoap|pbwa ['DB1 DB2 ...',s,c,f,r] -m|mode [gene, NCBI, mOTU, functional] -o [OUTPUT FOLDER]\n";
   print color 'reset';
   print "   Generate gene, mOTU, NCBI or functional profiles on filtered reads,
    (s)caftigs, (c)ontigs, sca(f)folds or (r)evised assembly scaftigs. 
    If -mode is set to either NCBI or mOTU, it is expected that the 
-   reads have been correctly mapped to the corresponding databases
+   reads have been correctly mapped to the corresponding databases.
+   Specify psoap if you used the command 'soap' previously, and 'pbwa' if you used 'bwa'.
    Additional options:
     -no_horizontal : No not calculate horizontal gene & functional coverages
     -verbose       : Prints extra information about status of profiling steps
@@ -1583,7 +1613,7 @@ Look in the MOCAT/mod folder for examples how to create modules. Run MOCAT.pl wi
 
 =item MOCAT.pl -sf my.samples -rtf
 
-=item MOCAT.pl -sf my.samples -s hg19 -screened_files
+=item MOCAT.pl -sf my.samples -bwa hg19 -screened_files
 
 =item MOCAT.pl -sf my.samples -a -r hg19
 
@@ -1601,7 +1631,7 @@ Look in the MOCAT/mod folder for examples how to create modules. Run MOCAT.pl wi
 
 =item MOCAT.pl -sf my.samples -sff adapters.fa
 
-=item MOCAT.pl -sf my.samples -s hg19 -r adapters.fa -screened_files
+=item MOCAT.pl -sf my.samples -bwa hg19 -r adapters.fa -screened_files
 
 =item MOCAT.pl -sf my.samples -a -r screened.adapters.fa.on.hg19
 
@@ -1678,7 +1708,7 @@ NOTE! Both 'fastx' and 'solexaqa' requires the two LANE.1.fq and LANE.2.fq input
 B<Additional note:> If 'readtrimfilter_use_precalc_5prime_trimming' in the config file is set to 'yes', then the file MOCAT.cutoff5prime must exist. For more information, see Config File Section.
 
 
-=item B<C<-s|screen ['DB1 DB2 ...' or 's' or 'c' or 'f'] >>
+=item B<C<-soap|bwa ['DB1 DB2 ...' or 's' or 'c' or 'f'] >>
 
 I<Additionally required options>
 
@@ -1720,7 +1750,7 @@ This option can be set when running the -s option. If set, it copies the selecte
 
 =back
 
-Trimmed and filtered reads will be aligned against a custom database (or multiple databases) located in the MOCAT data folder, using SOAPAligner2. This databse has to be previously generated and the name to specify is the filenames of the database, excluding '.index.xxx'. Provided with MOCAT is the 'hg19' database, which can for example be used to screen for human contamination in procaryotic samples. Note, if a paired end read is filtered, then it's pair mate is also removed. For a detailed description of the database files required and created, see the taxonomic profiling section below. Note that if you wish to use multiple databases (a split database) the naming convention must follow DBNAME.1 DBNAME.2 etc.
+Trimmed and filtered reads will be aligned against a custom database (or multiple databases) located in the MOCAT data folder, using SOAPAligner2 (if command used is soap) or BWA (if command used is bwa). This databse has to be previously generated and the name to specify is the filenames of the database, excluding '.index.xxx'. Provided with MOCAT is the 'hg19' database, which can for example be used to screen for human contamination in procaryotic samples. Note, if a paired end read is filtered, then it's pair mate is also removed. For a detailed description of the database files required and created, see the taxonomic profiling section below. Note that if you wish to use multiple databases (a split database) (only works with option soap) the naming convention must follow DBNAME.1 DBNAME.2 etc.
 
 
 
@@ -1838,7 +1868,7 @@ Fetches (extracts) 40 universial marker genes (Ciccarelli et al., Science, 2006 
 
 
 
-=item B<C<-f|filter ['DB1 DB2 ...','s','c','f','r']>>
+=item B<C<-fsoap ['DB1 DB2 ...','s','c','f','r']>>
 
 I<Additionally required options>
 
@@ -1872,11 +1902,11 @@ If set, faster, but saves temporary data to /dev/shm/<USER> instead of TEMP dire
 
 =back
 
-Additional filtering of reads that have been mapped using the s|screen command. Percentage ID and length cut off are defined in the config file. With this option you can map reads at a lower cutoff and then filter them at different (higher) cutoffs. It is required to run this step before running profiling below, even though you do not want to filter at a higher cut off. If you do not want to filter at a higher cut off, set the values in the config file to the same ones as for the screen step.
+Additional filtering of reads that have been mapped using the soap command (required for soap, but not for bwa). Percentage ID and length cut off are defined in the config file. With this option you can map reads at a lower cutoff and then filter them at different (higher) cutoffs. It is required to run this step before running profiling below, even though you do not want to filter at a higher cut off. If you do not want to filter at a higher cut off, set the values in the config file to the same ones as for the screen step.
 
 
 
-=item B<C<-p|profiling ['DB1 DB2 ...','s','c','f','r']>>
+=item B<C<-psoap|pbwa ['DB1 DB2 ...','s','c','f','r']>>
 
 I<Additionally required options>
 
@@ -1897,6 +1927,8 @@ Specifies from which type of reads the assembly was made. Reads that were only t
 =over
 
 =item C<-m|mode ['gene', 'NCBI', 'mOTU', 'functional']>
+
+Specify psoap if you used soap in the screen step, or pbwa if you used bwa
 
 Basic mode (gene): The (gene) coverages of the database are calculated. Of course, the sequences in the database does not have to be genes, but as MOCAT was designed to be used with gene catalogs, we call this mode 'gene'. :)
 
