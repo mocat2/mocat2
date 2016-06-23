@@ -36,7 +36,7 @@
 # INTRODUCTION
 #####################################################################################################################################
 # This is a copilation of 11 scripts that does the main calculation of MOCAT. Base and inert counts are calculated from a BAM/SAM/SOAP file.
-# This version of the script (MOCAT v 1.4.0 and above) is faster than v 1.3 and below, ahs been completely rewritten from scratch.
+# This version of the script (MOCAT v 1.4.0 and above) is faster than v 1.3 and below, and has been completely rewritten from scratch.
 # Some features have been removed from within these scripts, e.g. the automatic making of a coord file. This should be done elsewhere.
 # A number of bugs have been fixed compared to previous version, but mainly bases are now counted from the portion of the gene that is covered.
 # v 1.3.8:
