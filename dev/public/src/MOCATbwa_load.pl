@@ -9,30 +9,34 @@ use Getopt::Long;
 
 my ( $line, $read );
 
-foreach my $file ( @ARGV[ 1 .. $#ARGV ] )
+foreach my $files ( @ARGV[ 1 .. $#ARGV ] )
 {
-  open my $IN, "gunzip -c $file | ";
-  while (<$IN>)
+  my @files = split ",", $files;
+  foreach my $file (@files)
   {
-    chomp( $line = $_ );
-    if ( $. % 4 == 1 )
+    open my $IN, "gunzip -c $file | ";
+    while (<$IN>)
     {
-      if ( $line =~ m/^\S+\/([12])$/ )
+      chomp( $line = $_ );
+      if ( $. % 4 == 1 )
       {
-        print "$line/$1\n";
+        if ( $line =~ m/^\S+\/([12])$/ )
+        {
+          print "$line/$1\n";
+        } else
+        {
+          die "INTERNAL ERROR: FastQ format '$line' not supported. Please coorect MOCAT2 source code.";
+        }
+      } elsif ( $. % 4 == 2 && $ARGV[0] == 2 && $file =~ /.single.fq./ )
+      {
+        print "N\n";
+      } elsif ( $. % 4 == 0 && $ARGV[0] == 2 && $file =~ /.single.fq./ )
+      {
+        print "E\n";
       } else
       {
-        die "INTERNAL ERROR: FastQ format '$line' not supported. Please coorect MOCAT2 source code.";
+        print "$line\n";
       }
-    } elsif ( $. % 4 == 2 && $ARGV[0] == 2 && $file =~ /.single.fq./ )
-    {
-      print "N\n";
-    } elsif ( $. % 4 == 0 && $ARGV[0] == 2 && $file =~ /.single.fq./ )
-    {
-      print "E\n";
-    } else
-    {
-      print "$line\n";
     }
   }
 }

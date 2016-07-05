@@ -41,12 +41,14 @@ my $ending;
 # Get fq or fq.gz files
 if ( $use3files == 1 ) {
 	@allFiles = `ls -1 $cwd/$sample/*fq $cwd/$sample/*fq.gz 2>/dev/null | grep -v 'trimmed.filtered'  | grep -P '\.single\.|\.pair\.'`;
+	chomp(@allFiles);
 # this will only be used in case of use3files=1
 $ending = $allFiles[0];
 $ending =~ s/.*.pair.1.//;
 }
 else {
 	@allFiles = `ls -1 $cwd/$sample/*fq $cwd/$sample/*fq.gz 2>/dev/null | grep -v 'trimmed.filtered' | grep -v '.single.' | grep -v '.pair.'`;
+	chomp(@allFiles);
 }
 
 for my $i ( 0 .. scalar @allFiles - 1 ) {
@@ -139,6 +141,7 @@ if ( $paired_end_data eq "yes" && $use3files == 0 ) {
 		my $base_name = $1;
 		$format_counter = $count;
 		( my $format, my $sanger ) = get_format();
+		chomp(@allFiles);
 
 		my $cmd = "$bin_dir/$fastq_trim_filter -m $solexaqa_or_fastx -a $cwd/$sample/" . $allFiles[$count] . " -b $cwd/$sample/" . $allFiles[ $count + 1 ] . " -f " . $saved_first_cycle{ $sample . $allFiles[$count] } . " -2 " . $saved_first_cycle{ $sample . $allFiles[ $count + 1 ] } . " -q $qual_cutoff -l $length_cutoff -p 50 $sanger -o $cwd/$sample/reads.processed.$solexaqa_or_fastx/$base_name";
 
@@ -407,6 +410,5 @@ sub get_format {
 	if ( $format eq 's' ) { $format = 'sanger'; $sanger = "-Q 33" }
 	if ( $format eq 'x' ) { $format = 'solexa'; $sanger = "" }
 	if ( $format eq 'i' ) { $format = 'ia';     $sanger = "" }
-	$format_counter++;
 	return ( $format, $sanger );
 }
