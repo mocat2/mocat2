@@ -561,6 +561,7 @@ sub run {
 		$name =~ s/raw.reads.lane/RAW/;
 		$name =~ s/readtrimfilter/RTF/;
 		$name =~ s/\.$//;
+		$name =~ s/[^a-zA-Z0-9]//g;
 		my $random_number = rand(999999999);
 		$random_number =~ m/(.*)\..*/;
 		$name = substr( $name, 0, 20 ) . "_" . $1;

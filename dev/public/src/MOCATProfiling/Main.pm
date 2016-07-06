@@ -5,7 +5,7 @@ use File::Slurp;
 use threads;
 use threads::shared;
 use MOCATProfiling::Variables;
-use File::Sync qw(fsync sync);
+#use File::Sync qw(fsync sync);
 use Math::Round qw(round);
 use List::Util qw[min max];
 use Scalar::Util qw[looks_like_number];

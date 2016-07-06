@@ -3,7 +3,7 @@ use strict;
 use warnings;
 use MOCATProfiling::Variables;
 use Storable;
-use File::Sync qw(fsync sync);
+#use File::Sync qw(fsync sync);
 
 # This code is part of the MOCAT analysis pipeline
 # Code is (c) Copyright EMBL and BGI, 2012-2014
