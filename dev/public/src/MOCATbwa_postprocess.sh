@@ -1,7 +1,7 @@
 
 export LENGTHFILE=$2
 
-echo " -- HASH --"
+echo " -- LOCATION --"
 samtools view $1 | perl -wlane '
 BEGIN{$LAST=""};
 $line = $_;
@@ -79,13 +79,9 @@ foreach $h (keys %h) {
 print "$h\t$t\t$h{$h}{ID}\t$h{$h}{start}\t$h{$h}{length}";
 }
 }
-' | cut -f 1,2,3 | sed 's/\(.*\)\.\(.\)\d+$/\1.\2/' | sed 's/\t/ /g' | getHash | sed 's/ /\t/g' > $1.PP.hash
-
-
-echo " -- STATS --"
-perl -F"\t" -wlane '
+' | perl -F"\t" -wlane '
 BEGIN{use Math::Round qw(:all);
-open IN, "<$ENV{LENGTHFILE}";
+open IN, "<$ENV{LENGTHFILE}" or die "MISSING \$ENV{LENGTHFILE}=$ENV{LENGTHFILE}!";
 while (<IN>){
 chomp;
 @d=split "\t", $_;
@@ -115,10 +111,10 @@ foreach $d (sort keys %{$h{$a}{$b}{$c}}) {
 $t = scalar keys %{$h2{$a}{$b}{$d}};
 print "$a\t$b\t$c\t$d\t$h{$a}{$b}{$c}{$d}\t$t";
 }}}}}
-' $1.PP.hash > $1.PP.hash.stats
+' > $1.coverageLocation
 
 
-echo " -- COV --"
+echo " -- HISTOGRAM --"
 msamtools coverage -x -o /dev/stdout $1 | gunzip -c - | perl -wane '
 chomp (@F);
 if ($F[0] =~ m/^>(.*)/) {
@@ -136,4 +132,4 @@ print "$k\t$kk\t$h{$k}{$kk}\n";
 }
 }
 }
-' > $1.PP.coverage
+' > $1.coverageHistogram
