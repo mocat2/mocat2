@@ -32,7 +32,7 @@ use MOCATUnpublished;    #DEV VER#
 
 $MOCAT_DESCRIPTION_FILE = "~/MOCAT.versions";
 $MOCAT_DESCRIPTION      = "Version 2.1";
-$INTERNAL_MOCAT_VERSION = "v2.1.0";
+$INTERNAL_MOCAT_VERSION = "v2.1.1";
 $version                = $INTERNAL_MOCAT_VERSION;
 my $space = " ";
 $INTERNAL_NCBI_VERSION       = "4";        #20150928: updated ncbi map to v3, #20151002: updated ncbi map to v4 because v3 had bugs and this version should have correct names.dmp names (except 5)
@@ -55,6 +55,7 @@ $INTERNAL_Z_VERSION          = "Z3";
 # v1.5.6: t18->t19; removed unnecessary code in the NCBI profiling steps
 # v1.5.7: Support for pair.1 pair.2 single in screen fasta file
 # v2.1.0: Added support for SLURM queue and BWA for mapping
+# v2.1.1: Updated version of fastq_trim_filter_v5_EMBL, fixing FastX bug
 
 ##DEV VER#
 $MOCAT_DESCRIPTION      = "Major updates";                            #DEV VER#
@@ -456,6 +457,14 @@ if ( $PERCENT_CUTOFF ne "" )
 }
 
 #DEV OVERRIDES# #DEV VER#
+foreach my $override (@CONFIG_OVERRIDE)
+{
+  my @overrideX = $override =~ /^([a-zA-Z_]*)=(.*)/; 
+  if ( scalar @overrideX == 2 )
+  {
+    $conf{ $overrideX[0] } = $overrideX[1];
+  }
+}
 if ( $hostname =~ /submaster/ )
 {    #DEV VER#
   $conf{MOCAT_qsub_system} = 'LSF';    #DEV VER#
@@ -485,14 +494,6 @@ if ( $filter_psort_buffer ne "" )
 if ($TC)
 {
   $conf{MOCAT_SGE_qsub_add_param} = $conf{MOCAT_SGE_qsub_add_param} . " -tc $TC ";
-}
-foreach my $override (@CONFIG_OVERRIDE)
-{
-  my @override = split /=/, $override;
-  if ( scalar @override == 2 )
-  {
-    $conf{ $override[0] } = $override[1];
-  }
 }
 
 #DEV OVERRIDES# #DEV VER#
