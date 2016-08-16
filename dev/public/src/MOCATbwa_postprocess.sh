@@ -1,16 +1,36 @@
 
-export LENGTHFILE=$2
+export LENGTHFILE=$2 &&
+export MAPFILE=$3 &&
+export BINDIR=$4 &&
 
-echo " -- LOCATION --"
-samtools view $1 | perl -wlane '
-BEGIN{$LAST=""};
+${BINDIR}/samtools view $1 | perl -wlane '
+BEGIN{
+$LAST="";
+if($ENV{MAPFILE} eq "NOMAP") {
+$MAP=0;
+print STDERR "START 1/2 location calculations";
+} else {
+print STDERR "START 1/2 location calculations";
+print STDERR "map file: $ENV{MAPFILE}";
+$MAP=1;
+open $in, "<", $ENV{MAPFILE} or die "ERROR & EXIT: Cannot load $ENV{MAPFILE}";
+while ($line = <$in>) {
+chomp $line;
+@line = split "\t", $line;
+$map{$line[0]}=$line[1];
+}
+}
+};
+
+
 $line = $_;
 if($F[0] ne $LAST){
-if (scalar keys %h > 1){$t="multi"} else {$t="unique"};
-foreach $h (keys %h) {
+if (scalar keys %h2 > 1){$t="multi"} else {$t="unique"};
+foreach $h (sort keys %h) {
 print "$h\t$t\t$h{$h}{ID}\t$h{$h}{start}\t$h{$h}{length}";
 }
 %h=();
+%h2=();
 }
 
 #####################################################
@@ -69,18 +89,29 @@ print "$h\t$t\t$h{$h}{ID}\t$h{$h}{start}\t$h{$h}{length}";
   $as = 100 - ( $mm / $matchLength ) * 100;
 #####################################################
 
+# SAVE TO HASH
+if ($MAP == 1) {
+die "ERROR & EXIT: Postprocess map file $ENV{MAPFILE} does not contain $F[2] $!" unless ($map{$F[2]});
+$h2{$map{$F[2]}} = 1;
+} else {
+$h2{$F[2]} = 1;
+}
 $h{$F[2]}{start}=$F[3];
 $h{$F[2]}{ID} = $as;
 $h{$F[2]}{length}=$matchLength;
 $LAST=$F[0];
+# SAVE TO HASH
+
 END{
-if (scalar keys %h > 1){$t="multi"} else {$t="unique"};
+if (scalar keys %h2 > 1){$t="multi"} else {$t="unique"};
 foreach $h (keys %h) {
 print "$h\t$t\t$h{$h}{ID}\t$h{$h}{start}\t$h{$h}{length}";
 }
+print STDERR "DONE 1/2 location calculations";
 }
 ' | perl -F"\t" -wlane '
 BEGIN{use Math::Round qw(:all);
+print STDERR "START 2/2 location calculations";
 open IN, "<$ENV{LENGTHFILE}" or die "MISSING \$ENV{LENGTHFILE}=$ENV{LENGTHFILE}!";
 while (<IN>){
 chomp;
@@ -110,12 +141,15 @@ foreach $c (sort keys %{$h{$a}{$b}}) {
 foreach $d (sort keys %{$h{$a}{$b}{$c}}) {
 $t = scalar keys %{$h2{$a}{$b}{$d}};
 print "$a\t$b\t$c\t$d\t$h{$a}{$b}{$c}{$d}\t$t";
-}}}}}
+}}}}
+print STDERR "DONE 2/2 location calculations";
+}
 ' > $1.coverageLocation
 
-
-echo " -- HISTOGRAM --"
-msamtools coverage -x -o /dev/stdout $1 | gunzip -c - | perl -wane '
+${BINDIR}/msamtools-new coverage -x -o /dev/stdout $1 | gunzip -c - | perl -wane '
+BEGIN{
+print STDERR "START histogram calculations\n";
+};
 chomp (@F);
 if ($F[0] =~ m/^>(.*)/) {
 $n=$1;
@@ -131,5 +165,6 @@ foreach $kk (keys %{$h{$k}}){
 print "$k\t$kk\t$h{$k}{$kk}\n";
 }
 }
+print STDERR "DONE histogram calculations\n";
 }
 ' > $1.coverageHistogram

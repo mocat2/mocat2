@@ -44,6 +44,10 @@ sub create_job
     $read_type = 'extracted';
   }
 
+  unless ( $conf{bwa_postprocess_mapfile} )
+  {
+    $conf{bwa_postprocess_mapfile} = 'NOMAP';
+  }
   unless ( $conf{bwa_options} ) { $conf{bwa_options} = "" }
   my $tmp = $conf{bwa_options};
   $tmp =~ s/ //g;
@@ -320,8 +324,7 @@ sub create_job
 
       print JOB " && $bin_dir/bwa.fixed mem $conf{bwa_options} -t $processors2 $database <($src_dir/MOCATbwa_load.pl 1 $ONES $UNIQUES) <($src_dir/MOCATbwa_load.pl 2 $TWOS $UNIQUES) $LOG2 ";
       print JOB " | grep -v '\^\@' | awk '{if(\$6 != \"*\"){print}}' ";
-      
-      
+
       # This was initially added for Bowtie2, but because we hacked the source code and added bwa_load it's not needed here anymore
       #      if ( $conf{bwa_paired_end_filtering} eq 'yes' && $conf{MOCAT_paired_end} eq "yes")
       #      {
@@ -338,7 +341,7 @@ sub create_job
 
       #print JOB " | perl $src_dir/MOCATbwa_filter.pl $conf{screen_percent_cutoff} $conf{screen_length_cutoff} $LOG2 ";
       print JOB " | $bin_dir/msamtools$OSX -S --besthit -m filter -l $conf{bwa_length_cutoff} -p $conf{bwa_percent_cutoff} -z $conf{bwa_min_perc_query_aligned} -t $len_file - $LOG2 ";
-      
+
       if ( $conf{bwa_paired_end_filtering} eq 'yes' && $conf{MOCAT_paired_end} eq "yes" )
       {
         print JOB "| $scr_dir/MOCATFilter_filterPE.pl $LOG2 ";
@@ -348,9 +351,10 @@ sub create_job
       print JOB " | $scr_dir/MOCATFilter_stats_bwa.pl -length $conf{filter_length_cutoff} -identity $conf{filter_percent_cutoff} -db $screen -format SAM -stats $stats $LOG2 ";
       print JOB " | $bin_dir/msamtools$OSX -Sb -m merge -t $len_file - $LOG2 > $output_file.bam.tmp";
       print JOB " && sync  && test -e $output_file.bam.tmp && mv $output_file.bam.tmp $output_file.bam && test -e $output_file.bam ";
-      
-      if ($conf{bwa_postprocess} eq 'yes'){
-       print JOB " && $src_dir/MOCATbwa_postprocess.sh $output_file.bam $len_file ";
+
+      if ( $conf{bwa_postprocess} eq 'yes' )
+      {
+        print JOB " && $src_dir/MOCATbwa_postprocess.sh $output_file.bam $len_file $conf{bwa_postprocess_mapfile} $bin_dir $LOG2 ";
       }
 
       # Create the screened and extracted files

@@ -8,6 +8,7 @@
 grep '^export' $MC_MODCFG | source /dev/stdin 2>/dev/null &&
 
 # Define
+export LC_ALL=C
 FOLDER="$MC_WD/GENE_CATALOG_ANNOTATIONS/$MC_SF" &&
 LOCAL_TMP="$MC_WD/GENE_CATALOG_ANNOTATIONS/$MC_SF/temp" &&
 PROJECT_FOLDER="$MC_WD" &&

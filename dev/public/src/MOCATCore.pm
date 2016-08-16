@@ -935,6 +935,9 @@ EOF
         chomp( my $return = `$cmd` );
         $return =~ m/.* (\d+)/;
         my $id = $1;
+        unless ($id) {
+         die "ERROR & EXIT: No SLURM ID available. Did the queuing of the job fail?";
+        }
         print localtime() . ": SLURM Job ID is $id - $ID\n";
         system("touch $cwd/logs/SLURM_specific/$job.$date.status");
         sleep 10;

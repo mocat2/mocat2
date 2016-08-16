@@ -2279,7 +2279,7 @@ To initiate a new folder structure for MOCAT three steps are required.
 
 =back
 
-=head2 Example of a folder structure
+=head2 Examples of folder structures
 
 Current folder is: /usr/me/project. Then the following setup would be appropriate to run MOCAT:
 
@@ -2287,7 +2287,7 @@ Current folder is: /usr/me/project. Then the following setup would be appropriat
 
 =item ____________________________________
 
-=item Sample files (aoption A):
+=item Sample files (option A; paired-end):
 
 =item /usr/me/project/SAMPLE_1/lane1.1.fq
 
@@ -2312,7 +2312,7 @@ Current folder is: /usr/me/project. Then the following setup would be appropriat
 
 =item ____________________________________
 
-=item Sample files (aoption B):
+=item Sample files (option B; paired-end):
 
 =item /usr/me/project/SAMPLE_1/lane1.pair.1.fq
 
@@ -2328,6 +2328,16 @@ Current folder is: /usr/me/project. Then the following setup would be appropriat
 
 =back
 
+
+=item ____________________________________
+
+=item Sample files (option C; single-end):
+
+=item /usr/me/project/SAMPLE_1/lane1.fq
+
+=item /usr/me/project/SAMPLE_1/lane2.fq
+
+=back
 
 =over 
 

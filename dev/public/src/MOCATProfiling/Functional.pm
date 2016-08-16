@@ -39,9 +39,8 @@ sub summarizeFunctionalLevels {
 	#print join( " ", @ORDER ) . " : " . join( " ", @header ) . " : " . join( " ", @LEVELS ) . " X\n";
 
 	while (my $line = <$MAP>) {
-		chomp;
+		chomp $line;
 		my @line = split /\t/, $line;
-
 		$index = 0;
 		while ( exists $HASH{"$line[0].$index"} ) {
 			my @array  = @{ $HASH{"$line[0].$index"} };    # get the one line array, map data is stored in INIT_NUM and to the end

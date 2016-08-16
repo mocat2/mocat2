@@ -98,7 +98,7 @@ open STATS, ">$ostats" or die("Could not open output stats file ($ostats): $!");
 print STATS "Reads\tBases\tMax\tAvg\tKmer\tInserts\tMin % identity\tMin length\tSOAP max mismatches\n";
 print STATS "$READS\t$BASES\t$MAX\t" . $BASES / $READS . "\t$S2[4]\t$INSERTS\t$S2[6]\t$S2[7]\t$S2[8]\n";
 close STATS;
-print STDERR getLoggingTime() . " MOCATFilter - stats : [STATS] total_reads_in=$IN | unique_reads=$READS | total_bases=$BASES\n";
+print STDERR getLoggingTime() . " MOCATFilter - stats : [STATS] total_reads_in_and_out=$IN | unique_reads=$READS | total_bases=$BASES\n";
 print STDERR getLoggingTime() . " MOCATFilter - stats : finished\n";
 
 exit 0;

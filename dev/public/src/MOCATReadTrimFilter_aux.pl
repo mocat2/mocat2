@@ -172,8 +172,8 @@ if ( $paired_end_data eq "yes" && $use3files == 1 ) {
 	unless ( scalar @allFiles % 3 == 0 ) {
 		die "ERROR & EXIT: $sample seems to have .pair. and .single. files, but the number of files is not exactly 3 (number is " . ( scalar @allFiles ) . "), please check that no files are mising";
 	}
-	chomp( my @beginning = `ls -1 $cwd/$sample/*.pair.1.*fq.gz $cwd/$sample/*.pair.1.*.fq $cwd/$sample/*.pair.1.*fq.bz2 2>/dev/null | sed 's/.pair.1.*//'` );
-	chomp( my $end       = `ls -1 $cwd/$sample/*.pair.1.*fq.gz $cwd/$sample/*.pair.1.*.fq $cwd/$sample/*.pair.1.*fq.bz2 2>/dev/null | sed 's/.*.pair.1.//' | sort -u` );
+	chomp( my @beginning = `ls -1 $cwd/$sample/*.pair.1.*fq.gz $cwd/$sample/*.pair.1.*fq $cwd/$sample/*.pair.1.*fq.bz2 2>/dev/null | sed 's/.pair.1.*//'` );
+	chomp( my $end       = `ls -1 $cwd/$sample/*.pair.1.*fq.gz $cwd/$sample/*.pair.1.*fq $cwd/$sample/*.pair.1.*fq.bz2 2>/dev/null | sed 's/.*.pair.1.//' | sort -u` );
 	foreach my $beginning (@beginning) {
 		unless ( -e "$beginning.single.$end" ) {
 			die "ERROR & EXIT: Expected $beginning.single.$end to exist. Do the files have different ending for the sample $sample?";

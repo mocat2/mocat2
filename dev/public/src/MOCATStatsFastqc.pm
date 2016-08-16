@@ -26,7 +26,7 @@ sub create_job {
 		
 		my $LOG = " 2>> $cwd/logs/$job/samples/MOCATJob_$job.$sample.$date.log >> $cwd/logs/$job/samples/MOCATJob_$job.$sample.$date.log ";
 
-		chomp( my @fqs = `ls -1 $cwd/$sample/*fq $cwd/$sample/*fq.gz 2>/dev/null | grep -v 'trimmed.filtered' | grep -v '.single.' | grep -v '.pair.'` );
+		chomp( my @fqs = `ls -1 $cwd/$sample/*fq $cwd/$sample/*fq.gz 2>/dev/null | grep -v 'trimmed.filtered' ` );
 		foreach my $lane (@fqs) {
 			print JOB "$ext_dir/fastqc/fastqc -o $cwd/$sample/ -f fastq -t 1 $lane $LOG\n";
 		}
