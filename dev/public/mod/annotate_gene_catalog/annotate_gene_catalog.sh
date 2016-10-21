@@ -158,7 +158,8 @@ BEGIN{use List::Util qw(min max)}
 $overlap=max(0, min($F[3], $F[8]) - max($F[2], $F[7])) / min( $F[3]-$F[2],$F[8]-$F[7] );
 print if (($F[4] >= $ENV{score} && $F[9] >= $ENV{score} && $overlap >= $ENV{overlap}));
 ' $NAME2.$DB2.tmp3 | sort -k7,7 > $NAME2.$DB2.$scores.tmp4 &&
-join -1 7 -2 1 -o 1.1 2.2 -e "xNAx" $NAME2.$DB2.$scores.tmp4 $MC_MOD/data/$DB2.MAP | sed 's/ /\t/g' | sort -u | perl -F"\t" -ane '
+perl -F"\t" -lane 'print if ($F[4] >= 1000 && $F[9] >= 1000);' $NAME2.$DB2.$scores.tmp4 | sort -k7,7 > $NAME2.$DB2.$scores.tmp4b 
+join -1 7 -2 1 -o 1.1 2.2 -e "xNAx" $NAME2.$DB2.$scores.tmp4b $MC_MOD/data/$DB2.MAP | sed 's/ /\t/g' | sort -u | perl -F"\t" -ane '
 chomp(@F);
 foreach $i (1 .. scalar @F-1){
 @l = split /%/, $F[$i];

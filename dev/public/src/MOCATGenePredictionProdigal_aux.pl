@@ -36,7 +36,8 @@ for my $var ($AAt, $NTt) {
     if (m/^>/) {
       chomp;
       my @line = split(/ /, $_);
-      $line[0] =~ s/\_(\d+)\_(\d+)$/_gene$1_$2/;
+      #$line[0] =~ s/\_(\d+)\_(\d+)$/_gene$1_$2/;
+      $line[0] =~ s/\_(\d+)$/_gene$1/;
       my $strand;
       if ($line[6] eq '1') {
 	$strand = '+';

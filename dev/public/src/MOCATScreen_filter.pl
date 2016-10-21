@@ -124,6 +124,7 @@ for my $j ( 0 .. scalar @inputLane - 1 )
       if ( $counter == 1 )
       {
         $line =~ m/^@(.*)\/[12]/;
+        unless($1) {die "INTERNAL ERROR: $line <-- could not capture m/^@(.*)\/[12]/"}
         if ( $hash{$1} )
         {
           $print = 0;
