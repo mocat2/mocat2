@@ -24,7 +24,7 @@ sub summarizeFunctionalLevels {
 		print STDERR "(" . MOCATProfiling::Misc::getLoggingTime() . ") : summarizing functional levels based on maps in $map_file\n";
 	}
 	chomp( my $header = <$MAP> );
-	my @header = split /\s+/, $header;
+	my @header = split /\t/, $header;
 	my @ORDER;
 	foreach my $lvl (@LEVELS) {
 		foreach my $h ( 0 .. scalar @header - 1 ) {
@@ -38,18 +38,21 @@ sub summarizeFunctionalLevels {
 
 	#print join( " ", @ORDER ) . " : " . join( " ", @header ) . " : " . join( " ", @LEVELS ) . " X\n";
 
-	while (my $line = <$MAP>) {
-		chomp $line;
-		my @line = split /\t/, $line;
+	while (my $line0 = <$MAP>) {
+		chomp $line0;
+		my @line = split /\t/, $line0;
 		$index = 0;
 		while ( exists $HASH{"$line[0].$index"} ) {
 			my @array  = @{ $HASH{"$line[0].$index"} };    # get the one line array, map data is stored in INIT_NUM and to the end
 			my $length = $array[1] - $array[0] + 1;        # this is the length of the current gene
+
+      $_ ||= '' for @line;
+
 			for my $i (@ORDER) {                           # here we won't run over the map file in order, but rather in the order of the @levels, it's a bit tricky
 				my $level = $header[$i];
-				unless ( $line[$i] ) {
-					$line[$i] = '';
-				}
+#				unless ( $line[$i] ) {
+#				 $line[$i] = '';
+#				}
 
 				#print join(" ", @line) . " - $level - $i - $line[$i]\n";
 

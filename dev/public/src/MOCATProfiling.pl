@@ -8,6 +8,8 @@
 # UPDATES
 #####################################################################################################################################
 #
+# 20161215: Fixed a bug in Funcitonal.pm around line 51
+#
 # 20160330: I changed how SAM input lengths are calculated
 #
 # 20151005: I noted that the old length file was still used, despite this info in map file. So changed that.

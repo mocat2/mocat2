@@ -31,13 +31,13 @@ use MOCATGenePredictionMetaGeneMark;
 use MOCATUnpublished;    #DEV VER#
 
 $MOCAT_DESCRIPTION_FILE = "~/MOCAT.versions";
-$MOCAT_DESCRIPTION      = "Version 2.1";
-$INTERNAL_MOCAT_VERSION = "v2.1.1";
+$MOCAT_DESCRIPTION      = "Version 2.1.2";
+$INTERNAL_MOCAT_VERSION = "v2.1.2";
 $version                = $INTERNAL_MOCAT_VERSION;
 my $space = " ";
 $INTERNAL_NCBI_VERSION       = "4";        #20150928: updated ncbi map to v3, #20151002: updated ncbi map to v4 because v3 had bugs and this version should have correct names.dmp names (except 5)
 $INTERNAL_TAXONOMIC_VERSION  = "t19";      #t14->t15: fixed important bug that correctly calculates -1 for norm files in NCBI mode, t16: fixed bug in profiling affected mm.dist.among.unique norm for NCBI; t17: 20150928 updated ncbi map to v3; t17: 20151002 updated ncbi map to v4
-$INTERNAL_FUNCTIONAL_VERSION = "f16";      #14->15: added horizontal coverage; 15->16: Fixed a bug that calculated the wrong unannotated abundances for functional profiles and mm.dist.among.unique
+$INTERNAL_FUNCTIONAL_VERSION = "f17";      #14->15: added horizontal coverage; 15->16: Fixed a bug that calculated the wrong unannotated abundances for functional profiles and mm.dist.among.unique. 17: fixe a bug on line 51 in Functional.pm
 $INTERNAL_MOTU_VERSION       = "m14";
 $INTERNAL_GENE_VERSION       = "g15";      #14->15: added horizontal coverage
 $INTERNAL_RESISTANCE_VERSION = "r14";
