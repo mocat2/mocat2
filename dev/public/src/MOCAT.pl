@@ -31,8 +31,8 @@ use MOCATGenePredictionMetaGeneMark;
 use MOCATUnpublished;    #DEV VER#
 
 $MOCAT_DESCRIPTION_FILE = "~/MOCAT.versions";
-$MOCAT_DESCRIPTION      = "Version 2.1.2";
-$INTERNAL_MOCAT_VERSION = "v2.1.2";
+$MOCAT_DESCRIPTION      = "Version 2.1.3";
+$INTERNAL_MOCAT_VERSION = "v2.1.3";
 $version                = $INTERNAL_MOCAT_VERSION;
 my $space = " ";
 $INTERNAL_NCBI_VERSION       = "4";        #20150928: updated ncbi map to v3, #20151002: updated ncbi map to v4 because v3 had bugs and this version should have correct names.dmp names (except 5)
@@ -42,7 +42,7 @@ $INTERNAL_MOTU_VERSION       = "m14";
 $INTERNAL_GENE_VERSION       = "g15";      #14->15: added horizontal coverage
 $INTERNAL_RESISTANCE_VERSION = "r14";
 $INTERNAL_VIRULENCE_VERSION  = "v14";
-$INTERNAL_GENERAL_VERSION    = "gen20";    # gen15: uses FilterV2 instead of V1. gen16: has fixed the bug in v2, gen17: fixed minor bug in FilterV2 where len file wasn't sorted, gen18: added horizontal coverage, gen91: fixed bug in profiling for mm.dist.among.unique and NCBI
+$INTERNAL_GENERAL_VERSION    = "gen21";    # gen15: uses FilterV2 instead of V1. gen16: has fixed the bug in v2, gen17: fixed minor bug in FilterV2 where len file wasn't sorted, gen18: added horizontal coverage, gen91: fixed bug in profiling for mm.dist.among.unique and NCBI; gen20: fixed major bug in screen_fasta_file that prevented any new illumina formated reads to be removed
 $INTERNAL_A_VERSION          = "A4";       # this is the assembly version A3: supported up to SOAPdenovo 1.06, A4: SOAPdenovo 2.04
 $INTERNAL_B_VERSION          = "B4";       # from version 1.4.2 and onwards this version will incerase if there are changes to the /PROFILES and /SUMMARIES folders
 $INTERNAL_C_VERSION          = "C4";       # this is filtering V2. In v3 there was still a minor bug, which was fixed in v4.

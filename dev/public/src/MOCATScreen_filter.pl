@@ -39,12 +39,12 @@ GetOptions(
 
 unless ($bwa)
 {
- print STDERR "MOCATScreen_filter.pl: processing SOAP hash...\n";
-  open IN, "<$toRemoveFile";
+ print STDERR "MOCATScreen_filter.pl: processing SOAP hash\n";
+  open IN, "<$toRemoveFile" or die;
   while (<IN>)
   {
     chomp;
-
+    #print "\$hash{$_} = 1;\n";
     #s/\/.*$//; # no trailing /1 or /2 from now on
     $hash{$_} = 1;
   }
@@ -63,7 +63,7 @@ unless ($bwa)
   }
   close $IN;
 }
-print STDERR "MOCATScreen_filter.pl: loaded hash ok, processing...\n";
+print STDERR "MOCATScreen_filter.pl: loaded hash ok, processing\n";
 
 my $EsumLastFile = 0;
 my $EsumPair2    = 0;

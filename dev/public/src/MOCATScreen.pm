@@ -359,44 +359,7 @@ sub create_job
       # Get lanes in the sample folder, for fasta file screen
       %use3files = ();
       my $end;
-      chomp( my @fqs = `ls -1 $cwd/$sample/*fq $cwd/$sample/*fq.gz $cwd/$sample/*.fq.bz2 2>/dev/null | grep -v 'trimmed.filtered' | grep -P '\.single\.fq|\.pair\.1\.fq|\.pair\.2\.fq'` );
-      if ( !( scalar @fqs % 3 == 0 ) && scalar @fqs > 0 )
-      {
-        die "ERROR & EXIT: $sample seems to have .pair. and .single. files, but the number of files is not exactly 3 (number is " . ( scalar @fqs ) . "), please check that no files are mising";
-      }
-      if ( scalar @fqs % 3 == 0 && scalar @fqs > 0 )
-      {
-        chomp( my @beginning = `ls -1 $cwd/$sample/*.pair.1.*fq.gz $cwd/$sample/*.pair.1.*.fq $cwd/$sample/*.pair.1.*fq.bz2 2>/dev/null | sed 's/.pair.1.*//'` );
-        chomp( $end = `ls -1 $cwd/$sample/*.pair.1.*fq.gz $cwd/$sample/*.pair.1.*.fq $cwd/$sample/*.pair.1.*fq.bz2 2>/dev/null| sed 's/.*.pair.1.//' | sort -u` );
-        foreach my $beginning (@beginning)
-        {
-          unless ( -e "$beginning.single.$end" )
-          {
-            die "ERROR & EXIT: Expected $beginning.single.$end to exist. Do the files have different ending for the sample $sample?";
-          }
-          unless ( -e "$beginning.pair.1.$end" )
-          {
-            die "ERROR & EXIT: Expected $beginning.single.$end to exist. Do the files have different ending for the sample $sample?";
-          }
-          unless ( -e "$beginning.pair.2.$end" )
-          {
-            die "ERROR & EXIT: Expected $beginning.single.$end to exist. Do the files have different ending for the sample $sample?";
-          }
-        }
-        $use3files{$sample} = 1;
-        @fqs = @beginning;
-      }
-
-      unless ( $use3files{$sample} )
-      {
-        chomp( @fqs = `ls -1 $cwd/$sample/*.fq $cwd/$sample/*.fq.gz 2>/dev/null | grep -v 'trimmed\.filtered' | grep -v '\.single\.fq' | grep -v '\.pair\.'| grep -v "\\.2\\.fq"` );
-      }
-
-      foreach my $i ( 0 .. ( scalar @fqs - 1 ) )
-      {
-        chomp( $fqs[$i] );
-        $fqs[$i] =~ s/$cwd\/$sample\///;
-      }
+      
 
       # make directory
       print JOB " && mkdir -p $mf ";
@@ -412,8 +375,10 @@ sub create_job
       }
 
       # Usearch, if fasta file
+      my @fqs;
       if ($SCREEN_FASTA_FILE)
       {
+        @fqs = @lanes;
         print JOB " && echo 'FASTA FILE USED IN SCREEN: $screen[0]' >> $cwd/logs/$job/samples/MOCATJob_$job.$sample.$date.log ";
         if ( scalar @fqs == 0 )
         {
@@ -422,41 +387,17 @@ sub create_job
         print JOB " && rm -f $ids_file";    # Because read ids are appended to this file below, we need to first delete the file
         foreach my $lane (@fqs)
         {
-          my $zip = "cat";
-          if ( $lane =~ m/.gz$/ || $end =~ m/.gz$/ )
-          {
-            $zip = $ZCAT;
-          }
           my $fa      = "$temp_dir/$sample/temp/$lane.tmp";
           my $blast   = "$mf/$lane.usearch";
           my $logfile = "$mf/$lane.usearch.log";
           my $stats   = "$cwd/$sample/stats/$lane.usearch.on.$basename.$conf{MOCAT_data_type}.total.stats";
           my $stats2  = "$cwd/$sample/stats/$lane.usearch.on.$basename.$conf{MOCAT_data_type}.match.stats";
-          my $lane2   = $lane;
-          my $lane3;
-          my $lane1;
 
-          if ( $use3files{$sample} )
-          {
-            $lane1 = "$cwd/$sample/$lane.pair.1.$end";
-            $lane2 = "$cwd/$sample/$lane.pair.2.$end";
-            $lane3 = "$cwd/$sample/$lane.single.$end";
-          } else
-          {
-            $lane1 = "$cwd/$sample/$lane";
-            $lane3 = "";
-            if ( $lane =~ m/.1.fq/ )
-            {
-              $lane2 =~ s/.1.fq/.2.fq/;
-              $lane2 = "$cwd/$sample/$lane2";
-            } else
-            {
-              $lane2 = "";
-            }
-          }
           unless ($only_regenerate_reads)
           {
-            print JOB " && $zip $lane1 $lane2 $lane3 | $scr_dir/MOCATScreenFastaFile_aux.pl fq2fa > $fa";
+            print JOB " && gunzip -c $cwd/$sample/$screen_source.$conf{MOCAT_data_type}/$lane*fq.gz | $scr_dir/MOCATScreenFastaFile_aux.pl fq2fa > $fa";
+
+            #<(gunzip -c $cwd/$sample/$screen_source.$conf{MOCAT_data_type}/$lane*fq.gz | $scr_dir/MOCATScreenFastaFile_aux.pl fq2fa)
 
             if ( $conf{screen_fasta_file_usearch_version} eq '5' )
             {
@@ -472,8 +413,8 @@ sub create_job
             print JOB " && echo -e \"total_reads\\ttotal_hits\\tunique_hits\\n\$faEntries\\t\$totHits\\t\$uniqHits\" > $stats";
           }
 
-          # This line also handles the conversion of new formatted FastQ files into the old format
-          print JOB " && rm $fa $LOG && cut -f 1 $blast | perl -F\":\" -lane 'if (\$_ !~ /.+\\//){print \"\$F[0]:\$F[3]:\$F[4]:\$F[5]:\$F[6]#0/\"}else{\$_ =~ /(.+\\/)/; print \$1}' >> $ids_file ";
+          # in MOCAT v2.2+; we're loading not from the raw FastQ files but rather from the processed ones, and dont need the conversion
+          print JOB " && rm $fa $LOG && cut -f 1 $blast  | sed 's|/[12]\$||' >> $ids_file ";
           print JOB " && perl -lane \'BEGIN{sub fun {\$h{\$b}<=>\$h{\$a}}}; \$h{\$F[1]}++; END{foreach \$k (sort fun(keys(\%h))){print \"\$k\\t\$h{\$k}\"}}\' $blast > $stats2";
         }    # End, for each lane
       }    # End, if fasta file
