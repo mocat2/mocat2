@@ -178,7 +178,7 @@ sub usage {
 							print "line = $cmd\n";
 						}
 						my @line = `$cmd`;
-						if ( scalar @line => 2 ) {
+						if ( scalar @line >= 2 ) {
 							unless ( $line[-2] ) {
 								$line[-2] = '';
 							}

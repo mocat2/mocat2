@@ -1,0 +1,13 @@
+# Temp files
+*~
+.~*
+
+# MacOS files
+.DS_Store
+._*
+
+# Conflict resolution
+*.orig
+
+# Remote shares
+.nfs*
