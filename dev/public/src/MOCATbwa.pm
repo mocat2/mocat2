@@ -351,6 +351,8 @@ sub create_job
       print JOB " | $scr_dir/MOCATFilter_stats_bwa.pl -length $conf{filter_length_cutoff} -identity $conf{filter_percent_cutoff} -db $screen -format SAM -stats $stats $LOG2 ";
       print JOB " | $bin_dir/msamtools$OSX -Sb -m merge -t $len_file - $LOG2 > $output_file.bam.tmp";
       print JOB " && sync  && test -e $output_file.bam.tmp && mv $output_file.bam.tmp $output_file.bam && test -e $output_file.bam ";
+      
+      # shouldn't we make the $ids_file? NO this is generated inside the MOCATScreen_filter.pl file 
 
       if ( $conf{bwa_postprocess} eq 'yes' )
       {
@@ -380,10 +382,10 @@ sub create_job
           print JOB " $ef/$lane.extracted.$screen ";
         }
       }
-      print JOB " -bindir $bin_dir -bwa $output_file.bam -toremove $ids_file -stats $stats_file -estats $estats_file -identity $conf{bwa_percent_cutoff} -length $conf{bwa_length_cutoff} -soapmaxmm NA $LOG ";
+      print JOB " -bindir $bin_dir -bwa $output_file.bam -toremove not_used_in_BWA_mode -stats $stats_file -estats $estats_file -identity $conf{bwa_percent_cutoff} -length $conf{bwa_length_cutoff} -soapmaxmm NA $LOG ";
 
       # Remove ids file, it can get really big
-      print JOB " && rm -f $ids_file";
+      # NOT GENERATED print JOB " && rm -f $ids_file";
 
     }    # End, for each DB
 

@@ -52,6 +52,7 @@ unless ($bwa)
 } else
 {
  print STDERR "MOCATScreen_filter.pl: processing BWA hash...\n";
+ -e $bwa || die "ERROR & EXIT: missing $bwa ";
   open my $IN, "$bindir/samtools view $bwa | " or die "ERROR & EXIT: Cannor execute: $bindir/samtools view $bwa | ";
   while ( my $line = <$IN> )
   {
