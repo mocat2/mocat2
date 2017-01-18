@@ -135,10 +135,10 @@ $h2{$F[0]}{$F[1]}{$x}{$y} = 1;
 
 END{
 @A=("unique", "multi");
-foreach $a (sort keys %h){
+foreach $a (keys %h){
 foreach $b (@A) {
-foreach $c (sort keys %{$h{$a}{$b}}) {
-foreach $d (sort keys %{$h{$a}{$b}{$c}}) {
+foreach $c (keys %{$h{$a}{$b}}) {
+foreach $d (keys %{$h{$a}{$b}{$c}}) {
 $t = scalar keys %{$h2{$a}{$b}{$d}};
 print "$a\t$b\t$c\t$d\t$h{$a}{$b}{$c}{$d}\t$t";
 }}}}
