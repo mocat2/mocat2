@@ -121,8 +121,8 @@ $div{$d[0]} = $d[1];
 close IN;
 }
 chomp(@F);
-$x = round($F[3] / ($div{$F[0]}) * 200 );
-$y = nearest(0.01, $F[3] / ($div{$F[0]}) * 200 );
+$x = round($F[3] / ($div{$F[0]}) * ($div{$F[0]}/20000) );
+$y = nearest(0.01, $F[3] / ($div{$F[0]}) * ($div{$F[0]}/20000) );
 if ($y =~ m/^\d+\.(\d+)$/) {
 $y = $1 + 1;
 } else {

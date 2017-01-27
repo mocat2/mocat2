@@ -925,6 +925,7 @@ if ($do_assembly)
 ### ASSEMBLY CORRECTION ###
 if ($do_assembly_revision)
 {
+ die "Assembly revision has been deprecated. Please only use the assembly step. Thank you! Have a great day!\n";
   MOCATCore::print_settings("assembly_revision");
   print localtime() . ": PERFORMING ASSEMBLY REVISION...\n";
   if ( $conf{MOCAT_paired_end} ne 'yes' )

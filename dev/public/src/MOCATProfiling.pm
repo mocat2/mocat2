@@ -188,7 +188,7 @@ sub create_job
       {
         $out_stats_file = "$cwd/$sample/stats/$sample.coverage.$reads.on.$end.$assembly_type.$conf{MOCAT_data_type}.$conf{MOCAT_mapping_mode}.l$conf{filter_length_cutoff}.p$conf{filter_percent_cutoff}.stats";
       }
-
+      
       # Check len and coord file
       my $assembly_file = "$cwd/$sample/$assembly_type.$reads.$conf{MOCAT_data_type}.K$kmer/$sample.$assembly_type.$reads.$conf{MOCAT_data_type}.K$kmer.$end";
       ( -e "$assembly_file.gz" ) or die "\nERROR & EXIT: Missing $end file: $assembly_file.gz";
@@ -361,6 +361,7 @@ $scr_dir/MOCATFilter_falen.pl -infile $data_dir/$databases -outfile $data_dir/$d
       }
     } else
     {
+     $out_stats_file = "$cwd/$sample/stats/$sample.coverage.$read_type.$reads.on.$databases.$conf{MOCAT_data_type}.$conf{MOCAT_mapping_mode}.l$conf{filter_length_cutoff}.p$conf{filter_percent_cutoff}.stats";
       if ( $reads eq 'reads.processed' )
       {
         $out_PE_stats_file = "$cwd/$sample/stats/$sample.extracted.$databases.after.PE.filter.and.within.padded.region.$conf{MOCAT_mapping_mode}.$conf{MOCAT_data_type}.stats";
