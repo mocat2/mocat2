@@ -18,7 +18,7 @@
     typedef std::tr1::unordered_map<std::string, fastq_read> queue_type;
 #endif
 
-const char* version = "FASTQ trim/filter. EMBL v5 (2015-03-26)";
+const char* version = "FASTQ trim/filter. EMBL v5 (2016-07-15)";
 
 
 unique_istream_ptr open_stream(std::string fname) {
@@ -153,7 +153,7 @@ void fastx_trim_discard(fastq_read& read, const trim_options& opts) {
 
     const int len = end - opts.start_pos + 1;
     assert(len >= 0);
-    if (end < opts.min_len) {
+    if (len < opts.min_len) {
         read.clear();
         return;
     }
@@ -321,8 +321,12 @@ trim_filter_stats rtf_pe(std::istream& a,
     if (c) {
         lineno[0] = 0;
         while (read_fastq(*c, reads[0], lineno[0])) {
-                trim_discard(reads[0], opts3);
-                st.maybe_output_read(single, reads[0]);
+            trim_discard(reads[0], opts3);
+            if (reads[0].size()) {
+                if (header_transform) reads[0].header = header_stem(reads[0], lineno[0]);
+                reads[0].header += "/1";
+            }
+            st.maybe_output_read(single, reads[0]);
         }
     }
     return st;
