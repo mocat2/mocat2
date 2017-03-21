@@ -18,7 +18,7 @@
     typedef std::tr1::unordered_map<std::string, fastq_read> queue_type;
 #endif
 
-const char* version = "FASTQ trim/filter. EMBL v5 (2017-01-05)";
+const char* version = "FASTQ trim/filter. EMBL v5 (2015-03-26)";
 
 
 unique_istream_ptr open_stream(std::string fname) {
@@ -119,11 +119,32 @@ std::string join(const std::vector<std::string>& tokens, const std::string sep) 
 std::string header_stem(fastq_read& seq, int lineno=-1) {
     using boost::replace_all_copy;
     assert(seq.size());
+    static bool warned_before = false;
     const size_t slash = seq.header.find('/'); // FIND /1 | /2 at end
     if (slash == seq.header.size() - 2) {
         return replace_all_copy(seq.header.substr(0, slash), " ", "_");
     }
-    return replace_all_copy(seq.header, " ", "_");
+    std::vector<std::string> tokens = header_string_split(seq.header, ": ");
+    if (tokens.size() == 11) {
+        if (tokens[8] == "Y") seq.clear();
+        if (tokens[7] == "1" || tokens[7] == "2") {
+            tokens[7] = "0";
+            return join(tokens, ":");
+        } else {
+            std::cerr << "Cannot handle this header type: " << seq.header << "\n";
+            seq.clear();
+            return "";
+        }
+    } else if (tokens.size() == 6 || tokens.size() == 7) {
+        return tokens[0]+":"+tokens[2]+":"+tokens[3] +":"+tokens[4]+":"+tokens[5]+"#0";
+    } else {
+        if (!warned_before && lineno >= 0) {
+            std::cerr <<
+                "WARNING: FastQ header format unknown on line " << lineno << ": Skipping header normalization step.\n";
+            warned_before = true;
+        }
+        return replace_all_copy(seq.header, " ", "_");
+    }
 }
 
 void fastx_trim_discard(fastq_read& read, const trim_options& opts) {
@@ -132,7 +153,7 @@ void fastx_trim_discard(fastq_read& read, const trim_options& opts) {
 
     const int len = end - opts.start_pos + 1;
     assert(len >= 0);
-    if (len < opts.min_len) {
+    if (end < opts.min_len) {
         read.clear();
         return;
     }
@@ -300,12 +321,8 @@ trim_filter_stats rtf_pe(std::istream& a,
     if (c) {
         lineno[0] = 0;
         while (read_fastq(*c, reads[0], lineno[0])) {
-            trim_discard(reads[0], opts3);
-            if (reads[0].size()) {
-                if (header_transform) reads[0].header = header_stem(reads[0], lineno[0]);
-                reads[0].header += "/1";
-            }
-            st.maybe_output_read(single, reads[0]);
+                trim_discard(reads[0], opts3);
+                st.maybe_output_read(single, reads[0]);
         }
     }
     return st;
