@@ -312,7 +312,7 @@ sub create_job
         print JOB " && mkdir -p $ef ";
       }
 
-      print JOB " mkdir -p $output_folder && cat $data_dir/" . join( ".len $data_dir/", @screen ) . ".len | sort -u > $len_file ";
+      print JOB " && mkdir -p $output_folder && cat $data_dir/" . join( ".len $data_dir/", @screen ) . ".len | sort -u > $len_file ";
 
       # bwa mapping
       chomp( my @ONES = `ls $cwd/$sample/$screen_source.$conf{MOCAT_data_type}/*pair.1.fq.gz` );

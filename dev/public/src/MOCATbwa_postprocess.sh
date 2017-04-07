@@ -105,7 +105,7 @@ $LAST=$F[0];
 END{
 if (scalar keys %h2 > 1){$t="multi"} else {$t="unique"};
 foreach $h (keys %h) {
-print "$h\t$t\t$h{$h}{ID}\t$h{$h}{start}\t$h{$h}{length}";
+print "$h\t$t\t$h{$h}{ID}\t$h{$h}{start}\t$h{$h}{length}"; # 07.1 unique 100 4989996 147 == ID, uniqueness, match %, location, length
 }
 print STDERR "DONE 1/2 location calculations";
 }
@@ -128,7 +128,9 @@ $y = $1 + 1;
 } else {
 $y = 1;
 }
-$h{$F[0]}{$F[1]}{nearest(.1, $F[2])}{$x}++;
+$h{$F[0]}{$F[1]}{nearest(.1, $F[2])}{$x}++; # this column adds the read counts
+unless ($h3{$F[0]}{$F[1]}{nearest(.1, $F[2])}{$x}) {$h3{$F[0]}{$F[1]}{nearest(.1, $F[2])}{$x} = 0}
+$h3{$F[0]}{$F[1]}{nearest(.1, $F[2])}{$x} = $h3{$F[0]}{$F[1]}{nearest(.1, $F[2])}{$x} + $F[4]; # this adds the base counts
 if ($F[1] eq "unique" && nearest(.1, $F[2]) == 100) {
 $h2{$F[0]}{$F[1]}{$x}{$y} = 1;
 }
@@ -140,7 +142,7 @@ foreach $b (@A) {
 foreach $c (keys %{$h{$a}{$b}}) {
 foreach $d (keys %{$h{$a}{$b}{$c}}) {
 $t = scalar keys %{$h2{$a}{$b}{$d}};
-print "$a\t$b\t$c\t$d\t$h{$a}{$b}{$c}{$d}\t$t";
+print "$a\t$b\t$c\t$d\t$h{$a}{$b}{$c}{$d}\t$t\t$h3{$a}{$b}{$c}{$d}"; # last column is base counts for that particular bin
 }}}}
 print STDERR "DONE 2/2 location calculations";
 }
