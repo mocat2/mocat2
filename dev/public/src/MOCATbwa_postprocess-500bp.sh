@@ -148,26 +148,3 @@ print "$a\t$b\t$c\t$d\t$h{$a}{$b}{$c}{$d}\t$t\t$h3{$a}{$b}{$c}{$d}"; # last colu
 print STDERR "DONE 2/2 location calculations";
 }
 ' > $1.coverageLocation
-
-${BINDIR}/msamtools-new coverage -x -o /dev/stdout $1 | gunzip -c - | perl -wane '
-BEGIN{
-print STDERR "START histogram calculations\n";
-};
-chomp (@F);
-if ($F[0] =~ m/^>(.*)/) {
-$n=$1;
-}
-else {
-foreach $f (@F) {
-$h{$n}{$f}++;
-}
-}
-END{
-foreach $k (keys %h){
-foreach $kk (keys %{$h{$k}}){
-print "$k\t$kk\t$h{$k}{$kk}\n";
-}
-}
-print STDERR "DONE histogram calculations\n";
-}
-' > $1.coverageHistogram
