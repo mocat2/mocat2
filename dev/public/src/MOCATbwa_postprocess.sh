@@ -122,6 +122,8 @@ close IN;
 }
 chomp(@F);
 unless($div{$F[0]}){die "ERROR & EXIT: Missing $F[0] in length file"}
+
+
 $x = round($F[3] / ($div{$F[0]}) * ($div{$F[0]}/500) );
 $y = nearest(0.01, $F[3] / ($div{$F[0]}) * ($div{$F[0]}/500) );
 if ($y =~ m/^\d+\.(\d+)$/) {
@@ -136,6 +138,22 @@ if ($F[1] eq "unique" && nearest(.1, $F[2]) == 100) {
 $h2{$F[0]}{$F[1]}{$x}{$y} = 1;
 }
 
+
+$x = round($F[3] / ($div{$F[0]}) * ($div{$F[0]}/20000) );
+$y = nearest(0.01, $F[3] / ($div{$F[0]}) * ($div{$F[0]}/20000) );
+if ($y =~ m/^\d+\.(\d+)$/) {
+$y = $1 + 1;
+} else {
+$y = 1;
+}
+$Bh{$F[0]}{$F[1]}{nearest(.1, $F[2])}{$x}++; # this column adds the read counts
+unless ($Bh3{$F[0]}{$F[1]}{nearest(.1, $F[2])}{$x}) {$Bh3{$F[0]}{$F[1]}{nearest(.1, $F[2])}{$x} = 0}
+$Bh3{$F[0]}{$F[1]}{nearest(.1, $F[2])}{$x} = $Bh3{$F[0]}{$F[1]}{nearest(.1, $F[2])}{$x} + $F[4]; # this adds the base counts
+if ($F[1] eq "unique" && nearest(.1, $F[2]) == 100) {
+$Bh2{$F[0]}{$F[1]}{$x}{$y} = 1;
+}
+
+
 END{
 @A=("unique", "multi");
 foreach $a (keys %h){
@@ -143,11 +161,24 @@ foreach $b (@A) {
 foreach $c (keys %{$h{$a}{$b}}) {
 foreach $d (keys %{$h{$a}{$b}{$c}}) {
 $t = scalar keys %{$h2{$a}{$b}{$d}};
-print "$a\t$b\t$c\t$d\t$h{$a}{$b}{$c}{$d}\t$t\t$h3{$a}{$b}{$c}{$d}"; # last column is base counts for that particular bin
+print "$a\t$b\t$c\t$d\t$h{$a}{$b}{$c}{$d}\t$t\t$h3{$a}{$b}{$c}{$d}\t500"; # last column is base counts for that particular bin
 }}}}
+
+
+foreach $a (keys %Bh){
+foreach $b (@A) {
+foreach $c (keys %{$Bh{$a}{$b}}) {
+foreach $d (keys %{$Bh{$a}{$b}{$c}}) {
+$t = scalar keys %{$Bh2{$a}{$b}{$d}};
+print "$a\t$b\t$c\t$d\t$Bh{$a}{$b}{$c}{$d}\t$t\t$Bh3{$a}{$b}{$c}{$d}\t20000"; # last column is base counts for that particular bin
+}}}}
+
 print STDERR "DONE 2/2 location calculations";
 }
-' > $1.coverageLocation
+' > $1.coverageLocation.raw
+
+grep -P '\t500$' $1.coverageLocation.raw | cut -f 1,2,3,4,5,6,7 > $1.500.coverageLocation
+grep -P '\t20000$' $1.coverageLocation.raw | cut -f 1,2,3,4,5,6,7 > $1.20000.coverageLocation
 
 ${BINDIR}/msamtools-new coverage -x -o /dev/stdout $1 | gunzip -c - | perl -wane '
 BEGIN{
