@@ -1,4 +1,4 @@
-'#!/usr/bin/env perl
+#!/usr/bin/env perl
 use strict;
 use warnings;
 use Getopt::Long;
@@ -15,8 +15,8 @@ my $TOTinserts        = 0;
 my $fastq_trim_filter = "fastq_trim_filter_v5_EMBL";
 my $format_counter    = 0;
 GetOptions(
-	' length_cutoff = s'      => \$length_cutoff,
-	'qual_cutoff=s'         => \$qual_cutoff,
+	'length_cutoff=s'      => \$length_cutoff,
+	'qual_cutoff=s'        => \$qual_cutoff,
   'paired_end_data=s'    => \$paired_end_data,
   'use_5prime_file=s'    => \$use_5prime_file,
   'trim_5prime_end=s'    => \$trim_5_prime_end,
@@ -29,6 +29,7 @@ GetOptions(
   'zcat=s'               => \$ZCAT,
   'sample=s'             => \$sample,
   'use3files=s'          => \$use3files );
+
 
 # If running OSX, change binary file
 chomp( my $systemType = `uname -s` );
@@ -459,4 +460,4 @@ sub get_format
     if ( $format eq 'i' ) { $format = 'ia';     $sanger = "" }
     return ( $format, $sanger );
 }
-'
+
