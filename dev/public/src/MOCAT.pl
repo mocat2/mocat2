@@ -431,6 +431,10 @@ $qsub         = $conf{MOCAT_qsub_system};
 $ziplevel     = $conf{MOCAT_zip_level};
 $rownames_dir = $conf{MOCAT_rownames_dir};
 
+unless($conf{MOCAT_bwa_postprocess_binsize}) {
+ $conf{MOCAT_bwa_postprocess_binsize} = 500;
+}
+
 print "EXECUTE COMMAND   : " . join( " ", @args ) . "\n";
 print "CURRENT USER      : $username\n";
 print "CURRENT HOST      : $hostname\n";

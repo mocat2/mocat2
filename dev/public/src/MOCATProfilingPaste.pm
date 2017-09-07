@@ -796,7 +796,7 @@ sub paste2
         }
       }
       @input_files2 = ( "$OUTFOLDER/$file.insert.mm.dist.among.unique.scaled.annotated.mOTU.clusters.fraction", "$OUTFOLDER/$file.insert.mm.dist.among.unique.scaled.annotated.mOTU.clusters", "$OUTFOLDER/$file.insert.mm.dist.among.unique.scaled.mOTU.clusters.fraction", "$OUTFOLDER/$file.insert.mm.dist.among.unique.scaled.mOTU.clusters" );
-      @output_files = ( 'annotated.mOTU.abundances', 'mOTU.abundances', 'annotated.mOTU.counts', 'mOTU.counts' );
+      @output_files = ( 'annotated.mOTU.abundances', 'annotated.mOTU.counts', 'mOTU.abundances', 'mOTU.counts' );
 
       my @p1 = ( "$data_dir/mOTU.v1.map.txt", "$data_dir/mOTU-LG.v1.annotations.txt" );
       my @p2 = ( 'mOTU.v1.map.txt',           'mOTU-LG.v1.annotations.txt' );

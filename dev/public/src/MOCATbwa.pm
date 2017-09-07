@@ -356,7 +356,7 @@ sub create_job
 
       if ( $conf{bwa_postprocess} eq 'yes' )
       {
-        print JOB " && $src_dir/MOCATbwa_postprocess.sh $output_file.bam $len_file $conf{bwa_postprocess_mapfile} $bin_dir $LOG2 ";
+        print JOB " && export BINSIZE=$conf{MOCAT_bwa_postprocess_binsize} && $src_dir/MOCATbwa_postprocess.sh $output_file.bam $len_file $conf{bwa_postprocess_mapfile} $bin_dir $conf{MOCAT_bwa_postprocess_binsize} $LOG2 ";
       }
 
       # Create the screened and extracted files
