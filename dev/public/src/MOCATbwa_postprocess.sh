@@ -111,7 +111,9 @@ print "$h\t$t\t$h{$h}{ID}\t$h{$h}{start}\t$h{$h}{length}"; # 07.1 unique 100 498
 print STDERR "DONE 1/2 location calculations";
 }
 ' | perl -F"\t" -wlane '
-BEGIN{use Math::Round qw(:all);
+BEGIN{
+use POSIX qw/floor/;
+use Math::Round qw(:all);
 print STDERR "START 2/2 location calculations";
 open IN, "<$ENV{LENGTHFILE}" or die "MISSING \$ENV{LENGTHFILE}=$ENV{LENGTHFILE}!";
 while (<IN>){
@@ -125,7 +127,7 @@ chomp(@F);
 unless($div{$F[0]}){die "ERROR & EXIT: Missing $F[0] in length file"}
 
 
-$x = round($F[3] / ($div{$F[0]}) * ($div{$F[0]}/$ENV{BINSIZE}) );
+$x = floor($F[3] / ($div{$F[0]}) * ($div{$F[0]}/$ENV{BINSIZE}) ) + 1;
 $y = nearest(0.01, $F[3] / ($div{$F[0]}) * ($div{$F[0]}/$ENV{BINSIZE}) );
 if ($y =~ m/^\d+\.(\d+)$/) {
 $y = $1 + 1;
