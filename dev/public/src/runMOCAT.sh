@@ -5,7 +5,7 @@
 # This code is released under GNU GPL v3.
 
 # USER EMAIL (enter your email address here)
-EMAIL='jroatkul@its.jnj.com'
+EMAIL=''
 
 # Inital configuration
 CWD=`pwd`
