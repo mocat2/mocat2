@@ -1,8 +1,10 @@
 # MOCAT 2
 
-MOCAT2 (metagenomic analysis toolkit) is a package for analyzing metagenomics datasets. Currently MOCAT2 supports Illumina single- and paired-end reads in raw FastQ format. Using MOCAT2 you can generate taxonomic and functional profiles, as well as assemblereads and predict genes in assembled sequences. The official MOCAT2 page is http://mocat.embl.de/
+MOCAT2 (metagenomic analysis toolkit) is a package for analyzing metagenomics datasets. Currently MOCAT2 supports Illumina single- and paired-end reads in raw FastQ format. Using MOCAT2 you can generate taxonomic and functional profiles, as well as assemble reads and predict genes in assembled sequences. The official MOCAT2 page is http://mocat.embl.de/
 
-Development of MOCAT2 continues post the publication of the MOCAT2 Bioinformatics paper (http://bit.ly/1VbJnzi). This Github repo contains a cutting-edge MOCAT2 version. However, it is unsupported and comes as-is. Thus, only features available in the last tested and stable MOCAT2 release are supported (http://mocat.embl.de/download.html).
+Unfortunately, development of MOCAT2 has stopped. Here is the MOCAT2 Bioinformatics paper (http://bit.ly/1VbJnzi). This Github repo contains the latest MOCAT2 version.
+
+To use the functional annotation step, you need to download the required data files here: (4GB)
 
 OUTPUT FILES
 
