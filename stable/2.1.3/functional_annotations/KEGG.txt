@@ -1,0 +1,2 @@
+Please visit http://www.genome.jp/kegg/
+for full descriptions of KEGG KO, modules and pathways.

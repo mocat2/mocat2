@@ -1,0 +1,4 @@
+Please visit https://scop.berkeley.edu/
+for the SCOP family and superfamily descriptions.
+Please paste only the numbers and not the
+SCOPF or SCOPSF text.

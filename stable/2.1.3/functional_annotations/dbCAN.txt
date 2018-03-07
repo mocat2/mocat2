@@ -1,0 +1,317 @@
+#Family	cazy-note	ncbi-cdd	cazy-class	cazy-activities
+dockerin	The cohesin-dockerin interaction is the crucial interaction for complex formation in the cellulosome	pfam00404	Cellulosome	
+cohesin	The cohesin-dockerin interaction is the crucial interaction for complex formation in the cellulosome	pfam00963	Cellulosome	
+SLH	S-layer homology domain, anchoring cellulosome onto the bacterial cell surfaces	pfam00395	Cellulosome	
+CBM30	Formerly known as X7 modules.	pfam02927	CBM	Binding to cellulose has been demonstrated for the N-terminal module of Fibrobacter succinogenes CelF.
+GH22	Related a-lactalbumins are not included here	pfam00062	GH	lysozyme type C (EC 3.2.1.17); lysozyme type i (EC 3.2.1.17); alpha-lactalbumin
+GT7		pfam02709	GT	lactose synthase (EC 2.4.1.22); beta-N-acetylglucosaminyl-glycopeptide beta-1,4-galactosyltransferase (EC 2.4.1.38); N-acetyllactosamine synthase (EC 2.4.1.90); beta-1,4-N-acetylglucosaminyltransferase (EC 2.4.1.-); xylosylprotein beta-4-galactosyltransferase (EC 2.4.1.133)
+GT48		pfam02364	GT	1,3-beta-glucan synthase (EC 2.4.1.34)
+CBM40		pfam02973	CBM	Modules of approx. 200 residues, found at the N-terminus of GH33 sialidases. Can also be found inserted in the beta-propeller of GH33 sialidases. The sialic acid binding function has been demonstrated for the N-terminal CBM40 of Vibrio cholerae sialidase (Moustafa et al. (2004) J Biol Chem 279:40819-26) (PMID: 15226294).
+GT8	Distant similarity to family GT24	pfam01501	GT	lipopolysaccharide alpha-1,3-galactosyltransferase (EC 2.4.1.44);  UDP-Glc: (glucosyl)lipopolysaccharide alpha-1,2-glucosyltransferase (EC 2.4.1.-); lipopolysaccharide glucosyltransferase 1 (EC 2.4.1.58); glycogenin glucosyltransferase (EC 2.4.1.186); inositol 1-alpha-galactosyltransferase (galactinol synthase) (EC 2.4.1.123); homogalacturonan alpha-1,4-galacturonosyltransferase (EC 2.4.1.43); UDP-GlcA: xylan alpha-glucuronyltransferase (EC 2.4.1.-)
+GT1	Distantly related to family GT28; several members of this family are made of two subunits (for instance Alg13 and Alg14 in Saccharomyces); the complete enzyme has been reconstituted whenever possible, and appears with the two subunit names separated by a + sign and with the N-terminal subunit followed by the C-terminal one	COG1819	GT	UDP-glucuronosyltransferase (EC 2.4.1.17); 2-hydroxyacylsphingosine 1-beta-galactosyltransferase (EC 2.4.1.45); N-acylsphingosine galactosyltransferase (EC 2.4.1.47); flavonol 3-O-glucosyltransferase (EC 2.4.1.91); indole-3-acetate beta-glucosyltransferase (EC 2.4.1.121); sterol glucosyltransferase (EC 2.4.1.173); ecdysteroid UDP-glucosyltransferase (EC 2.4.1.-); zeaxanthin glucosyltransferase (EC 2.4.1.-); zeatin O-beta-glucosyltransferase (EC 2.4.1.203); zeatin O-beta-xylosyltransferase (EC 2.4.2.40); limonoid glucosyltransferase (EC 2.4.1.210); sinapate 1-glucosyltransferase (EC 2.4.1.120); anthocyanin 3-O-galactosyltransferase (EC 2.4.1.-); anthocyanin 5-O-glucosyltransferase (EC 2.4.1.-); anthocyanidin 3-O-glucosyltransferase (EC 2.4.1.115); dTDP-beta-2-deoxy-L-fucose: alpha-L-2-deoxyfucosyltransferase (EC 2.4.1.-); UDP-beta-L-rhamnose: alpha-L-rhamnosyltransferase (EC 2.4.1.-); UDP-glucose: 4-hydroxybenzoate 4-O-beta-glucosyltransferase (EC 2.4.1.194); flavonol L-rhamnosyltransferase (EC 2.4.1.159); salicylic acid beta-glucosyltransferase (EC 2.4.1.-)
+GH18	Contains chitinases of classes III and V. Contains non-catalytic proteins such as xylanase inhibitor; concanavalin B; narbonin	pfam00704	GH	chitinase (EC 3.2.1.14); endo-beta-N-acetylglucosaminidase (EC 3.2.1.96); xylanase inhibitor; concanavalin B; narbonin
+PL9		self-built	PL	pectate lyase (EC 4.2.2.2); exopolygalacturonate lyase (EC 4.2.2.9); thiopeptidoglycan lyase (EC 4.2.2.-).
+CBM48		pfam02922	CBM	Modules of approx. 100 residues with glycogen-binding function, appended to GH13 modules. Also found in the beta subunit (glycogen-binding) of AMP-activated protein kinases (AMPK)
+GH45	formerly known as cellulase family K; distantly related to plant expansins	pfam02015	GH	endoglucanase (EC 3.2.1.4)
+CBM32	Formerly known as X56 modules. Distantly related to CBM6 modules and to Anguilla anguilla agglutinin.	pfam00754	CBM	Binding to galactose and lactose has been demonstrated for the module of Micromonospora viridifaciens sialidase (PMID: 16239725). Binding to polygalacturonic acid has been shown for a Yersinia member (PMID: 17292916). Binding to LacNAc (beta-D-galactosyl-1,4-beta-D-N-acetylglucosamine) has been shown for an N-acetylglucosaminidase from Clostridium perfingens (PMID: 16990278).
+GH25		pfam01183	GH	lysozyme (EC 3.2.1.17)
+PL8		pfam02278	PL	hyaluronate lyase (EC 4.2.2.1); chondroitin AC lyase (EC 4.2.2.5); xanthan lyase (EC 4.2.2.12); chondroitin ABC lyase (EC 4.2.2.20)
+GH34		pfam00064	GH	sialidase or neuraminidase (EC 3.2.1.18)
+GT2	Distant similarity to families GT12, GT21, GT27, GT55, GT81 etc.	pfam00535	GT	cellulose synthase (EC 2.4.1.12); chitin synthase (EC 2.4.1.16); dolichyl-phosphate beta-D-mannosyltransferase (EC 2.4.1.83); dolichyl-phosphate beta-glucosyltransferase (EC 2.4.1.117); N-acetylglucosaminyltransferase (EC 2.4.1.-); N-acetylgalactosaminyltransferase (EC 2.4.1.-); hyaluronan synthase (EC 2.4.1.212); chitin oligosaccharide synthase (EC 2.4.1.-); beta-1,3-glucan synthase (EC 2.4.1.34); beta-1,4-mannan synthase (EC 2.4.1.-); beta-mannosylphosphodecaprenolï¿½mannooligosaccharide alpha-1,6-mannosyltransferase (EC 2.4.1.199); alpha-1,3-L-rhamnosyltransferase (EC 2.4.1.-)
+CBM13	Previously known as cellulose-binding domain family XIII (CBD XIII).	pfam00652	CBM	Modules of approx. 150 residues which always appear as a threefold internal repeat. The only apparent exception to this, xylanase II of Actinomadura sp. FC7 (GenBank U08894), is in fact not completely sequenced. These modules were first identified in several plant lectins such as ricin or agglutinin of Ricinus communis which bind galactose residues. The three-dimensional structure of a plant lectin has been determined and displays a pseudo-threefold symmetry in accord with the observed sequence threefold repeat. These modules have since been found in a number of other proteins of various functions including glycoside hydrolases and glycosyltransferases. While in the plant lectins this module binds mannose, binding to xylan has been demonstrated in the Streptomyces lividans xylanase A and arabinofuranosidase B. Binding to GalNAc has been shown for the corresponding module of GalNAc transferase 4. For the other proteins, the binding specificity of these modules has not been established. The pseudo three-fold symmetry of the CBM13 module has now been confirmed in the 3-D structure of the intact, two-domain, xylanase of Streptomyces olivaceoviridis.
+GH38		pfam01074	GH	alpha-mannosidase (EC 3.2.1.24) ; mannosyl-oligosaccharide alpha-1,3-1,6-mannosidase (EC 3.2.1.114); mannosyl-oligosaccharide alpha-1,3-mannosidase (EC 3.2.1.-)
+CBM6	Previously known as cellulose-binding domain family VI (CBD VI).	pfam03422	CBM	Modules of approx. 120 residues. The cellulose-binding function has been demonstrated in one case on amorphous cellulose and beta-1,4-xylan. Some of these modules also bind beta-1,3-glucan, beta-1,3-1,4-glucan, and beta-1,4-glucan.
+PL12		pfam07940	PL	heparin-sulfate lyase (EC 4.2.2.8)
+GH23	Corresponds to family 1 of the peptidoglycan lytic transglycosylases described by N.T. Blackburn and A.J. Clarke (2001) J. Mol. Evol. 52, 78-84; Note that 'peptidoglycan lytic transglycosylases' cleave peptidoglycan without intervention of a water molecule.	cd00254	GH	lysozyme type G (EC 3.2.1.17); peptidoglycan lyase (EC 4.2.2.-) also known in the literature as peptidoglycan lytic transglycosylase
+GH16		cd00413	GH	xyloglucan:xyloglucosyltransferase (EC 2.4.1.207); keratan-sulfate endo-1,4-beta-galactosidase (EC 3.2.1.103); endo-1,3-beta-glucanase (EC 3.2.1.39); endo-1,3(4)-beta-glucanase (EC 3.2.1.6); licheninase (EC 3.2.1.73); beta-agarase (EC 3.2.1.81); kappa;-carrageenase (EC 3.2.1.83); xyloglucanase (EC 3.2.1.151)
+CBM35		pfam03422	CBM	Modules of approx. 130 residues. A module that is conserved in three Cellvibrio xylan-degrading enzymes binds to xylan and the interaction is calcium dependent, while a module from a Cellvibrio mannanase binds to decorated soluble mannans and mannooligosaccharides. A module in a
+CBM1	Previously known as cellulose-binding domain family I (CBD I).	pfam00734	CBM	Modules of approx. 40 residues found almost exclusively in fungi. The cellulose-binding function has been demonstrated in many cases, and appears to be mediated by three aromatic residues separated by about 10.4 angstrom and which form a flat surface. The only non-fungal occurence of CBM1 is in an algal non-hydrolytic polysaccharide-binding protein which is composed of four repeated CBM1 modules. Binding to chitin has been demonstrated in one case.
+GT90	Created from Klutts, Levery and Doering (2007) J. Biol. Chem. 282:17890-17899 (PMID: 17430900)	smart00672	GT	UDP-Xyl: (mannosyl) glucuronoxylomannan/galactoxylomannan beta-1,2-xylosyltransferase (EC 2.4.2.-)
+GH36	Mechanistic commonality with family GH27 demonstrated by Comfort et al. (2007) Biochemistry, 46: 3319-3330 (PMID: 17323919)	COG3345	GH	alpha-galactosidase (EC 3.2.1.22); alpha-N-acetylgalactosaminidase (EC 3.2.1.49); stachyose synthase (EC 2.4.1.67); raffinose synthase (EC 2.4.1.82)
+GH56		pfam01630	GH	hyaluronidase (EC 3.2.1.35); chondroitin hydrolase (EC 3.2.1.-)
+PL14		self-built	PL	alginate lyase (EC 4.2.2.3); exo-oligoalginate lyase (EC 4.2.2.-); beta-1,4-glucuronan lyase (EC 4.2.2.14)
+GH83		pfam00423	GH	neuraminidase (EC 3.2.1.18)
+GT31		pfam01762	GT	N-acetyllactosaminide beta-1,3-N-acetylglucosaminyltransferase (EC 2.4.1.149); Glycoprotein-N-acetylgalactosamine 3-beta-galactosyltransferase (EC 2.4.1.122); fucose-specific beta-1,3-N-acetylglucosaminyltransferase (EC 2.4.1.-); globotriosylceramide beta-1,3-GalNAc transferase (EC 2.4.1.79); chondroitin synthase (beta-1,3-GlcUA and beta-1,4-GalNAc transferase (EC 2.4.1.175); chondroitin beta-1,3-glucuronyltransferase (EC 2.4.1.226); chondroitin beta-1,4-N-acetylgalactosaminyltransferase (EC 2.4.1.-).
+GH54		pfam09206	GH	alpha-L-arabinofuranosidase (EC 3.2.1.55); beta-xylosidase (EC 3.2.1.37).
+GT13		pfam03071	GT	alpha-1,3-mannosyl-glycoprotein beta-1,2-N-acetylglucosaminyltransferase (EC 2.4.1.101)
+GH27	Mechanistic commonality with family GH36 demonstrated by Comfort et al. (2007) Biochemistry 46:3319-3330 (PMID: 17323919).	pfam02065	GH	alpha-galactosidase (EC 3.2.1.22); alpha-N-acetylgalactosaminidase (EC 3.2.1.49); isomalto-dextranase (EC 3.2.1.94); beta-L-arabinopyranosidase (EC 3.2.1.88)
+CE10	WARNING: because the vast majority (if not all) of the members of this family are esterases acting on non-carbohydrate substrates, the information on this page is no longer updated (August 2002).	COG0657	CE	arylesterase (EC 3.1.1.-);  carboxyl esterase (EC 3.1.1.3); acetylcholinesterase (EC 3.1.1.7); cholinesterase (EC 3.1.1.8); sterol esterase (EC 3.1.1.13); brefeldin A esterase (EC 3.1.1.-).
+GT61		pfam04577	GT	beta-1,2-xylosyltransferase (EC 2.4.2.38)
+GH50		self-built	GH	beta-agarase (EC 3.2.1.81).
+GH35		pfam01301	GH	beta-galactosidase (EC 3.2.1.23); exo-beta-glucosaminidase (EC 3.2.1.165)
+GT10		pfam00852	GT	galactoside alpha-1,3/1,4-L-fucosyltransferase (EC 2.4.1.65); galactoside alpha-1,3-L-fucosyltransferase (EC 2.4.1.152); glycoprotein alpha-1,3-L-fucosyltransferase (EC 2.4.1.214)
+GT4		pfam00534	GT	sucrose synthase (EC 2.4.1.13); sucrose-phosphate synthase (EC 2.4.1.14); alpha-glucosyltransferase (EC 2.4.1.52); lipopolysaccharide N-acetylglucosaminyltransferase (EC 2.4.1.56); GDP-Man alpha-mannosyltransferase (EC 2.4.1.-); 1,2-diacylglycerol 3-glucosyltransferase (EC 2.4.1.157);  diglucosyl diacylglycerol synthase (EC 2.4.1.208); digalactosyldiacylglycerol synthase (EC 2.4.1.141); trehalose phosphorylase (EC 2.4.1.231); phosphatidylinositol alpha-mannosyltransferase (EC 2.4.1.57); UDP-Gal alpha-galactosyltransferase (EC 2.4.1.-); UDP-Xyl alpha-xylosyltransferase (EC 2.4.2.-)
+CBM25	Formerly known as X5 modules; structurally related to CBM26 modules	pfam03423	CBM	Starch-binding function demonstrated in one case.
+GH5	formerly known as cellulase family A; Following a recent paper by St John et al. (FEBS Letters, 2010, in press) several GH5 subfamilies have been reassigned to GH30.	pfam00150	GH	chitosanase (EC 3.2.1.132); beta-mannosidase (EC 3.2.1.25); Cellulase (EC 3.2.1.4); glucan 1,3-beta-glucosidase (EC 3.2.1.58); licheninase (EC 3.2.1.73); glucan endo-1,6-beta-glucosidase (EC 3.2.1.75); mannan endo-beta-1,4-mannosidase (EC 3.2.1.78); endo-beta-1,4-xylanase (EC 3.2.1.8); cellulose beta-1,4-cellobiosidase (EC 3.2.1.91); beta-1,3-mannanase (EC 3.2.1.-); xyloglucan-specific endo-beta-1,4-glucanase (EC 3.2.1.151); mannan transglycosylase (EC 2.4.1.-); endo-beta-1,6-galactanase (EC 3.2.1.164)
+GH43		pfam04616	GH	beta-xylosidase (EC 3.2.1.37); beta-1,3-xylosidase (EC 3.2.1.-); alpha-L-arabinofuranosidase (EC 3.2.1.55); arabinanase (EC 3.2.1.99); xylanase (EC 3.2.1.8); galactan 1,3-beta-galactosidase  (EC 3.2.1.145)
+GT84	Distantly related to family GT2; created after Ciocchini et al. (2006) Glycobiology 16:679-691 (PMID: 16603625)	pfam10091	GT	cyclic beta-1,2-glucan synthase (EC 2.4.1.-);
+GH13	New: many members have been assigned to subfamilies as described by Stam et al. (2006) Protein Eng Des Sel. 19, 555-562 (PMID: 17085431)	pfam00128	GH	alpha-amylase (EC 3.2.1.1); pullulanase (EC 3.2.1.41); cyclomaltodextrin glucanotransferase (EC 2.4.1.19); cyclomaltodextrinase (EC 3.2.1.54); trehalose-6-phosphate hydrolase (EC 3.2.1.93); oligo-alpha-glucosidase (EC 3.2.1.10); maltogenic amylase (EC 3.2.1.133); neopullulanase (EC 3.2.1.135); alpha-glucosidase (EC 3.2.1.20); maltotetraose-forming alpha-amylase (EC 3.2.1.60); isoamylase (EC 3.2.1.68); glucodextranase (EC 3.2.1.70); maltohexaose-forming alpha-amylase (EC 3.2.1.98); maltotriose-forming alpha-amylase (EC 3.2.1.116); branching enzyme (EC 2.4.1.18); trehalose synthase (EC 5.4.99.16); 4-alpha-glucanotransferase (EC 2.4.1.25); maltopentaose-forming alpha-amylase (EC 3.2.1.-) ; amylosucrase (EC 2.4.1.4) ; sucrose phosphorylase (EC 2.4.1.7); malto-oligosyltrehalose trehalohydrolase (EC 3.2.1.141); isomaltulose synthase (EC 5.4.99.11); amino acid transporter.
+GH74		smart00602	GH	endoglucanase (EC 3.2.1.4); oligoxyloglucan reducing end-specific cellobiohydrolase (EC 3.2.1.150); xyloglucanase (EC 3.2.1.151)
+CE6		pfam03629	CE	acetyl xylan esterase (EC 3.1.1.72).
+GH42	Identification of the catalytic residues in doi:10.1016/j.febslet.2007.04.053	pfam02449	GH	beta-galactosidase (EC 3.2.1.23)
+GH108	Created after Emina A. Stojkoviae and Lucia B. Rothman-Denes (2007) J. Mol. Biol. 366:406-419. PMID:17174325	pfam05838	GH	N-acetylmuramidase (EC 3.2.1.17)
+GT27	Distant similarity to families GT2, GT12 and GT21	cd02510	GT	polypeptide alpha-N-acetylgalactosaminyltransferase (EC 2.4.1.41)
+CBM5	Previously known as cellulose-binding domain family V (CBD V).	pfam02839	CBM	Modules of approx. 60 residues found in bacterial enzymes. Chitin-binding described in several cases. Distantly related to the CBM12 family.
+GT3		pfam05693	GT	glycogen synthase (EC 2.4.1.11).
+GT6		pfam03414	GT	alpha-1,3-galactosyltransferase (EC 2.4.1.87); alpha-1,3 N-acetylgalactosaminyltransferase (EC 2.4.1.40); alpha-galactosyltransferase (EC 2.4.1.37); globoside alpha-N-acetylgalactosaminyltransferase (EC 2.4.1.88).
+GH79		self-built	GH	beta-glucuronidase (EC 3.2.1.31); beta-4-O-methyl-glucuronidase (EC 3.2.1.-); heparanase (EC 3.2.1.-); baicalin beta-glucuronidase (EC 3.2.1.167)
+CBM21		pfam03370	CBM	Modules of approx. 100 residues. The granular starch-binding function has been demonstrated in one case. Sometimes designated as starch-binding domains (SBD).
+GT32		pfam04488	GT	alpha-1,6-mannosyltransferase (EC 2.4.1.-); alpha-1,4-N-acetylglucosaminyltransferase (EC 2.4.1.-); alpha-1,4-N-acetylgalactosaminyltransferase (EC 2.4.1.-);
+GH63		PRK10137	GH	processing alpha-glucosidase (EC 3.2.1.106); alpha-1,3-glucosidase (EC 3.2.1.84); alpha-glucosidase (EC 3.2.1.20)
+GT11		pfam01531	GT	GDP-L-Fuc: galactoside alpha-1,2-L-fucosyltransferase (EC 2.4.1.69); GDP-L-Fuc: beta-LacNac alpha-1,3-L-fucosyltransferase (EC 2.4.1.-)
+GT67	Activity shown by Dobson et al. (2003) J Biol Chem. 278:15523-15531	PTZ00210	GT	UDP-Gal: phosphoglycan betalpha-1,3 galactosyltransferase 1 (SCG1) (EC 2.4.1.-)
+GH26	formerly known as cellulase family I.	pfam02156	GH	beta-mannanase (EC 3.2.1.78); beta-1,3-xylanase (EC 3.2.1.32)
+CBM33		pfam03067	CBM	Binding to chitin has been demonstrated in several cases and binding to chitosan descibed in a single case.
+GH28		pfam00295	GH	polygalacturonase (EC 3.2.1.15); exo-polygalacturonase (EC 3.2.1.67); exo-polygalacturonosidase (EC 3.2.1.82); rhamnogalacturonase (EC 3.2.1.-); endo-xylogalacturonan hydrolase (EC 3.2.1.-); rhamnogalacturonan alpha-L-rhamnopyranohydrolase (EC 3.2.1.40)
+GT25		pfam01755	GT	lipopolysaccharide beta-1,4-galactosyltransferase (EC 2.4.1.-); beta-1,3-glucosyltransferase (EC 2.4.1.-); beta-1,2-glucosyltransferase (EC 2.4.1.-); beta-1,2-galactosyltransferase (EC 2.4.1.-)
+GH73	The 3-D structure of Sphingomonas sp. strain A1 FlgJ protein of this family has recently been solved (Hashimotoa et al., BBRC 2009, in press); there is only one, unconfirmed, report of b-1,4-N-acetylmuramoylhydrolase (EC 3.2.1.17) activity	pfam01832	GH	peptidoglycan hydrolase with endo-beta-N-acetylglucosaminidase specificity  (EC 3.2.1.-)
+GH33		cd00260	GH	sialidase or neuraminidase (EC 3.2.1.18); trans-sialidase (EC 2.4.1.-); 2-keto-3-deoxynononic acid sialidase (EC 3.2.1.-)
+GH55		self-built	GH	exo-beta-1,3-glucanase (EC 3.2.1.58); endo-beta-1,3-glucanase (EC 3.2.1.39).
+GH6	formerly known as cellulase family B.   The  cellobiohydrolases of  this  family are widely believed to act processively from the non-reducing  ends of  cellulose chains to  generate cellobiose.	pfam01341	GH	endoglucanase (EC 3.2.1.4); cellobiohydrolase (EC 3.2.1.91)
+CBM14		pfam01607	CBM	Modules of approx. 70 residues. The chitin-binding function has been demonstrated in several cases. These modules are found attached to a number of chitinase catalytic domains, but also in non-catalytic proteins either in isolation or as multiple repeats.
+GH10	formerly known as cellulase family F.	pfam00331	GH	endo-1,4-beta-xylanase (EC 3.2.1.8); endo-1,3-beta-xylanase (EC 3.2.1.32)
+CE4		pfam01522	CE	acetyl xylan esterase (EC 3.1.1.72);  chitin deacetylase (EC 3.5.1.41); chitooligosaccharide deacetylase (EC 3.5.1.-); peptidoglycan GlcNAc deacetylase (EC 3.5.1.-); peptidoglycan N-acetylmuramic acid deacetylase (EC 3.5.1.-).
+PL1		smart00656	PL	pectate lyase (EC 4.2.2.2); exo-pectate lyase (EC 4.2.2.9); pectin lyase (EC 4.2.2.10).
+CBM3	Previously known as cellulose-binding domain family III (CBD III).	pfam00942	CBM	Modules of approx. 150 residues found in bacterial enzymes. The cellulose-binding function has been demonstrated in many cases. In one instance binding to chitin has been reported.
+GH3		pfam00933	GH	beta-glucosidase (EC 3.2.1.21); xylan 1,4-beta-xylosidase (EC 3.2.1.37); beta-N-acetylhexosaminidase (EC 3.2.1.52); glucan 1,3-beta-glucosidase (EC 3.2.1.58); glucan 1,4-beta-glucosidase (EC 3.2.1.74); exo-1,3-1,4-glucanase (EC 3.2.1.-); alphalpha-L-arabinofuranosidase (EC 3.2.1.55).
+GT28	Distantly related to family GT1	pfam04101	GT	1,2-diacylglycerol 3-beta-galactosyltransferase (EC 2.4.1.46); 1,2-diacylglycerol 3-beta-glucosyltransferase (EC 2.4.1.157);  UDP-GlcNAc: Und-PP-MurAc-pentapeptide beta-N-acetylglucosaminyltransferase (EC 2.4.1.227).
+GT30	These enzymes use a nucleotide monophosphosugar as the donor (CMP-b-KDO) instead of a nucleotide diphosphosugar	pfam04413	GT	CMP-beta-KDO: alpha-3-deoxy-D-manno-octulosonic-acid (KDO) transferase (EC 2.4.99.-).
+GH32		pfam00251	GH	invertase (EC 3.2.1.26); endo-inulinase (EC 3.2.1.7); beta-2,6-fructan 6-levanbiohydrolase (EC 3.2.1.64); endo-levanase (EC 3.2.1.65); exo-inulinase (EC 3.2.1.80); fructan beta-(2,1)-fructosidase/1-exohydrolase (EC 3.2.1.153); fructan beta-(2,6)-fructosidase/6-exohydrolase (EC 3.2.1.154); sucrose:sucrose 1-fructosyltransferase (EC 2.4.1.99); fructan:fructan 1-fructosyltransferase (EC 2.4.1.100); sucrose:fructan 6-fructosyltransferase (EC 2.4.1.10); fructan:fructan 6G-fructosyltransferase (EC 2.4.1.243); levan fructosyltransferase (EC 2.4.1.-)
+GT29	These enzymes use CMP-beta-N-acetylneuraminate as the sugar donor	pfam00777	GT	sialyltransferase (EC 2.4.99.-); beta-galactoside alpha-2,6-sialyltransferase (EC 2.4.99.1); alpha-N-acetylgalactosaminide alpha-2,6-sialyltransferase (EC 2.4.99.3); beta-galactoside alpha-2,3-sialyltransferase (EC 2.4.99.4); N-acetyllactosaminide alpha-2,3-sialyltransferase (EC 2.4.99.6); (alpha-N-acetyl-neuraminyl-2,3-beta-galactosyl-1,3)-N-acetylgalactosaminide alpha-2,6-sialyltransferase (EC 2.4.99.7);  alpha-N-acetyl-neuraminide alpha-2,8-sialyltransferase (EC 2.4.99.8); lactosylceramide alpha-2,3-sialyltransferase (EC 2.4.99.9).
+CBM18		smart00270	CBM	Modules of approx. 40 residues. The chitin-binding function has been demonstrated in many cases. These modules are found attached to a number of chitinase catalytic domains, but also in non-catalytic proteins either in isolation or as multiple repeats.
+CBM34	Formerly known as X21 modules.	cd02857	CBM	Modules of approx. 120 residues. Granular starch-binding function has been demonstrated in the case of Thermoactinomyces vulgaris R-47 alpha-amylase 1 (TVAI).
+GT47	The long animal heparan synthases are made of two domains. The N-terminal domain, which adds b-1,4-GlcA residues, belongs to family GT47 while the C-terminal domain, which adds a-1,4-GlcNAc residues, belongs to family GT64. The plant homologs, which have a single domain, display various specificities ranging from xyloglucan b-galactosyltransferase to a pectin b-glucuronyltransferase and arabinan a-L-arabinosyltransferase.	pfam03016	GT	heparan beta-glucuronyltransferase (EC 2.4.1.225); xyloglucan beta-galactosyltransferase (EC 2.4.1.-); heparan synthase (EC 2.4.1.-); arabinan alphalpha-L-arabinosyltransferase (EC 2.4.2.-).
+GT26		pfam03808	GT	UDP-ManNAcA: beta-N-acetyl mannosaminuronyltransferase (EC 2.4.1.-); UDP-ManNAc: beta-N-acetyl-mannosaminyltransferase (EC 2.4.1.-); UDP-Glc: beta-1,4-glucosyltransferase (EC 2.4.1.-).
+GH2		COG3250	GH	beta-galactosidase (EC 3.2.1.23) ; beta-mannosidase (EC 3.2.1.25); beta-glucuronidase (EC 3.2.1.31); mannosylglycoprotein endo-beta-mannosidase (EC 3.2.1.152); exo-beta-glucosaminidase (EC 3.2.1.165)
+GH12	formerly known as cellulase family H.	pfam01670	GH	endoglucanase (EC 3.2.1.4); xyloglucan hydrolase (EC 3.2.1.151); beta-1,3-1,4-glucanase (EC 3.2.1.73); xyloglucan endotransglycosylase (EC 2.4.1.207)
+GT14		pfam02485	GT	beta-1,3-galactosyl-O-glycosyl-glycoprotein beta-1,6-N-acetylglucosaminyltransferase (EC 2.4.1.102); N-acetyllactosaminide beta-1,6-N-acetylglucosaminyltransferase (EC 2.4.1.150); protein O-beta-xylosyltransferase (EC 2.4.2.26)
+GH102	Corresponds to family 2 of the peptidoglycan lytic transglycosylases described by N.T. Blackburn and A.J. Clarke (2001) J. Mol. Evol. 52, 78-84	pfam03562	GH	peptidoglycan lytic transglycosylase (EC 3.2.1.-)
+GH4	The enzymes in this family display an unusual mechanism involving NAD+.	pfam02056	GH	maltose-6-phosphate glucosidase (EC 3.2.1.122); alpha-glucosidase (EC 3.2.1.20); alpha-galactosidase (EC 3.2.1.22); 6-phospho-beta-glucosidase (EC 3.2.1.86); alpha-glucuronidase (EC 3.2.1.139).
+GT39	These enzymes use dolichol-P-mannose (b-linked) as the sugar donor.	pfam02366	GT	Dol-P-Man: protein alpha-mannosyltransferase (EC 2.4.1.109)
+GT66	These enzymes utilise an oligosaccharide-PP-dolichol as the donor	pfam02516	GT	Dol-PP-alpha-oligosaccharide: protein beta-oligosaccharyltransferase (EC 2.4.1.119)
+CBM43	Created after Barral, Suarez, Batanero, Alfonso, Alche, Rodríguez-García, Villalba, Rivas and Rodríguez (2005) Biochem. J. 390, 77-84 (PMID: 15882149). Formerly known as X8 modules.	pfam07983	CBM	Modules of approx. 90-100 residues found at the C-terminus of GH17 or GH72 enzymatic modules and also sometimes isolated. CBM43 modules sometimes carry a C-terminal membrane anchor. The beta-1,3-glucan binding function has been demonstrated with the olive pollen protein Ole e 10.
+GH11	formerly known as cellulase family G	pfam00457	GH	xylanase (EC 3.2.1.8)
+CBM2	Previously known as cellulose-binding domain family II (CBD II).	pfam00553	CBM	Modules of approx. 100 residues and which are found in a large number of bacterial enzymes. The cellulose-binding function has been demonstrated in many cases. Several of these modules have been shown to also bind chitin or xylan.
+GH8	formerly known as cellulase family D	pfam01270	GH	chitosanase (EC 3.2.1.132); cellulase (EC 3.2.1.4); licheninase (EC 3.2.1.73); endo-1,4-beta-xylanase (EC 3.2.1.8); reducing-end-xylose releasing exo-oligoxylanase (EC 3.2.1.156)
+GH20		pfam00728	GH	beta-hexosaminidase (EC 3.2.1.52); lacto-N-biosidase (EC 3.2.1.140); beta-1,6-N-acetylglucosaminidase) (EC 3.2.1.-); beta-6-SO3-N-acetylglucosaminidase (EC 3.2.1.-)
+GT9		pfam01075	GT	lipopolysaccharide N-acetylglucosaminyltransferase (EC 2.4.1.56); heptosyltransferase (EC 2.4.-.-).
+GH29		pfam01120	GH	alpha-L-fucosidase (EC 3.2.1.51)
+GH92	Asp	pfam07971	GH	mannosyl-oligosaccharide alpha-1,2-mannosidase (EC 3.2.1.113); mannosyl-oligosaccharide alpha-1,3-mannosidase (EC 3.2.1.-);
+GH51		COG3534	GH	alpha-L-arabinofuranosidase (EC 3.2.1.55); endoglucanase (EC 3.2.1.4)
+GH65		pfam03632	GH	alpha,alpha-trehalase (EC 3.2.1.28); maltose phosphorylase (EC 2.4.1.8); trehalose phosphorylase (EC 2.4.1.64); kojibiose phosphorylase (EC 2.4.1.230); trehalose-6-phosphate phosphorylase (EC 2.4.1.-);
+GT51	There are two categories of enzymes in this family : monofunctional (just the GT51 module) or bifunctional (GT51 module attached to a penicillin-binding transpeptidase module). These enzymes utilise Und-PP-MurAc-(GlcNAc)-pentapeptide as the sugar donor.	pfam00912	GT	murein polymerase (EC 2.4.1.129).
+GH17		pfam00332	GH	glucan endo-1,3-beta-glucosidase (EC 3.2.1.39); glucan 1,3-beta-glucosidase (EC 3.2.1.58); licheninase (EC 3.2.1.73); beta-1,3-glucanosyltransglycosylase (EC 2.4.1.-).
+CE1	Family CE1 also contains lots of other esterases such as PHB depolymerases.	pfam00756	CE	acetyl xylan esterase (EC 3.1.1.72); cinnamoyl esterase (EC 3.1.1.-); feruloyl esterase (EC 3.1.1.73); carboxylesterase (EC 3.1.1.1); S-formylglutathione hydrolase (EC 3.1.2.12)
+GT35	NULL	pfam00343	GT	glycogen or starch phosphorylase (EC 2.4.1.1).
+GH19	Contains chitinases of classes I, II, and IV.	cd00325	GH	chitinase (EC 3.2.1.14).
+GH1		pfam00232	GH	beta-glucosidase (EC 3.2.1.21); beta-galactosidase (EC 3.2.1.23); beta-mannosidase (EC 3.2.1.25); beta-glucuronidase (EC 3.2.1.31); beta-D-fucosidase (EC 3.2.1.38); phlorizin hydrolase (EC 3.2.1.62); exo-beta-1,4-glucanase (EC 3.2.1.74); 6-phospho-beta-galactosidase (EC 3.2.1.85); 6-phospho-beta-glucosidase (EC 3.2.1.86); strictosidine beta-glucosidase (EC 3.2.1.105); lactase (EC 3.2.1.108); amygdalin beta-glucosidase (EC 3.2.1.117); prunasin beta-glucosidase (EC 3.2.1.118); raucaffricine beta-glucosidase (EC 3.2.1.125); thioglucosidase (EC 3.2.1.147); beta-primeverosidase (EC 3.2.1.149); isoflavonoid 7-O-beta-apiosyl-beta-glucosidase (EC 3.2.1.161); hydroxyisourate hydrolase (EC 3.-.-.-); beta-glycosidase (EC 3.2.1.-)
+GH15		pfam00723	GH	glucoamylase (EC 3.2.1.3); glucodextranase (EC 3.2.1.70); alpha,alpha-trehalase (EC 3.2.1.28)
+GT83	Known sugar donors include undecaprenyl phospho-a-L-4-amino-4-deoxy-L-arabinose ; dodecaprenyl phospho-b-galacturonic acid	COG1807	GT	undecaprenyl phosphate-alpha-L-Ara4N: 4-amino-4-deoxy-beta-L-arabinosyltransferase (EC 2.4.2.-); dodecaprenyl phosphate-beta-galacturonic acid: lipopolysaccharide core alpha-galacturonosyl transferase (EC 2.4.1.-)
+GH77		pfam02446	GH	amylomaltase or 4-alpha-glucanotransferase (EC 2.4.1.25)
+CBM50	Also known as LysM domains	pfam01476	CBM	Modules of approx. 50 residues found attached to various enzymes from families GH18, GH19, GH23, GH24, GH25 and GH73, i.e. enzymes cleaving either chitin or peptidoglycan. Binding to chitopentaose demonstrated in the case of Pteris ryukyuensis chitinase A [Ohnuma T et al. (2008) J. Biol. Chem. 283:5178-87 (PMID: 18083709)]. CBM50 modules are also found in a multitude of other enzymes targeting the petidoglycan such as peptidases and amidases. These enzymes are not reported in the list below.
+CE9		cd00854	CE	N-acetylglucosamine 6-phosphate deacetylase (EC 3.5.1.25); N-acetylgalactosamine-6-phosphate deacetylase (EC 3.5.1.80).
+GH31		pfam01055	GH	alpha-glucosidase (EC 3.2.1.20); alpha-1,3-glucosidase (EC 3.2.1.84); sucrase-isomaltase (EC 3.2.1.48) (EC 3.2.1.10); alpha-xylosidase (EC 3.2.1.-); alpha-glucan lyase (EC 4.2.2.13); isomaltosyltransferase (EC 2.4.1.-).
+GT5		cd03791	GT	UDP-Glc: glycogen glucosyltransferase (EC 2.4.1.11); ADP-Glc: starch glucosyltransferase (EC 2.4.1.21); NDP-Glc: starch glucosyltransferase (EC 2.4.1.242); UDP-Glc: alpha-1,3-glucan synthase (EC 2.4.1.183) UDP-Glc: alpha-1,4-glucan synthase (EC 2.4.1.-)
+PL7		pfam08787	PL	alginate lyase (EC 4.2.2.3); alpha-L-guluronate lyase (EC 4.2.2.11)
+PL6		self-built	PL	alginate lyase (EC 4.2.2.3); chondroitinase B (EC 4.2.2.4).
+PL5		pfam05426	PL	alginate lyase (EC 4.2.2.3).
+PL4		self-built	PL	rhamnogalacturonan lyase (EC 4.2.2.-).
+PL3		pfam03211	PL	pectate lyase (EC 4.2.2.2).
+PL22	Structure:function relationships and mechanistic investigation by Abbott et al. (2010) PMID - 20851883	TIGR02800	PL	oligogalacturonate lyase / oligogalacturonide lyase (EC 4.2.2.6)
+PL21	heparin lyase II enzymes have simultaneously heparin lyase (heparin lyase I) and heparin-sulfate lyase (heparin lyase III) activity ; distantly related to family PL15;	pfam07940	PL	heparin lyase (EC 4.2.2.7); heparin-sulfate lyase (EC 4.2.2.8); acharan-sulfate lyase (EC 4.2.2.-)
+PL20	Created after paper by Konno et al. (2009) Appl. Environ. Microbiol. 75(1):101-7 (PMID: 18978091)	self-built	PL	endo-beta-1,4-glucuronan lyase (EC 4.2.2.14)
+PL2		pfam06917	PL	pectate lyase (EC 4.2.2.2); exo-polygalacturonate lyase (EC 4.2.2.9).
+PL18		pfam08787	PL	alginate lyase (EC 4.2.2.3).
+PL17		pfam07940	PL	alginate lyase (EC 4.2.2.3).
+PL16	Formerly known as glycoside hydrolase family GH69; assigned to a PL family following papers by Baker, J. R., Dong, S. and Pritchard, D. G. (2002) Biochem J 365, 317-322 and Smith et al (2005) PNAS 102: 17652-17657.	pfam07212	PL	hyaluronan lyase (EC 4.2.2.1).
+PL15		pfam07940	PL	oligo-alginate lyase (EC 4.2.2.-)
+PL13		self-built	PL	heparin lyase  (EC 4.2.2.7)
+PL11		self-built	PL	rhamnogalacturonan lyase (EC 4.2.2.-); exo-unsaturated rhamnogalacturonan lyase (EC 4.2.2.-)
+PL10		pfam09492	PL	pectate lyase (EC 4.2.2.2)
+GT92	Created from Tiz et al. (2009) J. Biol. Chem., 284(52):36223-33 (PMID:19858195)	pfam01697	GT	UDP-Gal: N-glycan core alpha-1,6-fucoside beta-1,4-galactosyltransferase (EC 2.4.1.-); UDP-Gal: beta-galactoside beta-1,4-galactosyltransferase (EC 2.4.1.-)
+GT91	Created from Mille et al. (2008) J Biol Chem. 283, 9724-9736 (PMID: 18234669)	pfam12141	GT	beta-1,2-mannosyltransferase (EC 2.4.1.-)
+GT89	These enzymes use b-D-arabinofuranosyl-1-monophosphoryldecaprenol as the sugar donor; created after Seidel et al., J Biol Chem. 282:14729-14740 (2007) (PMID - 17387176).	self-built	GT	beta-D-arabinofuranosyl-1-monophosphoryldecaprenol : arabinan beta-1,2-arabinofuranosyltransferase (EC 2.4.2.-)
+GT88	created after reading Belyi et al. Infect Immun. 71 (2003) 181-186 (PMID - 12496164); mechanism shown by Belyi et al. (2009) JBC in press (PMID - 19478083)	self-built	GT	UDP-Glc: alpha-glucosyltransferase (EC 2.4.1.-)
+GT87	These enzymes use polyprenol-P-mannose as the sugar donor; created after Morita, YS et al. (2006) J. Biol. Chem., 281(35):25143-55 (PMID: 16803893)	pfam09594	GT	polyprenol-P-Man: alpha-1,2-mannosyltransferase (EC 2.4.1.-)
+GT85	These enzymes utilise b-D-arabinofuranosyl monophosphoryldecaprenol as the donor; created after reading Alderwick et al. (2006) J. Biol. Chem., 281 (2006) 15653-15661 (PMID - 16595677)	pfam12250	GT	beta-D-arabinofuranosyl monophosphoryldecaprenol: galactan alpha-D-arabinofuranosyltransferase (EC 2.4.2.-)
+GT82	Distantly related to family GT2; activity shown in Gilbert et al. (2002) J. Biol. Chem. 277, 327-337	pfam06306	GT	UDP-GalNAc: beta-1,4-N-acetylgalactosaminyltransferase (EC 2.4.1.-)
+GT81	Created after reading Costa et al. (2006) J. Bacteriol. 188:1022-1030; updated to include mycobacterial,enzymes after reading Empadinhas et al. (2008) FEMS Microbiol Lett 280:195ï¿½202; distantly related to family GT2	PRK13915	GT	NDP-Glc: glucosyl-3-phosphoglycerate synthase (EC 2.4.1.-); NDP-Man: mannosyl-3-phosphoglycerate synthase (EC 2.4.1.-);
+GT80	created from reading Yamamoto, Nakashizuka and Terada (1998) J Biochem (Tokyo) 123:94-100	pfam11477	GT	beta-galactoside alpha-2,6-sialyltransferase (EC 2.4.99.1); beta-galactoside alpha-2,3-sialyltransferase (EC 2.4.99.4)
+GT79	Created after reading Goswami et al. Glycobiology (2006) 16, 230-236 (PMID: 16272216)	self-built	GT	GDP-D-Ara: phosphoglycan alpha-1,2-D-arabinopyranosyltransferase 1 (EC 2.4.2.-)
+GT78	Distant similarity to family GT2	self-built	GT	GDP-Man: alpha-mannosyltransferase (mannosylglycerate synthase) (EC 2.4.1.-)
+GT77	Created from Egelund J, Skjodt M, Geshi N, Ulvskov P and Petersen BL (2004) Plant Physiol. 136:2609-2620	pfam03407	GT	alpha-xylosyltransferase (EC 2.4.2.39); alpha-1,3-galactosyltransferase (EC 2.4.1.37); arabinosyltransferase (EC 2.4.2.-)
+GT76	These enzymes use dolichol-P-mannose as the sugar donor; created after Kang, Hong, Ashida, Shishioh, Murakami, Morita, Maeda and Kinoshita (2005) J. Biol. Chem. 280:9489-9497 (PMID: 15623507)	pfam04188	GT	Dol-P-Man: alpha-1,6-mannosyltransferase (EC 2.4.1.-)
+GT75	Members of this family are often attributed EC 2.4.1.112 (forming a-bonds) despite a paper by Singh et al, FEBS Lett  376 (1995) 61-64, showing that the glucose residue is b-linked to an arginine residue	pfam03214	GT	UDP-Glc: self-glucosylating beta-glucosyltransferase (EC 2.4.1.-)
+GT74	The Dictyostelium enzyme has a GT2-GT74 tandem structure while the Desulfovibrio enzyme has a GT74-GT2 tandem structure.	self-built	GT	alpha-1,2-L-fucosyltransferase (EC 2.4.1.69)
+GT73	These enzymes use a nucleotide monophosphosugar as the donor (CMP-b-KDO) instead of a nucleotide diphosphosugar	PRK09822	GT	CMP-beta-KDO: alpha-3-deoxy-D-manno-octulosonic-acid (KDO) transferase (EC 2.4.99.-).
+GT72		pfam11440	GT	UDP-Glc: DNA alpha-glucosyltransferase (EC 2.4.1.26)
+GT71	Distantly related to family GT8	pfam11051	GT	alpha-mannosyltransferase (EC 2.4.1.-)
+GT70		self-built	GT	UDP-GlcA: beta-glucuronosyltransferase (EC 2.4.1.17)
+GT69	Created after reading Sommer et al. (2003) J. Biol. Chem. 278:47724-47730.	pfam11735	GT	GDP-Man: alpha-1,3-mannosyltransferase (EC 2.4.1.-)
+GT68	Distantly related to families GT65, GT23, GT11; created after reading Martinez-Dunker et al. (2003) Glycobiology 13:1C-5C	pfam10250	GT	GDP-Fuc: protein O-alpha-fucosyltransferase (EC 2.4.1.-)
+GT65	Distantly related to families GT68, GT23, GT11	pfam10250	GT	GDP-Fuc: protein O-alpha-fucosyltransferase (EC 2.4.1.-)
+GT64	The long animal heparan synthases are made of two domains. The N-terminal domain, which adds b-1,4-GlcA residues, belongs to family GT47 while the C-terminal domain, which adds a-1,4-GlcNAc residues, belongs to family GT64. The plant homologs have a single domain.	pfam09258	GT	UDP-GlcNAc: heparan alpha-N-acetylhexosaminyltransferase (EC 2.4.1.224)
+GT63	Exceptionally, this family was created with a single member whose 3-D structure and mechanism are well characterised	self-built	GT	UDP-Glc: DNA beta-glucosyltransferase (EC 2.4.1.27)
+GT62		pfam03452	GT	alpha-1,2-mannosyltransferase (EC 2.4.1.-); alpha-1,6-mannosyltransferase (EC 2.4.1.-)
+GT60		pfam11397	GT	UDP-GlcNAc: polypeptide alpha-N-acetylglucosaminyltransferase (EC 2.4.1.-); UDP-GlcNAc: hydroxyproline polypeptide alpha-N-acetylglucosaminyltransferase (EC 2.4.1.-)
+GT59	These enzymes use dolichol-P-glucose as the sugar donor.	pfam04922	GT	Dol-P-Glc: Glc2Man9GlcNAc2-PP-Dol alpha-1,2-glucosyltransferase (EC 2.4.1.-)
+GT58	These enzymes use dolichol-P-mannose as the sugar donor.	pfam05208	GT	Dol-P-Man: dolichol pyrophosphate-mannose alpha-1,3-mannosyltransferase (EC 2.4.1.130); Dol-P-Man: dolichol pyrophosphate-Man5GlcNAc2 alpha-1,2-mannosyltransferase (EC 2.4.1.130)
+GT57	These enzymes use dolichol-P-glucose as the sugar donor.	pfam03155	GT	Dol-P-Glc: alpha-1,3-glucosyltransferase (EC 2.4.1.-)
+GT56		pfam07429	GT	TDP-Fuc4NAc: lipid II Fuc4NAc transferase (EC 2.4.1.-)
+GT55	Distantly related to family GT2	pfam09488	GT	GDP-Man: mannosyl-3-phosphoglycerate synthase (EC 2.4.1.217)
+GT54		pfam04666	GT	UDP-GlcNAc: alpha-1,3-D-mannoside beta-1,4-N-acetylglucosaminyltransferase (EC 2.4.1.145)
+GT53		pfam04602	GT	UDP-L-Ara: alpha-L-arabinosyltransferase (EC 2.4.2.-)
+GT52		pfam07922	GT	alpha-2,3-sialyltransferase (EC 2.4.99.4); alpha-glucosyltransferase (EC 2.4.1.-)
+GT50	These enzymes use dolichol-P-mannose as the sugar donor.	pfam05007	GT	Dol-P-Man alpha-1,4-mannosyltransferase (EC 2.4.1.-)
+GT49		self-built	GT	beta-1,3-N-acetylglucosaminyltransferase (EC 2.4.1.-).
+GT46	This family has been deleted until a convincing sufficient biochemical characterization is found for a member of this family	self-built	GT	Deleted
+GT45		pfam00535	GT	alpha-N-acteylglucosaminyltransferase (EC 2.4.1.-)
+GT44		pfam04488	GT	UDP-Glc: alpha-glucosyltransferase (EC 2.4.1.-); UDP-GlcNAc: alpha-N-acetylglucosaminyltransferase (EC 2.4.1.-).
+GT43		pfam03360	GT	beta-glucuronyltransferase (EC 2.4.1.135); UDP-Xyl: xylan  beta-1,4-xylosyltransferase (EC 2.4.2.-)
+GT42	These enzymes use CMP-beta-N-acetylneuraminate as the sugar donor	pfam06002	GT	CMP-NeuAc alpha-2,3-sialyltransferase (EC 2.4.99.-)
+GT41		COG3914	GT	UDP-GlcNAc: peptide beta-N-acetylglucosaminyltransferase (EC 2.4.1.94)
+GT40	These enzymes use UDP-galactofuranose as donor	cd04186	GT	beta-1,3-galactofuranosyltransferases (EC 2.4.1.-)
+GT38	These enzymes use CMP-beta-N-acetylneuraminate as the sugar donor	pfam07388	GT	polysialyltransferase (EC 2.4.-.-)
+GT37		pfam03254	GT	galactoside 2-L-fucosyltransferase (EC 2.4.1.69)
+GT34		pfam05637	GT	UDP-Gal: galactomannan alpha-1,6-galactosyltransferase (EC 2.4.1.-); UDP-Xyl: xyloglucan alpha-1,6-xylosyltransferase (EC 2.4.2.39); alpha-1,2-galactosyltransferase (EC 2.4.1.-)
+GT33		cd03816	GT	GDP-Man: chitobiosyldiphosphodolichol beta-mannosyltransferase (EC 2.4.1.142).
+GT24	Distant similarity to family GT8	cd06432	GT	UDP-Glc: glycoprotein alpha-glucosyltransferase (EC 2.4.1.-).
+GT23	Distantly related to families GT65, GT68, GT11	self-built	GT	N-acetyl-beta-D-glucosaminide alpha-1,6-L-fucosyltransferase (EC 2.4.1.68)
+GT22	These enzymes use dolichol-P-mannose as the sugar donor.	pfam03901	GT	Dol-P-Man alpha-mannosyltransferase (EC 2.4.1.-)
+GT21	Distant similarity to families GT2, GT12 and GT27	cd02520	GT	UDP-Glc: ceramide beta-glucosyltransferase (EC 2.4.1.80).
+GT20		pfam00982	GT	alpha,alpha-trehalose-phosphate synthase [UDP-forming] (EC 2.4.1.15)
+GT19		pfam02684	GT	lipid-A-disaccharide synthase (EC 2.4.1.182).
+GT18		self-built	GT	alpha-1,3(6)-mannosylglycoprotein beta-1,6-N-acetyl-glucosaminyltransferase (EC 2.4.1.155).
+GT17		pfam04724	GT	beta-1,4-mannosyl-glycoprotein beta-1,4-N-acetylglucosaminyltransferase (EC 2.4.1.144).
+GT16		pfam05060	GT	alpha-1,6-mannosyl-glycoprotein beta-1,2-N-acetylglucosaminyltransferase (EC 2.4.1.143).
+GT15		pfam01793	GT	glycolipid 2-alpha-mannosyltransferase (EC 2.4.1.131); GDP-Man: alpha-1,2-mannosyltransferase (EC 2.4.1.-).
+GT12	Distant similarity to families GT2, GT21 and GT27	pfam00535	GT	[N-acetylneuraminyl]-galactosylglucosylceramide N-acetylgalactosaminyltransferase (EC 2.4.1.92).
+GH99	Created after Spiro, Bhoyroo and Spiro (1997) J. Biol. Chem. 272, 29356-29363	self-built	GH	glycoprotein endo-alpha-1,2-mannosidase (EC 3.2.1.130)
+GH98	Created after Anderson et al. (J. Biol. Chem. 2005 280: 7720-7728; PMID:15618227)	pfam08306	GH	endo-beta-galactosidase (EC 3.2.1.-)
+GH97	Created based on a paper by Hughes et al. (2003) Oral Microbiol Immunol. 18:309-312 (PMID: 12930523); *Mechanistic and structural elucidation by Gloster et al. (2008) Chem. Biol., Oct 8 (PMID:18848471); the inverting a-glucosidases (EC 3.2.1.20) could be renamed glucoamylases (EC 3.2.1.3 according to Kitamura et al. (2008) J. Biol. Chem., Nov 3 (PMID:18981178)	pfam10566	GH	alpha-glucosidase (EC 3.2.1.20); alpha-galactosidase (EC 3.2.1.22)
+GH96		self-built	GH	alpha-agarase (EC 3.2.1.158)
+GH95	Created based on a paper by Katayama, Sakuma, Kimura, Makimura, Hiratake, Sakata, Yamanoi, Kumagai, and Yamamoto (J. Bacteriol. 2004 Aug;186(15):4885-4893)	self-built	GH	alpha-1,2-L-fucosidase (EC 3.2.1.63); alpha-L-fucosidase (EC 3.2.1.51)
+GH94	Formerly known as glycosyltransferase family GT36; Assigned to a GH family following a paper by Hidaka, Honda, Kitaoka, Nirasawa, Hayashi, Wakagi, Shoun and Fushinobu (Structure (Camb). 2004 Jun;12(6):937-947) (PMID: 15274915) that revealed the evolutionary, structural and mechanistic relationship of these phosphorylases with glycoside hydrolases of clan GH-L.	COG3459	GH	cellobiose phosphorylase (EC 2.4.1.20);  cellodextrin phosphorylase (EC 2.4.1.49);  chitobiose phosphorylase (EC 2.4.1.-); cyclic beta-1,2-glucan synthase (EC 2.4.1.-)
+GH93		self-built	GH	exo-alpha-L-1,5-arabinanase (EC 3.2.1.-)
+GH91	Was temporarily changed into PL19 until it was recently realized that these "PLs" are analogous to GH23 SLTs/lysozymes (there is at least one hydrolase in the GH91 family) and therefore are better classified in the GH category. See CAZypedia (below) for more.	self-built	GH	inulin lyase [DFA-I-forming] (EC 4.2.2.17); inulin lyase [DFA-III-forming] (EC 4.2.2.18); dIota;-fructofuranose 1,2':2,3' dianhydride hydrolase [DFA-IIIase] (EC 3.2.1.-)
+GH90		pfam09251	GH	endorhamnosidase (EC 3.2.1.-)
+GH9	formerly known as cellulase family E.	pfam00759	GH	endoglucanase (EC 3.2.1.4); cellobiohydrolase (EC 3.2.1.91); beta-glucosidase (EC 3.2.1.21); exo-beta-glucosaminidase (EC 3.2.1.165)
+GH89		pfam05089	GH	alpha-N-acetylglucosaminidase (EC 3.2.1.50)
+GH88		pfam07470	GH	d-4,5 unsaturated beta-glucuronyl hydrolase (EC 3.2.1.-)
+GH87		self-built	GH	mycodextranase (EC 3.2.1.61); alpha-1,3-glucanase (EC 3.2.1.59)
+GH86		self-built	GH	beta-agarase (EC 3.2.1.81)
+GH85		pfam03644	GH	endo-beta-N-acetylglucosaminidase (EC 3.2.1.96)
+GH84	Mechanism shown in Macauley et al. (2005) JBC 280:25313-25322	pfam07555	GH	N-acetyl beta-glucosaminidase (EC 3.2.1.52); hyaluronidase (EC 3.2.1.35)
+GH82		COG5434	GH	Iota;-carrageenase (EC 3.2.1.157)
+GH81		pfam03639	GH	endo-beta-1,3-glucanase (EC 3.2.1.39)
+GH80		cd00978	GH	chitosanase (EC 3.2.1.132)
+GH78		pfam05592	GH	alpha-L-rhamnosidase (EC 3.2.1.40)
+GH76		pfam03663	GH	alpha-1,6-mannanase (EC 3.2.1.101)
+GH75		pfam07335	GH	chitosanase (EC 3.2.1.132)
+GH72		pfam03198	GH	beta-1,3-glucanosyltransglycosylase (EC 2.4.1.-)
+GH71		pfam03659	GH	alpha-1,3-glucanase (EC 3.2.1.59).
+GH70		pfam02324	GH	dextransucrase (EC 2.4.1.5); alternansucrase (EC 2.4.1.140); reuteransucrase (EC 2.4.1.-); alpha-4,6-glucanotransferase (EC 2.4.1.-)
+GH7	formerly known as cellulase family C. The cellobiohydrolases of this family act processively from the reducing ends of cellulose chains to generate cellobiose. This is markedly different from the IUBMB definition of cellobiohydrolases (EC 3.2.1.91), which act from the non-reducing ends of cellulose.	pfam00840	GH	endo-beta-1,4-glucanase (EC 3.2.1.4); [reducing end-acting] cellobiohydrolase (EC 3.2.1.-); chitosanase (EC 3.2.1.132); endo-beta-1,3-1,4-glucanase (EC 3.2.1.73)
+GH68		pfam02435	GH	levansucrase (EC 2.4.1.10); beta-fructofuranosidase (EC 3.2.1.26); inulosucrase (EC 2.4.1.9).
+GH67		COG3661	GH	alpha-glucuronidase (EC 3.2.1.139); xylan alpha-1,2-glucuronidase (EC 3.2.1.131)
+GH66		self-built	GH	cycloisomaltooligosaccharide glucanotransferase (EC 2.4.1.-); dextranase (EC 3.2.1.11).
+GH64		self-built	GH	beta-1,3-glucanase (EC 3.2.1.39).
+GH62		pfam03664	GH	alpha-L-arabinofuranosidase (EC 3.2.1.55)
+GH61	The enzymes in this family were originally classified as a glycoside hydrolase family based on measurement of very weak endo-1,4-b-D-glucanase activity in one family member. The structure and mode of action of these enzymes are certainly non-canonical and they cannot be considered as bona fide glycosidases. However, they are kept in the CAZy classification on the basis of their capacity to enhance the breakdown of lignocellulose when used in conjunction with a cellulase or a mixture of cellulases.	pfam03443	GH	endoglucanase (EC 3.2.1.4)
+GH59		pfam02057	GH	galactocerebrosidase (EC 3.2.1.46)
+GH58		pfam12217	GH	endo-N-acetylneuraminidase or endo-sialidase (EC 3.2.1.129)
+GH57		pfam03065	GH	alpha-amylase (EC 3.2.1.1); 4-alpha-glucanotransferase (EC 2.4.1.25); alpha-galactosidase (EC 3.2.1.22); amylopullulanase (EC 3.2.1.41); branching enzyme (EC 2.4.1.18)
+GH53		pfam07745	GH	endo-beta-1,4-galactanase (EC 3.2.1.89).
+GH52		pfam03512	GH	beta-xylosidase (EC 3.2.1.37).
+GH49		pfam03718	GH	dextranase (EC 3.2.1.11); isopullulanase (EC 3.2.1.57); dextran 1,6-alpha-isomaltotriosidase (EC 3.2.1.95).
+GH48	formerly known as cellulase family L. Some cellobiohydrolases of this family have been reported to act from the reducing ends of cellulose (EC 3.2.1.-), while others have been reported to operate from the non-reducing ends to liberate cellobiose or cellotriose or cellotetraose (EC 3.2.1.-). This family also contains endo-processive cellulases (EC 3.2.1.-), whose activity is hard to distinguish from that of cellobiohydrolases.	pfam02011	GH	endoglucanase (EC 3.2.1.4); chitinase (EC 3.2.1.14); cellobiohydrolase (EC 3.2.1.91); endo-processive cellulases (EC 3.2.1.-); [reducing end] cellobiohydrolase (3.2.1.-)
+GH47		pfam01532	GH	alpha-mannosidase (EC 3.2.1.113)
+GH46		cd00978	GH	chitosanase (EC 3.2.1.132)
+GH44	formerly known as cellulase family J. Note that the stereochemistry of the reaction has recently been corrected : Kitago et al., J. Biol. Chem. 282(2007)35703-11 (PMID: 17905739)	self-built	GH	endoglucanase (EC 3.2.1.4); xyloglucanase (EC 3.2.1.151)
+GH39		self-built	GH	alpha-L-iduronidase (EC 3.2.1.76); beta-xylosidase (EC 3.2.1.37).
+GH37		pfam01204	GH	alpha,alpha-trehalase (EC 3.2.1.28).
+GH30	Following a recent paper by St John et al. (FEBS Letters, 2010, in press) several GH5 subfamilies have been reassigned to GH30. The subfamilies in GH30 are now indicated.	COG5520	GH	glucosylceramidase (EC 3.2.1.45); beta-1,6-glucanase (EC 3.2.1.75); beta-xylosidase (EC 3.2.1.37); beta-fucosidase (EC 3.2.1.38); beta-glucosidase (3.2.1.21); endo-beta-1,6-galactanase (EC:3.2.1.164)
+GH24		cd00737	GH	lysozyme (EC 3.2.1.17)
+GH14		pfam01373	GH	beta-amylase (EC 3.2.1.2)
+GH125	Created after Gregg, Zandberg, Hehemann, Whitworth, Deng, Vocadlo  Boraston (2011) J. Biol. Chem., in press	pfam06824	GH	exo-alpha-1,6-mannosidase (EC 3.2.1.-)
+GH124	Created after Bras et al. (2011) Proc.Natl.Acad.Sci.USA; distantly related to lytic transglycosylases of family GH23	GH124	GH	endoglucanase (EC 3.2.1.4)
+GH123	Created after Sumida T, Fujimoto K, Ito M. (2011) J Biol Chem. in press [PMID: 21297160]	self-built	GH	glycosphingolipid beta-N-acetylgalactosaminidase (EC 3.2.1.-)
+GH122	Created after Confort et al. (2008) Appl Environ Microbiol. 74(4):1281-3 PMID:18156337	COG4697	GH	alpha-glucosidase (EC 3.2.1.20)
+GH121	Created after Fujita et al. (2010) JBC, in press, PMID:21149454	self-built	GH	beta-L-arabinobiosidase (EC 3.2.1.-)
+GH120	created after Shao W, Xue Y, Wu A, Kataeva I, Pei J, Wu H, Wiegel J (2010) Characterization of a novel beta-xylosidase XylC from Thermoanaerobacterium saccharolyticum JW/SL-YS485, Appl. Environ. Microbiol. (in press)	pfam07602	GH	beta-xylosidase (EC 3.2.1.37)
+GH119	Distantly related to family GH57; created after Watanabe H, Nishimoto T, Kubota M, Chaen H, Fukuda S. (2006) Biosci Biotechnol Biochem. 2006 Nov;70(11):2690-702 [PMID - 17090949]	self-built	GH	alpha-amylase (EC 3.2.1.1)
+GH118		self-built	GH	beta-agarase (EC 3.2.1.81)
+GH117	Distantly related to family GH43	pfam04616	GH	alpha-1,3-L-neoagarooligosaccharide hydrolase (EC 3.2.1.-); alpha-1,3-L-neoagarobiase / neoagarobiose hydrolase (EC 3.2.1.-)
+GH116		pfam04685	GH	acid beta-glucosidase (EC 3.2.1.45); beta-glucosidase (EC 3.2.1.21); beta-xylosidase (EC 3.2.1.37)
+GH115	created from reading Ryabova et al. (2009) FEBS Lett. in press	self-built	GH	xylan alpha-1,2-glucuronidase (3.2.1.131); alpha-(4-O-methyl)-glucuronidase (3.2.1.-)
+GH114	Activity shown in Tamura et al. (1995) Journal of Fermentation and Bioengineering 80:305-310 doi:10.1016/0922-338X(95)94196-X	pfam03537	GH	endo-alpha-1,4-polygalactosaminidase (EC 3.2.1.109)
+GH113	Created based on Zhang et al. (2008) J. Biol. Chem. 283, 31551-31558 (PMID:18755688)	self-built	GH	beta-mannanase (EC 3.2.1.78)
+GH112		pfam09508	GH	lacto-N-biose phosphorylase or galacto-N-biose phosphorylase (EC 2.4.1.211); D-galactosyl-1,4-L-rhamnose phosphorylase (EC 2.4.1.-)
+GH111		self-built	GH	keratan sulfate hydrolase (endo-beta-N-acetylglucosaminidase) (EC 3.2.1.-)
+GH110	Created following Liu et al. (2007) Nature Biotechnol 25:454-64 (PMID: 17401360); mechanism described by Liu et al. (PMID: 18227066)	self-built	GH	alpha-galactosidase (EC 3.2.1.22); alpha-1,3-galactosidase (EC 3.2.1.-)
+GH109	Created following Liu et al. (2007) Nature Biotechnol 25:454-64 (PMID: 17401360); the enzymes in this family display an unusual mechanism involving NAD+	pfam01408	GH	alpha-N-acetylgalactosaminidase (EC 3.2.1.49)
+GH107	Created after Colin et al. (2006) Glycobiology 16, 1021-1032	self-built	GH	sulfated fucan endo-1,4-fucanase (EC 3.2.1.-)
+GH106	Created after reading Miyata et al (2005) Curr Microbiol. 51:105-109	self-built	GH	alpha-L-rhamnosidase (EC 3.2.1.40)
+GH105	Created based on a paper by Itoh, Ochiai, Mikami, Hashimoto, and Murata (J. Mol. Biol. 360 (2006) 573-585) (PMID: 16781735)	pfam07470	GH	unsaturated rhamnogalacturonyl hydrolase (EC 3.2.1.-)
+GH104	Corresponds to family 4 of the peptidoglycan lytic transglycosylases described by N.T. Blackburn and A.J. Clarke (2001) J. Mol. Evol. 52, 78-84	cd00736	GH	peptidoglycan lytic transglycosylase (EC 3.2.1.-)
+GH103	Corresponds to family 3 of the peptidoglycan lytic transglycosylases described by N.T. Blackburn and A.J. Clarke (2001) J. Mol. Evol. 52, 78-84	TIGR02283	GH	peptidoglycan lytic transglycosylase (EC 3.2.1.-)
+GH101	Created after Fujita et al. (2005) J. Biol. Chem. 280:37415-37422 (PMID: 16141207); catalytic residue determination : Willis et al. (2009) Biochemistry 48:10334-41 (PMID: 19788271)	self-built	GH	endo-alpha-N-acetylgalactosaminidase (EC 3.2.1.97)
+GH100	Created from Gallagher and Pollock (1998) J Exp Bot 322:789-795 and Sturm et al. (1999) Physiol Plantarum 107:159-165	pfam04853	GH	alkaline and neutral invertase (EC 3.2.1.26)
+CE8		pfam01095	CE	pectin methylesterase (EC 3.1.1.11).
+CE7		pfam05448	CE	acetyl xylan esterase (EC 3.1.1.72); cephalosporin-C deacetylase (EC 3.1.1.41).
+CE5	There are many cutinases in the databanks. Only an example is given here as cutinases act on cutin rather than on carbohydrate esters.	pfam01083	CE	acetyl xylan esterase (EC 3.1.1.72); cutinase (EC 3.1.1.74)
+CE3		cd01833	CE	acetyl xylan esterase (EC 3.1.1.72).
+CE2		cd01831	CE	acetyl xylan esterase (EC 3.1.1.72).
+CE16	Formerly known as X125 modules; created from Li et al. Appl. Environ. Microbiol., 74:7482-7489 (PMID: 18978092)	cd01846	CE	acetylesterase (EC 3.1.1.6) active on various carbohydrate acetyl esters
+CE15	Formerly known as X100 modules; Created following a paper by Xin-Liang Li et al. (2007) FEBS Letters 581(21):4029-35  (PMID: 17678650).	self-built	CE	4-O-methyl-glucuronoyl methylesterase (EC 3.1.1.-)
+CE14		pfam02585	CE	N-acetyl-1-D-myo-inosityl-2-amino-2-deoxy-alpha-D-glucopyranoside deacetylase (EC 3.5.1.89); diacetylchitobiose deacetylase (EC 3.5.1.-); mycothiol S-conjugate amidase (EC 3.5.1.-)
+CE13		pfam03283	CE	pectin acetylesterase (EC 3.1.1.-)
+CE12		cd01821	CE	pectin acetylesterase (EC 3.1.1.-); rhamnogalacturonan acetylesterase (EC 3.1.1.-); acetyl xylan esterase (EC 3.1.1.72)
+CE11		pfam03331	CE	UDP-3-0-acyl N-acetylglucosamine deacetylase (EC 3.5.1.-).
+CBM9	Previously known as cellulose-binding domain family IX (CBD IX).	pfam06452	CBM	Modules of approx. 170 residues found so far only in xylanases. The cellulose-binding function has been demonstrated in one case.
+CBM8	Previously known as cellulose-binding domain family VIII (CBD VIII).	self-built	CBM	The cellulose-binding module from a cellulase of the slime mold Dictyostelium discoideum has been experimentally shown to bind cellulose.
+CBM62	Created after Montanier et al. (2011) JBC, in press (doi:10.1074/jbc.M110.217372)	self-built	CBM	The CBM62 module od Clostridium thermocellum Cthe_2193 protein binds galactose moieties found on xyloglucan, arabinogalactan and galactomannan.
+CBM61	Family created after Cid et al. (2010) [PMID: 20826814]	self-built	CBM	Modules of approx. 150 residues found appended to GH16, GH30, GH31, GH43, GH53 and GH66 catalytic domains. A beta-1,4-galactan binding function has been demonstrated for the CBM60 of Thermotoga maritima GH53 galactanase [PMID: 20826814].
+CBM60	Family created after Montanier et al. (2010) [PMID: 20659893]	self-built	CBM	Modules of approx 120 residues usually found appended to xylanases. The xylan-binding function and the relatedness (circular permutation) to family CBM36 has been demonstrated [PMID: 20659893].
+CBM59		self-built	CBM	Binding to mannan, xylan, and cellulose demonstrated for the CBM59 of ManF-X10 xylanase from an environmental genomic DNA library (Li et al. (2009) World Journal of Microbiology and Biotechnology 25:2071-2078; doi:10.1007/s11274-009-0111-6)
+CBM58		self-built	CBM	The CBM58 module of the Bacteroides thetaiotaomicron SusG protein has been shown to bind maltoheptaose
+CBM57		pfam11721	CBM	Created from reading Schallus et al (2008) Mol Biol Cell. 19:3404-3414 [PMID: 18524852] and finding related domains attached to various glycosidases.
+CBM56		self-built	CBM	beta-1,3-glucan binding function demonstrated by Yamamoto et al. (1998) FEBS Letters 433:41-43 [PMID: 9738929]
+CBM55		self-built	CBM	Binding to chitin demonstrated in the case of the CBM55 of Entamoeba histolytica chitinase (Van Dellen et al. (2002) Infect Immun. 70:3259â€“3263; PMID: 12011021).
+CBM54		self-built	CBM	Binding to xylan, yeast cell wall glucan and chitin shown in Dvortsov et al., Microbiology UK (2009) in press.
+CBM53	Starch-binding demonstrated in one case.	pfam03423	CBM	Starch-binding function demonstrated by Valdez et al. (2008) [PMID: 18260645]
+CBM52		pfam10645	CBM	Modules of approx. 60 residues attached to a few GH81 enzymes but present in other proteins. Binding to beta-1,3-glucan demonstrated for  Schizosaccharomyces pombe 972h- endo-1,3-beta-glucanase Eng1 [Martin-Quadrado et al., Mol. Microbiol. (2008) 69:188-200 PMID:18466295]
+CBM51	Also know as NPCBM domains	pfam08305	CBM	Modules of approx. 150 residues found attached to various enzymes from  families GH2, GH27, GH31, GH95, GH98 and GH101 . Binding to galactose and to blood group A/B-antigens demonstrated in the  case of C. perfringens GH95CBM51 and GH98CBM51 respectively [Gregg KJ et al. (2008) J. Biol. Chem. 283:12604-13 PMID: 18292090].
+CBM49	Created after Urbanowicz et al. (2007) J. Biol. Chem. 282:12066-74 (PMID: 17322304)	pfam09478	CBM	Modules of approx. 100 residues found at the C-terminus of plant GH9 enzymes. Distantly related to CBM2 modules. Binding to crystalline cellulose demonstrated in the case of Solanum lycopersicum Cel8 enzyme (SlCel9C1).
+CBM47	Created from Boraston, Wang and Burke (2006) J. Biol. Chem., 281:35263-71 (PMID: 16987809)	pfam00754	CBM	Modules of approx 150 residues. Fucose-binding activity demonstrated
+CBM46	Created from Wamalwa BM, Sakka M, Shiundu PM, Ohmiya K, Kimura T, Sakka K (2006) Appl Environ Microbiol 72:6851-6853 (PMID: 16950908)	pfam03442	CBM	Modules of approx.  100 residues, found at the C-terminus of several GH5 cellulases. Cellulose-binding function demonstrated in one case.
+CBM45	Created following Mikkelsen, Suszkiewicz and Blennow (2006) Biochemistry 45:4674-82 (PMID: 16584202).	self-built	CBM	Modules of approx.  100 residues, found at the N-terminus of plastidial alpha-amylases and of alpha-glucan, water dikinases. Starch-binding activity demonstrated in the case of potato alpha-glucan, water dikinase.
+CBM44	Created after Najmudin et al. J. Biol. Chem. (2006) 281:8815-8828 (PMID: 16314409)	pfam00801	CBM	The C-terminal CBM44 module of the Clostridium thermocellum enzyme has been demonstrated to bind equally well cellulose and xyloglucan
+CBM42	Created following a paper by Miyanaga A, Koseki T, Matsuzawa H, Wakagi T, Shoun H, Fushinobu S (2004) J.Biol. Chem. 279:44907-44914 (PMID: 15292273)	pfam05270	CBM	Modules of approx. 160 residues found mostly at the C-terminus of GH54 catalytic domains. Binding to arabinofuranose (present in arabinoxylan) has been demonstrated.
+CBM41	Formerly known as X28 modules.	pfam03714	CBM	Modules of approx. 100 residues found in primarily in bacterial pullulanases. The N-terminal module from Thermotoga maritima Pul13 has been shown to bind to the alpha-glucans amylose, amylopectin, pullulan, and oligosaccharide fragments derived from these polysaccharides (Lammerts van Bueren et al. (2004) Biochemistry 43:15633-42) (PMID: 15581376).
+CBM4	Previously known as cellulose-binding domain family IV (CBD IV).	pfam02018	CBM	Modules of approx. 150 residues found in bacterial enzymes. Binding of these modules has been demonstrated with xylan, beta-1,3-glucan, beta-1,3-1,4-glucan, beta-1,6-glucan and amorphous cellulose but not with crystalline cellulose.
+CBM39	Formerly known as X67 modules.	self-built	CBM	Modules generally found at the N-terminus of a GH16 module (itself frequently lacking a catalytic machinery) and more seldomly in isolation. The beta-1,3-glucan binding function has been demonstrated, along with binding to lipopolysaccharide and lipoteichoic acid.
+CBM38	Formerly known as X39 modules.	self-built	CBM	The inulin-binding function has been demonstrated in the case of the cycloinulo-oligosaccharide fructanotransferase from Paenibacillus macerans (Bacillus macerans) by Lee et al. (2004) FEMS Microbiol Lett 234:105-10. (PMID:15109727).
+CBM37	Formerly known as X94 modules.	smart00060	CBM	Modules of approx. 100 residues, conserved in numerous R. albus polysaccharide-degrading enzymes and other proteins from this bacterium.  Several members of CBM37 have been shown to exhibit rather broad binding specificity to xylan, chitin, microcrystalline and phosphoric-acid swollen cellulose, as well as more heterogeneous substrates, such as alfalfa cell walls, banana stem and wheat straw.
+CBM36	Formerly known as X9 modules	pfam03422	CBM	Modules of approx. 120-130 residues displaying structural similarities to CBM6 modules. The only CBM36 currently characterised, that from Paenbacillus polymyxa xylanase 43A, shows calcium-dependent binding of xylans and xylooligosaccharides. X-ray crystallography shows that there is a direct interaction between calcium and ligand.
+CBM31		pfam11606	CBM	Binding to beta-1,3-xylan has been demonstrated for the C-terminal module of the beta-1,3-xylanase of Alcaligenes sp. XY234.
+CBM29		self-built	CBM	Binding to mannan/glucomannan has been demonstrated.
+CBM28		pfam03424	CBM	The module from the endo-1,4-glucanase of Bacillus sp. 1139 binds to non-crystalline cellulose, cellooligosaccharides, and beta-(1,3)(1,4)-glucans
+CBM27	Formerly known as X11 modules	pfam09212	CBM	Mannan-binding function demonstrated in two cases
+CBM26	Formerly known as X22 modules; structurally related to CBM25 modules	self-built	CBM	Starch-binding function demonstrated in two cases.
+CBM24	Formerly known as X59 modules	self-built	CBM	alpha-1,3-glucan (mutan)-binding function demonstrated in two cases (PMID:10636904)
+CBM23		pfam03425	CBM	Mannan-binding function demonstrated in one case.
+CBM22	Formerly known as X6 modules or thermostabilizing domains	pfam02018	CBM	A xylan binding function has been demonstrated in several cases and affinity with mixed beta-1,3/beta-1,4-glucans in one. In several cases a thermostabilizing effect has also been seen.
+CBM20	PDB:1b90	pfam00686	CBM	The granular starch-binding function has been demonstrated in several cases. Interact strongly with cyclodextrins. Often designated as starch-binding domains (SBD).
+CBM19		pfam03427	CBM	Modules of 60-70 residues with chitin-binding function.
+CBM17		pfam03424	CBM	Modules of approx. 200 residues. Binding to amorphous cellulose, cellooligosaccharides and derivatized cellulose has been demonstrated.
+CBM16		pfam02018	CBM	Carbohydrate-binding module 16. Binding to cellulose and glucomannan demonstrated [B. Bae et al (2008) J Biol Chem. 283:12415-25 (PMID: 18025086)]
+CBM15		pfam03426	CBM	Binding to xylan and xylooligosaccharides has been demonstrated in the case of Xyn10C of Cellvibrio mixtus.
+CBM12	Previously known as cellulose-binding domain family XII (CBD XII).	pfam02839	CBM	Modules of approx. 40-60 residues. The majority of these modules is found among chitinases where the function is chitin-binding. Distantly related to the CBM5 family.
+CBM11	Previously known as cellulose-binding domain family XI (CBD XI).	pfam03425	CBM	Modules of approx. 180-200 residues. The CBM11 of Clotridium thermocellum Cel26A-Cel5E has been shown to bind both beta-1,4-glucan and beta-1,3-1,4-mixed linked glucans.
+CBM10	Previously known as cellulose-binding domain family X (CBD X).	pfam02013	CBM	Modules of approx. 50 residues. The cellulose-binding function has been demonstrated in one case.
+Unclassified-GT0	Glycosyltransferases not yet assigned to a family	NA	GT	Some of the proteins in this category display weak similarity to established GT families, but too distant to allow a reliable assignment; some will serve as seeds to build new families in the future.
+Unclassified-GH0	Glycoside hydrolases not yet assigned to a family.		GH	
+Unclassified-CE0	Carbohydrate esterases not yet assigned to a family.		CE	
+Unclassified-PL0	Polysaccharide lyases not yet assigned to a family.		PL	Some of the proteins in this category display weak similarity to established PL families, but too distant to allow a reliable assignment; some will serve as seeds to build new families in the future.
+Unclassified-CBM0	Carbohydrate-binding modules not yet assigned to a family.		CBM	

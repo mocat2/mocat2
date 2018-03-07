@@ -1,0 +1,1127 @@
+AAC2I	Resistance type: netilmicin
+AAC2I	Resistance type: tobramycin
+AAC2I	Resistance type: 6_n_netilmicin
+AAC2I	Resistance type: dibekacin
+AAC2I	Resistance type: gentamicin
+AAC2IA	Resistance type: netilmicin
+AAC2IA	Resistance type: tobramycin
+AAC2IA	Resistance type: 6_n_netilmicin
+AAC2IA	Resistance type: dibekacin
+AAC2IA	Resistance type: gentamicin
+AAC2IB	Resistance type: netilmicin
+AAC2IB	Resistance type: tobramycin
+AAC2IB	Resistance type: 6_n_netilmicin
+AAC2IB	Resistance type: dibekacin
+AAC2IB	Resistance type: gentamicin
+AAC2IC	Resistance type: netilmicin
+AAC2IC	Resistance type: tobramycin
+AAC2IC	Resistance type: 6_n_netilmicin
+AAC2IC	Resistance type: dibekacin
+AAC2IC	Resistance type: gentamicin
+AAC2ID	Resistance type: netilmicin
+AAC2ID	Resistance type: tobramycin
+AAC2ID	Resistance type: 6_n_netilmicin
+AAC2ID	Resistance type: dibekacin
+AAC2ID	Resistance type: gentamicin
+AAC3III	Resistance type: tobramycin
+AAC3III	Resistance type: paromomycin
+AAC3III	Resistance type: neomycin
+AAC3III	Resistance type: kanamycin
+AAC3III	Resistance type: sisomicin
+AAC3III	Resistance type: dibekacin
+AAC3III	Resistance type: gentamicin
+AAC3III	Resistance type: lividomycin
+AAC3IIA	Resistance type: netilmicin
+AAC3IIA	Resistance type: tobramycin
+AAC3IIA	Resistance type: sisomicin
+AAC3IIA	Resistance type: dibekacin
+AAC3IIA	Resistance type: gentamicin
+AAC3IIB	Resistance type: netilmicin
+AAC3IIB	Resistance type: tobramycin
+AAC3IIB	Resistance type: sisomicin
+AAC3IIB	Resistance type: dibekacin
+AAC3IIB	Resistance type: gentamicin
+AAC3IV	Resistance type: netilmicin
+AAC3IV	Resistance type: tobramycin
+AAC3IV	Resistance type: sisomicin
+AAC3IV	Resistance type: dibekacin
+AAC3IV	Resistance type: gentamicin
+AAC3IV	Resistance type: apramycin
+AAC3IX	Resistance type: neomycin
+AAC3IA	Resistance type: astromicin
+AAC3IA	Resistance type: sisomicin
+AAC3IA	Resistance type: gentamicin
+AAC3VI	Resistance type: sisomicin
+AAC3VI	Resistance type: gentamicin
+AAC3VII	Resistance type: paromomycin
+AAC3VIII	Resistance type: neomycin
+AAC3VIII	Resistance type: ribostamycin
+AAC3X	Resistance type: aminoglycoside
+AAC6I	Resistance type: isepamicin
+AAC6I	Resistance type: netilmicin
+AAC6I	Resistance type: tobramycin
+AAC6I	Resistance type: amikacin
+AAC6I	Resistance type: sisomicin
+AAC6I	Resistance type: dibekacin
+AAC6IIA	Resistance type: netilmicin
+AAC6IIA	Resistance type: tobramycin
+AAC6IIA	Resistance type: sisomicin
+AAC6IIA	Resistance type: dibekacin
+AAC6IIA	Resistance type: gentamicin
+AAC6IIB	Resistance type: netilmicin
+AAC6IIB	Resistance type: tobramycin
+AAC6IIB	Resistance type: sisomicin
+AAC6IIB	Resistance type: dibekacin
+AAC6IIB	Resistance type: gentamicin
+AAC6IA	Resistance type: isepamicin
+AAC6IA	Resistance type: netilmicin
+AAC6IA	Resistance type: tobramycin
+AAC6IA	Resistance type: amikacin
+AAC6IA	Resistance type: sisomicin
+AAC6IA	Resistance type: dibekacin
+AAC6IB	Resistance type: isepamicin
+AAC6IB	Resistance type: netilmicin
+AAC6IB	Resistance type: tobramycin
+AAC6IB	Resistance type: amikacin
+AAC6IB	Resistance type: sisomicin
+AAC6IB	Resistance type: dibekacin
+AAC6IC	Resistance type: isepamicin
+AAC6IC	Resistance type: netilmicin
+AAC6IC	Resistance type: tobramycin
+AAC6IC	Resistance type: amikacin
+AAC6IC	Resistance type: sisomicin
+AAC6IC	Resistance type: dibekacin
+AAC6IE	Resistance type: isepamicin
+AAC6IE	Resistance type: netilmicin
+AAC6IE	Resistance type: tobramycin
+AAC6IE	Resistance type: amikacin
+AAC6IE	Resistance type: sisomicin
+AAC6IE	Resistance type: dibekacin
+AAC6IF	Resistance type: isepamicin
+AAC6IF	Resistance type: netilmicin
+AAC6IF	Resistance type: tobramycin
+AAC6IF	Resistance type: amikacin
+AAC6IF	Resistance type: sisomicin
+AAC6IF	Resistance type: dibekacin
+AAC6IG	Resistance type: isepamicin
+AAC6IG	Resistance type: netilmicin
+AAC6IG	Resistance type: tobramycin
+AAC6IG	Resistance type: amikacin
+AAC6IG	Resistance type: sisomicin
+AAC6IG	Resistance type: dibekacin
+AADD	Resistance type: tobramycin
+AADD	Resistance type: kanamycin
+ADEA	Resistance type: aminoglycoside
+ADEA	Resistance type: fluoramphenicol
+ADEB	Resistance type: chloramphenicol
+ADEB	Resistance type: aminoglycoside
+ADEC	Resistance type: chloramphenicol
+ADEC	Resistance type: aminoglycoside
+AMRA	Resistance type: aminoglycoside
+AMRA	Resistance type: macrolide
+AMRA	Resistance type: acriflavine
+AMRB	Resistance type: aminoglycoside
+AMRB	Resistance type: macrolide
+AMRB	Resistance type: acriflavine
+ANT2IA	Resistance type: tobramycin
+ANT2IA	Resistance type: kanamycin
+ANT2IA	Resistance type: sisomicin
+ANT2IA	Resistance type: dibekacin
+ANT2IA	Resistance type: gentamicin
+ANT2IB	Resistance type: tobramycin
+ANT2IB	Resistance type: kanamycin
+ANT2IB	Resistance type: sisomicin
+ANT2IB	Resistance type: dibekacin
+ANT2IB	Resistance type: gentamicin
+ANT3IA	Resistance type: spectinomycin
+ANT3IA	Resistance type: streptomycin
+ANT4IIA	Resistance type: isepamicin
+ANT4IIA	Resistance type: tobramycin
+ANT4IIA	Resistance type: amikacin
+ANT6IA	Resistance type: streptomycin
+ANT9IA	Resistance type: spectinomycin
+APH33IA	Resistance type: streptomycin
+APH33IB	Resistance type: streptomycin
+APH3IIIA	Resistance type: isepamicin
+APH3IIIA	Resistance type: butirosin
+APH3IIIA	Resistance type: paromomycin
+APH3IIIA	Resistance type: amikacin
+APH3IIIA	Resistance type: neomycin
+APH3IIIA	Resistance type: kanamycin
+APH3IIIA	Resistance type: lividomycin
+APH3IIIA	Resistance type: ribostamycin
+APH3IIIA	Resistance type: gentamincin_b
+APH3IIA	Resistance type: butirosin
+APH3IIA	Resistance type: paromomycin
+APH3IIA	Resistance type: neomycin
+APH3IIA	Resistance type: kanamycin
+APH3IIA	Resistance type: ribostamycin
+APH3IIA	Resistance type: gentamincin_b
+APH3IVA	Resistance type: butirosin
+APH3IVA	Resistance type: paromomycin
+APH3IVA	Resistance type: neomycin
+APH3IVA	Resistance type: kanamycin
+APH3IVA	Resistance type: ribostamycin
+APH3IA	Resistance type: paromomycin
+APH3IA	Resistance type: neomycin
+APH3IA	Resistance type: kanamycin
+APH3IA	Resistance type: lividomycin
+APH3IA	Resistance type: ribostamycin
+APH3IA	Resistance type: gentamincin_b
+APH3IB	Resistance type: paromomycin
+APH3IB	Resistance type: neomycin
+APH3IB	Resistance type: kanamycin
+APH3IB	Resistance type: lividomycin
+APH3IB	Resistance type: ribostamycin
+APH3IB	Resistance type: gentamincin_b
+APH3IC	Resistance type: paromomycin
+APH3IC	Resistance type: neomycin
+APH3IC	Resistance type: kanamycin
+APH3IC	Resistance type: lividomycin
+APH3IC	Resistance type: ribostamycin
+APH3IC	Resistance type: gentamincin_b
+APH3VIIA	Resistance type: neomycin
+APH3VIIA	Resistance type: kanamycin
+APH3VIA	Resistance type: isepamicin
+APH3VIA	Resistance type: butirosin
+APH3VIA	Resistance type: paromomycin
+APH3VIA	Resistance type: amikacin
+APH3VIA	Resistance type: gentamicin_b
+APH3VIA	Resistance type: neomycin
+APH3VIA	Resistance type: kanamycin
+APH3VIA	Resistance type: ribostamycin
+APH3VA	Resistance type: paromomycin
+APH3VA	Resistance type: neomycin
+APH3VA	Resistance type: ribostamycin
+APH3VB	Resistance type: paromomycin
+APH3VB	Resistance type: neomycin
+APH3VB	Resistance type: ribostamycin
+APH4IA	Resistance type: hygromycin_b
+APH4IB	Resistance type: hygromycin_b
+APH6IA	Resistance type: streptomycin
+APH6IB	Resistance type: streptomycin
+APH6IC	Resistance type: streptomycin
+APH6ID	Resistance type: streptomycin
+BL1_AMPC	Resistance type: cephalosporin
+BL1_ASBA	Resistance type: cephalosporin
+BL1_CF	Resistance type: cephalosporin
+BL1_EC	Resistance type: cephalosporin
+BL1_FOX	Resistance type: cephalosporin
+BL1_MOX	Resistance type: cephalosporin
+BL1_PAO	Resistance type: cephalosporin
+BL1_SM	Resistance type: cephalosporin
+BL2_LEN	Resistance type: penicillin
+BL2A_1	Resistance type: penicillin
+BL2A_III	Resistance type: penicillin
+BL2A_III2	Resistance type: penicillin
+BL2A_EXO	Resistance type: penicillin
+BL2A_KCC	Resistance type: penicillin
+BL2A_NPS	Resistance type: penicillin
+BL2A_PC	Resistance type: penicillin
+BL2B_OHIO1	Resistance type: cephalosporin
+BL2B_OHIO1	Resistance type: penicillin
+BL2B_ROB	Resistance type: cephalosporin
+BL2B_ROB	Resistance type: penicillin
+BL2B_TLE	Resistance type: cephalosporin
+BL2B_TLE	Resistance type: penicillin
+BL2B_ULA	Resistance type: cephalosporin
+BL2B_ULA	Resistance type: penicillin
+BL2BE_K	Resistance type: monobactam
+BL2BE_K	Resistance type: e_cephalosporin
+BL2BE_K	Resistance type: n_cephalosporin
+BL2BE_K	Resistance type: penicillin
+BL2BE_MEN	Resistance type: monobactam
+BL2BE_MEN	Resistance type: e_cephalosporin
+BL2BE_MEN	Resistance type: n_cephalosporin
+BL2BE_MEN	Resistance type: penicillin
+BL2BE_PER	Resistance type: monobactam
+BL2BE_PER	Resistance type: e_cephalosporin
+BL2BE_PER	Resistance type: n_cephalosporin
+BL2BE_PER	Resistance type: penicillin
+BL2BE_SHV2	Resistance type: monobactam
+BL2BE_SHV2	Resistance type: e_cephalosporin
+BL2BE_SHV2	Resistance type: n_cephalosporin
+BL2BE_SHV2	Resistance type: penicillin
+BL2C_BRO	Resistance type: carbenicillin
+BL2C_BRO	Resistance type: penicillin
+BL2C_PSE1	Resistance type: carbenicillin
+BL2C_PSE1	Resistance type: penicillin
+BL2C_PSE3	Resistance type: carbenicillin
+BL2C_PSE3	Resistance type: penicillin
+BL2D_LCR1	Resistance type: cloxacillin
+BL2D_LCR1	Resistance type: penicillin
+BL2D_MOXA	Resistance type: cloxacillin
+BL2D_MOXA	Resistance type: penicillin
+BL2D_OXA1	Resistance type: cloxacillin
+BL2D_OXA1	Resistance type: penicillin
+BL2D_OXA10	Resistance type: cloxacillin
+BL2D_OXA10	Resistance type: penicillin
+BL2D_OXA2	Resistance type: cloxacillin
+BL2D_OXA2	Resistance type: penicillin
+BL2D_OXA5	Resistance type: cloxacillin
+BL2D_OXA5	Resistance type: penicillin
+BL2D_OXA9	Resistance type: cloxacillin
+BL2D_OXA9	Resistance type: penicillin
+BL2D_R39	Resistance type: cloxacillin
+BL2D_R39	Resistance type: penicillin
+BL2E_CBLA	Resistance type: cephalosporin
+BL2E_CEPA	Resistance type: cephalosporin
+BL2E_CFXA	Resistance type: cephalosporin
+BL2E_FPM	Resistance type: cephalosporin
+BL2E_Y56	Resistance type: cephalosporin
+BL2F_NMCA	Resistance type: cephalosporin
+BL2F_NMCA	Resistance type: carbapenem
+BL2F_NMCA	Resistance type: penicillin
+BL2F_SME1	Resistance type: cephalosporin
+BL2F_SME1	Resistance type: carbapenem
+BL2F_SME1	Resistance type: penicillin
+BL3_BC	Resistance type: cephamycin
+BL3_BC	Resistance type: cephalosporin
+BL3_BC	Resistance type: carbapenem
+BL3_BC	Resistance type: penicillin
+BL3_CCRA	Resistance type: cephamycin
+BL3_CCRA	Resistance type: cephalosporin
+BL3_CCRA	Resistance type: carbapenem
+BL3_CCRA	Resistance type: penicillin
+BL3_IMP	Resistance type: cephamycin
+BL3_IMP	Resistance type: cephalosporin
+BL3_IMP	Resistance type: carbapenem
+BL3_IMP	Resistance type: penicillin
+BL3_L	Resistance type: cephamycin
+BL3_L	Resistance type: cephalosporin
+BL3_L	Resistance type: carbapenem
+BL3_L	Resistance type: penicillin
+BACA	Resistance type: bacitracin
+BCRA	Resistance type: bacitracin
+BCRC	Resistance type: bacitracin
+BMR	Resistance type: chloramphenicol
+BMR	Resistance type: fluoroquinolone
+CARA	Resistance type: lincosamide
+CARA	Resistance type: streptogramin_b
+CARA	Resistance type: macrolide
+EREA	Resistance type: erythromycin
+EREB	Resistance type: erythromycin
+ERMA	Resistance type: lincosamide
+ERMA	Resistance type: streptogramin_b
+ERMA	Resistance type: macrolide
+ERMB	Resistance type: lincosamide
+ERMB	Resistance type: streptogramin_b
+ERMB	Resistance type: macrolide
+ERMC	Resistance type: lincosamide
+ERMC	Resistance type: streptogramin_b
+ERMC	Resistance type: macrolide
+ERMD	Resistance type: lincosamide
+ERMD	Resistance type: streptogramin_b
+ERMD	Resistance type: macrolide
+ERME	Resistance type: lincosamide
+ERME	Resistance type: streptogramin_b
+ERME	Resistance type: macrolide
+ERMF	Resistance type: lincosamide
+ERMF	Resistance type: streptogramin_b
+ERMF	Resistance type: macrolide
+ERMG	Resistance type: lincosamide
+ERMG	Resistance type: streptogramin_b
+ERMG	Resistance type: macrolide
+ERMH	Resistance type: lincosamide
+ERMH	Resistance type: streptogramin_b
+ERMH	Resistance type: macrolide
+ERMN	Resistance type: lincosamide
+ERMN	Resistance type: streptogramin_b
+ERMN	Resistance type: macrolide
+ERMO	Resistance type: lincosamide
+ERMO	Resistance type: streptogramin_b
+ERMO	Resistance type: macrolide
+ERMQ	Resistance type: lincosamide
+ERMQ	Resistance type: streptogramin_b
+ERMQ	Resistance type: macrolide
+ERMR	Resistance type: lincosamide
+ERMR	Resistance type: streptogramin_b
+ERMR	Resistance type: macrolide
+ERMS	Resistance type: lincosamide
+ERMS	Resistance type: streptogramin_b
+ERMS	Resistance type: macrolide
+ERMT	Resistance type: lincosamide
+ERMT	Resistance type: streptogramin_b
+ERMT	Resistance type: macrolide
+ERMU	Resistance type: lincosamide
+ERMU	Resistance type: streptogramin_b
+ERMU	Resistance type: macrolide
+ERMV	Resistance type: lincosamide
+ERMV	Resistance type: streptogramin_b
+ERMV	Resistance type: macrolide
+ERMW	Resistance type: lincosamide
+ERMW	Resistance type: streptogramin_b
+ERMW	Resistance type: macrolide
+ERMX	Resistance type: lincosamide
+ERMX	Resistance type: streptogramin_b
+ERMX	Resistance type: macrolide
+ERMY	Resistance type: lincosamide
+ERMY	Resistance type: streptogramin_b
+ERMY	Resistance type: macrolide
+FOSA	Resistance type: fosfomycin
+FOSB	Resistance type: fosfomycin
+FOSC	Resistance type: fosfomycin
+FOSX	Resistance type: fosfomycin
+KSGA	Resistance type: kasugamycin
+LMRA	Resistance type: lincomycin
+LNUA	Resistance type: lincomycin
+LNUB	Resistance type: lincomycin
+MACA	Resistance type: macrolide
+MACB	Resistance type: macrolide
+MEFA	Resistance type: macrolide
+MFPA	Resistance type: fluoroquinolone
+MPHA	Resistance type: macrolide
+MPHB	Resistance type: macrolide
+MPHC	Resistance type: macrolide
+MSRA	Resistance type: lincosamide
+MSRA	Resistance type: streptogramin_b
+MSRA	Resistance type: macrolide
+OLEB	Resistance type: lincosamide
+OLEB	Resistance type: streptogramin_b
+OLEB	Resistance type: macrolide
+OPRA	Resistance type: aminoglycoside
+OPRA	Resistance type: macrolide
+OPRA	Resistance type: acriflavine
+QNRA	Resistance type: fluoroquinolone
+QNRB	Resistance type: fluoroquinolone
+QNRS	Resistance type: fluoroquinolone
+SRMB	Resistance type: lincosamide
+SRMB	Resistance type: streptogramin_b
+SRMB	Resistance type: macrolide
+SUL1	Resistance type: sulfonamide
+SUL2	Resistance type: sulfonamide
+SUL3	Resistance type: sulfonamide
+TLRC	Resistance type: lincosamide
+TLRC	Resistance type: streptogramin_b
+TLRC	Resistance type: macrolide
+TMRB	Resistance type: tunicamycin
+VANA	Resistance type: vancomycin
+VANA	Resistance type: teicoplanin
+VANB	Resistance type: vancomycin
+VANC	Resistance type: vancomycin
+VAND	Resistance type: vancomycin
+VAND	Resistance type: teicoplanin
+VANE	Resistance type: vancomycin
+VANG	Resistance type: vancomycin
+VANHA	Resistance type: vancomycin
+VANHA	Resistance type: teicoplanin
+VANHB	Resistance type: vancomycin
+VANHD	Resistance type: vancomycin
+VANHD	Resistance type: teicoplanin
+VANRA	Resistance type: vancomycin
+VANRA	Resistance type: teicoplanin
+VANRB	Resistance type: vancomycin
+VANRC	Resistance type: vancomycin
+VANRD	Resistance type: vancomycin
+VANRD	Resistance type: teicoplanin
+VANRE	Resistance type: vancomycin
+VANRG	Resistance type: vancomycin
+VANSA	Resistance type: vancomycin
+VANSA	Resistance type: teicoplanin
+VANSB	Resistance type: vancomycin
+VANSC	Resistance type: vancomycin
+VANSD	Resistance type: vancomycin
+VANSD	Resistance type: teicoplanin
+VANSE	Resistance type: vancomycin
+VANSG	Resistance type: vancomycin
+VANT	Resistance type: vancomycin
+VANTE	Resistance type: vancomycin
+VANTG	Resistance type: vancomycin
+VANUG	Resistance type: vancomycin
+VANWB	Resistance type: vancomycin
+VANWG	Resistance type: vancomycin
+VANXA	Resistance type: vancomycin
+VANXA	Resistance type: teicoplanin
+VANXB	Resistance type: vancomycin
+VANXD	Resistance type: vancomycin
+VANXD	Resistance type: teicoplanin
+VANXYC	Resistance type: vancomycin
+VANXYE	Resistance type: vancomycin
+VANXYG	Resistance type: vancomycin
+VANYA	Resistance type: vancomycin
+VANYA	Resistance type: teicoplanin
+VANYB	Resistance type: vancomycin
+VANYD	Resistance type: vancomycin
+VANYD	Resistance type: teicoplanin
+VANYG	Resistance type: vancomycin
+VANZ	Resistance type: teicoplanin
+VATA	Resistance type: streptogramin_a
+VATB	Resistance type: streptogramin_a
+VATC	Resistance type: streptogramin_a
+VATD	Resistance type: streptogramin_a
+VATE	Resistance type: streptogramin_a
+VGAA	Resistance type: streptogramin_a
+VGAB	Resistance type: streptogramin_a
+VGBA	Resistance type: streptogramin_b
+VGBB	Resistance type: streptogramin_b
+AAD9	Resistance type: streptomycin
+AAD9	Resistance type: spectomycin
+AAD9IB	Resistance type: streptomycin
+AAD9IB	Resistance type: spectomycin
+ACRA	Resistance type: aminoglycoside
+ACRA	Resistance type: glycylcycline
+ACRA	Resistance type: macrolide
+ACRA	Resistance type: beta_lactam
+ACRA	Resistance type: acriflavin
+ACRB	Resistance type: aminoglycoside
+ACRB	Resistance type: glycylcycline
+ACRB	Resistance type: macrolide
+ACRB	Resistance type: beta_lactam
+ACRB	Resistance type: acriflavin
+ARNA	Resistance type: polymyxin
+BL1_ACC	Resistance type: e_penicillin
+BL1_ACC	Resistance type: cephalosporin
+BL1_CEPS	Resistance type: cephalosporin
+BL1_CMY2	Resistance type: carbapenem
+BL1_CMY2	Resistance type: cephamycin
+BL1_CMY2	Resistance type: ceftriaxone
+BL1_CMY2	Resistance type: cephalosporin
+BL1_CMY2	Resistance type: cefoxitin
+BL1_CMY2	Resistance type: ceftazidime
+BL1_OCH	Resistance type: cephalosporin
+BL1_PSE	Resistance type: cephalosporin
+BL2_GES	Resistance type: cephalosporin
+BL2_GES	Resistance type: penicillin
+BL2_KPC	Resistance type: cephamycin
+BL2_KPC	Resistance type: cephalosporin
+BL2_KPC	Resistance type: carbapenem
+BL2_KPC	Resistance type: penicillin
+BL2_VEB	Resistance type: cephalosporin
+BL2_VEB	Resistance type: penicillin
+BL2A_OKP	Resistance type: penicillin
+BL2B_TEM	Resistance type: cephalosporin
+BL2B_TEM	Resistance type: penicillin
+BL2B_TEM1	Resistance type: penicillin
+BL2B_TEM1	Resistance type: cephalosporin_ii
+BL2B_TEM1	Resistance type: cephalosporin_i
+BL2B_TEM2	Resistance type: penicillin
+BL2B_TEM2	Resistance type: cephalosporin_ii
+BL2B_TEM2	Resistance type: cephalosporin_i
+BL2BE_CTXM	Resistance type: monobactam
+BL2BE_CTXM	Resistance type: penicillin
+BL2BE_CTXM	Resistance type: cephalosporin_iii
+BL2BE_CTXM	Resistance type: ceftazidime
+BL2BE_CTXM	Resistance type: cephalosporin_ii
+BL2BE_CTXM	Resistance type: cephalosporin_i
+BL2BE_OXY1	Resistance type: monobactam
+BL2BE_OXY1	Resistance type: penicillin
+BL3_CIT	Resistance type: cephamycin
+BL3_CIT	Resistance type: cephalosporin
+BL3_CIT	Resistance type: carbapenem
+BL3_CIT	Resistance type: penicillin
+BL3_CPHA	Resistance type: cephamycin
+BL3_CPHA	Resistance type: cephalosporin
+BL3_CPHA	Resistance type: carbapenem
+BL3_CPHA	Resistance type: penicillin
+BL3_GIM	Resistance type: cephamycin
+BL3_GIM	Resistance type: cephalosporin
+BL3_GIM	Resistance type: carbapenem
+BL3_GIM	Resistance type: penicillin
+BL3_SHW	Resistance type: cephamycin
+BL3_SHW	Resistance type: cephalosporin
+BL3_SHW	Resistance type: carbapenem
+BL3_SHW	Resistance type: penicillin
+BL3_SIM	Resistance type: cephamycin
+BL3_SIM	Resistance type: cephalosporin
+BL3_SIM	Resistance type: carbapenem
+BL3_SIM	Resistance type: penicillin
+BL3_VIM	Resistance type: cephamycin
+BL3_VIM	Resistance type: cephalosporin
+BL3_VIM	Resistance type: carbapenem
+BL3_VIM	Resistance type: penicillin
+BLE	Resistance type: bleomycin
+BLT	Resistance type: chloramphenicol
+BLT	Resistance type: doxorubicin
+BLT	Resistance type: fluoroquinolone
+BLT	Resistance type: puromycin
+CATA1	Resistance type: chloramphenicol
+CATA10	Resistance type: chloramphenicol
+CATA11	Resistance type: chloramphenicol
+CATA12	Resistance type: chloramphenicol
+CATA13	Resistance type: chloramphenicol
+CATA14	Resistance type: chloramphenicol
+CATA15	Resistance type: chloramphenicol
+CATA16	Resistance type: chloramphenicol
+CATA2	Resistance type: chloramphenicol
+CATA3	Resistance type: chloramphenicol
+CATA4	Resistance type: chloramphenicol
+CATA5	Resistance type: chloramphenicol
+CATA6	Resistance type: chloramphenicol
+CATA7	Resistance type: chloramphenicol
+CATA8	Resistance type: chloramphenicol
+CATA9	Resistance type: chloramphenicol
+CATB1	Resistance type: chloramphenicol
+CATB2	Resistance type: chloramphenicol
+CATB3	Resistance type: chloramphenicol
+CATB4	Resistance type: chloramphenicol
+CATB5	Resistance type: chloramphenicol
+CEOA	Resistance type: chloramphenicol
+CEOB	Resistance type: chloramphenicol
+CML_E1	Resistance type: chloramphenicol
+CML_E2	Resistance type: chloramphenicol
+CML_E3	Resistance type: chloramphenicol
+CML_E4	Resistance type: chloramphenicol
+CML_E5	Resistance type: chloramphenicol
+CML_E6	Resistance type: chloramphenicol
+CML_E7	Resistance type: chloramphenicol
+CML_E8	Resistance type: chloramphenicol
+DFRA14	Resistance type: trimethoprim
+DFRA15	Resistance type: trimethoprim
+DFRA16	Resistance type: trimethoprim
+DFRA17	Resistance type: trimethoprim
+DFRA19	Resistance type: trimethoprim
+DFRA20	Resistance type: trimethoprim
+DFRA21	Resistance type: trimethoprim
+DFRA22	Resistance type: trimethoprim
+DFRA23	Resistance type: trimethoprim
+DFRA24	Resistance type: trimethoprim
+DFRA25	Resistance type: trimethoprim
+DFRA26	Resistance type: trimethoprim
+DFRB1	Resistance type: trimethoprim
+DFRB2	Resistance type: trimethoprim
+DFRB3	Resistance type: trimethoprim
+DFRB6	Resistance type: trimethoprim
+DFRA1	Resistance type: trimethoprim
+DFRA10	Resistance type: trimethoprim
+DFRA12	Resistance type: trimethoprim
+DFRA13	Resistance type: trimethoprim
+DFRA5	Resistance type: trimethoprim
+DFRA7	Resistance type: trimethoprim
+EMEA	Resistance type: fluoroquinolone
+EMRE	Resistance type: aminoglycoside
+FUSB	Resistance type: fusaric_acid
+FUSH	Resistance type: fusidic_acid
+LMRB	Resistance type: lincomycin
+LSA	Resistance type: lincosamide
+LSA	Resistance type: streptogramin_b
+LSA	Resistance type: macrolide
+MDTE	Resistance type: doxorubicin
+MDTE	Resistance type: erythromycin
+MDTF	Resistance type: doxorubicin
+MDTF	Resistance type: erythromycin
+MDTG	Resistance type: deoxycholate
+MDTG	Resistance type: fosfomycin
+MDTH	Resistance type: deoxycholate
+MDTH	Resistance type: fosfomycin
+MDTK	Resistance type: enoxacin
+MDTK	Resistance type: norfloxacin
+MDTL	Resistance type: chloramphenicol
+MDTM	Resistance type: chloramphenicol
+MDTM	Resistance type: acriflavine
+MDTM	Resistance type: norfloxacin
+MDTN	Resistance type: t_chloride
+MDTN	Resistance type: acriflavine
+MDTN	Resistance type: puromycin
+MDTO	Resistance type: t_chloride
+MDTO	Resistance type: acriflavine
+MDTO	Resistance type: puromycin
+MDTP	Resistance type: t_chloride
+MDTP	Resistance type: acriflavine
+MDTP	Resistance type: puromycin
+MECA	Resistance type: beta_lactam
+MECR1	Resistance type: methicillin
+MEPA	Resistance type: tigecycline
+MEXA	Resistance type: aminoglycoside
+MEXA	Resistance type: tigecycline
+MEXA	Resistance type: fluoroquinolone
+MEXA	Resistance type: beta_lactam
+MEXA	Resistance type: tetracycline
+MEXB	Resistance type: aminoglycoside
+MEXB	Resistance type: tigecycline
+MEXB	Resistance type: fluoroquinolone
+MEXB	Resistance type: beta_lactam
+MEXB	Resistance type: tetracycline
+MEXC	Resistance type: glycylcycline
+MEXC	Resistance type: fluoroquinolone
+MEXC	Resistance type: roxithromycin
+MEXC	Resistance type: erythromycin
+MEXD	Resistance type: glycylcycline
+MEXD	Resistance type: fluoroquinolone
+MEXD	Resistance type: roxithromycin
+MEXD	Resistance type: erythromycin
+MEXE	Resistance type: chloramphenicol
+MEXE	Resistance type: fluoroquinolone
+MEXF	Resistance type: chloramphenicol
+MEXF	Resistance type: fluoroquinolone
+MEXX	Resistance type: aminoglycoside
+MEXX	Resistance type: glycylcycline
+MEXY	Resistance type: aminoglycoside
+MEXY	Resistance type: glycylcycline
+NORM	Resistance type: tigecycline
+NORM	Resistance type: streptomycin
+NORM	Resistance type: kanamycin
+NORM	Resistance type: ciprofloxacin
+NORM	Resistance type: norfloxacin
+OPCM	Resistance type: chloramphenicol
+OPRM	Resistance type: aminoglycoside
+OPRM	Resistance type: tigecycline
+OPRM	Resistance type: fluoroquinolone
+OPRM	Resistance type: beta_lactam
+OPRM	Resistance type: tetracycline
+OPRJ	Resistance type: glycylcycline
+OPRJ	Resistance type: fluoroquinolone
+OPRJ	Resistance type: roxithromycin
+OPRJ	Resistance type: erythromycin
+OPRN	Resistance type: chloramphenicol
+OPRN	Resistance type: fluoroquinolone
+OTRA	Resistance type: tetracycline
+OTRB	Resistance type: tetracycline
+PAC	Resistance type: puromycin
+PBP1A	Resistance type: penicillin
+PBP1B	Resistance type: penicillin
+PBP2	Resistance type: penicillin
+PBP2B	Resistance type: penicillin
+PBP2X	Resistance type: penicillin
+PMRA	Resistance type: ciprofloxacin
+PMRA	Resistance type: norfloxacin
+PUR8	Resistance type: puromycin
+QAC	Resistance type: qa_compound
+QACA	Resistance type: qa_compound
+QACB	Resistance type: qa_compound
+RIF	Resistance type: rifampin
+ROSA	Resistance type: fosmidomycin
+ROSB	Resistance type: fosmidomycin
+SMEA	Resistance type: fluoroquinolone
+SMEB	Resistance type: fluoroquinolone
+SMEC	Resistance type: fluoroquinolone
+SMED	Resistance type: fluoroquinolone
+SMEE	Resistance type: fluoroquinolone
+SMEF	Resistance type: fluoroquinolone
+STA	Resistance type: streptothricin
+STR	Resistance type: streptomycin
+TCMA	Resistance type: tetracenomycin_c
+TCR3	Resistance type: tetracycline
+TET	Resistance type: tetracycline
+TET30	Resistance type: tetracycline
+TET31	Resistance type: tetracycline
+TET32	Resistance type: tetracycline
+TET33	Resistance type: tetracycline
+TET34	Resistance type: tetracycline
+TET36	Resistance type: tetracycline
+TET37	Resistance type: tetracycline
+TET38	Resistance type: tetracycline
+TET39	Resistance type: tetracycline
+TET40	Resistance type: tetracycline
+TET41	Resistance type: tetracycline
+TETA	Resistance type: tetracycline
+TETB	Resistance type: tetracycline
+TETC	Resistance type: tetracycline
+TETD	Resistance type: tetracycline
+TETE	Resistance type: tetracycline
+TETG	Resistance type: tetracycline
+TETH	Resistance type: tetracycline
+TETJ	Resistance type: tetracycline
+TETK	Resistance type: tetracycline
+TETL	Resistance type: tetracycline
+TETM	Resistance type: tetracycline
+TETO	Resistance type: tetracycline
+TETPA	Resistance type: tetracycline
+TETPB	Resistance type: tetracycline
+TETQ	Resistance type: tetracycline
+TETS	Resistance type: tetracycline
+TETT	Resistance type: tetracycline
+TETU	Resistance type: tetracycline
+TETV	Resistance type: tetracycline
+TETW	Resistance type: tetracycline
+TETX	Resistance type: tetracycline
+TETY	Resistance type: tetracycline
+TETZ	Resistance type: tetracycline
+TOLC	Resistance type: aminoglycoside
+TOLC	Resistance type: glycylcycline
+TOLC	Resistance type: macrolide
+TOLC	Resistance type: beta_lactam
+TOLC	Resistance type: acriflavin
+TSNR	Resistance type: thiostrepton
+VPH	Resistance type: viomycin
+YKKC	Resistance type: na_antimicrobials
+YKKD	Resistance type: na_antimicrobials
+ADEABC	Resistance-nodulation-cell division transporter system. Multidrug resistance efflux pump.
+ARNA	Bifunctional enzyme that catalyzes the oxidative decarboxylation of UDP-glucuronic acid (UDP-GlcUA) to UDP-4-keto-arabinose (UDP-Ara4O) and the addition of a formyl group to UDP-4-amino-4-deoxy-L-arabinose (UDP-L-Ara4N) to form UDP-L-4-formamido-arabinose (UDP-L-Ara4FN). The modified arabinose is attached to lipid A and is required for resistance to polymyxin and cationic antimicrobial peptides.
+FUSB	Involved in the resistance (detoxification) of the fungal toxin fusaric acid.
+FUSH	Esterase enzyme inactivating fusidic acid
+KSGA	Specifically dimethylates two adjacent adenosines in the loop of a conserved hairpin near the 3'-end of 16S rRNA in the 30S particle. Its inactivation leads to kasugamycin resistance.
+STA	Streptothricin acetyltransferase (STAT).
+MDTNOP	Resistance-nodulation-cell division transporter system. Multidrug resistance efflux pump.
+MDTM	Major facilitator superfamily transporter. Multidrug resistance efflux pump.
+MDTL	Major facilitator superfamily transporter. Multidrug resistance efflux pump.
+MDTK	Major facilitator superfamily transporter. Multidrug resistance efflux pump.
+MDTH	Major facilitator superfamily transporter. Multidrug resistance efflux pump.
+MDTG	Major facilitator superfamily transporter. Multidrug resistance efflux pump.
+MDTEF	Resistance-nodulation-cell division transporter system. Multidrug resistance efflux pump.
+TET_RPP	Ribosomal protection protein, which protects ribosome from the translation inhibition of tetracycline.
+TET_EFFLUX	Major facilitator superfamily transporter, tetracycline efflux pump.
+TET_MOD	NADP-requiring oxidoreductase, an enzyme that can modify tetracycline. Mechanism detail unknown.
+TET_XPRT	Xanthine-guanine phosphoribosyltransferase. Mechanism detail unknown.
+TET_FLAVO	Flavoproteins. Mechanism detail unknown. Only one such protein found in oral metagenome. 
+SUL	Sulfonamide-resistant dihydropteroate synthase, which can not be inhibited by sulfonamide. 
+ANT	Aminoglycoside O-nucleotidylyltransferase, which modifies aminoglycosides by adenylylation. 
+AAC	Aminoglycoside N-acetyltransferase, which modifies aminoglycosides by acetylation. 
+APH	Aminoglycoside O-phosphotransferase, which modifies aminoglycosides by phosphorylation.
+BACA	Undecaprenyl pyrophosphate phosphatase, which consists in the sequestration of Undecaprenyl pyrophosphate. 
+BCR	ABC transporter system, bacitracin efflux pump. 
+MLS_ABC	ABC transporter system, Macrolide-Lincosamide-Streptogramin B efflux pump. 
+MLS_MFS	Major facilitator superfamily transporter, Macrolide-Lincosamide-Streptogramin B efflux pump.
+ERM	rRNA adenine N-6-methyltransferase, which can methylate adenine at position 2058 of 23S rRNA, conferring resistance to erythromycin.
+ERE	Erythromycin esterase, which can inactivate erythromycin by lactone ring cleavage. 
+LNU	Lincosamide nucleotidyltransferase. 
+VAT	Virginiamycin A acetyltransferase, which can inactivate the target drug.
+MPH	Macrolide phosphotransferase
+QNR	Pentapeptide repeat family, which protects DNA gyrase from the inhibition of quinolones.
+FOS	Glutathione transferase, metalloglutathione transferase which confers resistance to fosfomycin by catalyzing the addition of glutathione to fosfomycin
+TMR	Mechanism unknown. 
+VANA	VanA type vancomycin resistance operon genes, which can synthesize peptidoglycan with modified C-terminal D-Ala-D-Ala to D-alanine--D-lactate.
+VANB	VanB type vancomycin resistance operon genes, which can synthesize peptidoglycan with modified C-terminal D-Ala-D-Ala to D-alanine--D-lactate.
+VAND	VanD type vancomycin resistance operon genes, which can synthesize peptidoglycan with modified C-terminal D-Ala-D-Ala to D-alanine--D-lactate.
+VANC	VanC type vancomycin resistance operon genes, which can synthesize peptidoglycan with modified C-terminal D-Ala-D-Ala to D-alanine--D-serine.
+VANE	VanE type vancomycin resistance operon genes, which can synthesize peptidoglycan with modified C-terminal D-Ala-D-Ala to D-alanine--D-serine.
+VANG	VanG type vancomycin resistance operon genes, which can synthesize peptidoglycan with modified C-terminal D-Ala-D-Ala to D-alanine--D-serine.
+CML	Major facilitator superfamily transporter, chloramphenicol efflux pump.  
+BLA_A	Class A beta-lactamase. This enzyme breaks the beta-lactam antibiotic ring open and deactivates the molecule's antibacterial properites. 
+BLA_B	Class B beta-lactamase. This enzyme breaks the beta-lactam antibiotic ring open and deactivates the molecule's antibacterial properites. 
+BLA_C	Class C beta-lactamase. This enzyme breaks the beta-lactam antibiotic ring open and deactivates the molecule's antibacterial properites. 
+BLA_D	Class D beta-lactamase. This enzyme breaks the beta-lactam antibiotic ring open and deactivates the molecule's antibacterial properites. 
+MLS_HDR	Streptogramin B Lyase, which can deactivate the target drug by hydrolysis.
+MFPA	Pentapeptide repeat family, which protects DNA gyrase from the inhibition of quinolones.
+DFRA	Group A drug-insensitive dihydrofolate reductase, which can not be inhibited by trimethoprim.
+DFRB	Group B drug-insensitive R67 dihydrofolate reductase, which can not be inhibited by trimethoprim.
+MECA	Penicillin binding protein, which has a low affinity for beta-lactams and catalyze a penicillin-insensitive transpeptidation.
+CATA	Group A chloramphenicol acetyltransferase, which can inactivate chloramphenicol.
+CATB	Group B chloramphenicol acetyltransferase, which can inactivate chloramphenicol. Also referred to as xenobiotic acetyltransferase.
+LSA	ABC efflux family that is resistant to MLS antibiotics
+ACR	Resistance-nodulation-cell division transporter system. Multidrug resistance efflux pump.
+MEPA	Multi antimicrobial extrusion (MATE) efflux family protein. Multidrug resistance efflux pump.
+EMEA	Major facilitator superfamily transporter. Multidrug resistance efflux pump.
+PMRA	Major facilitator superfamily transporter. Multidrug resistance efflux pump.
+AMR	Resistance-nodulation-cell division transporter system. Multidrug resistance efflux pump.
+CEO	Resistance-nodulation-cell division transporter system. Multidrug resistance efflux pump.
+SMEABC	Resistance-nodulation-cell division transporter system. Multidrug resistance efflux pump.
+SMEDEF	Resistance-nodulation-cell division transporter system. Multidrug resistance efflux pump.
+MEXAB	Resistance-nodulation-cell division transporter system. Multidrug resistance efflux pump.
+MEXCD	Resistance-nodulation-cell division transporter system. Multidrug resistance efflux pump.
+MEXEF	Resistance-nodulation-cell division transporter system. Multidrug resistance efflux pump.
+MEXHI	Resistance-nodulation-cell division transporter system. Multidrug resistance efflux pump.
+MEXVW	Resistance-nodulation-cell division transporter system. Multidrug resistance efflux pump.
+MEXXY	Resistance-nodulation-cell division transporter system. Multidrug resistance efflux pump.
+BMR	Major facilitator superfamily transporter. Multidrug resistance efflux pump.
+EMRE	Multidrug resistance efflux pump.
+QAC	Small Multidrug Resistance (SMR) protein family. Multidrug resistance efflux pump, which consists of two proteins.
+EMRD	Multidrug resistance efflux pump.
+BLT	Major facilitator superfamily transporter. Multidrug resistance efflux pump.
+ROSAB	Efflux pump/potassium antiporter system. RosA: Major facilitator superfamily transporter. RosB: Potassium antiporter. 
+TET_OTHER	Tetracycline resistance other mechanisms. 
+QACAB	Multidrug efflux pump from bacterial pathogen staphylococcus aureus. Including QacA and QacB, both of which confer resistance to various toxic organic cations but differ in that QacB mediates lower levels of resistance to divalent cations. They differed by seven nucleotide subsititutions. 
+BLE	Binding protein with a strong affinity to the bleomycin family of antibiotics, which confers resistance to these antibiotics by preventing the bleomycin-induced DNA breakage
+VANZ	VanZ confers low-level VanZ confers low-level resistance to the glycopeptide antibiotic teicoplanin. 
+NORM	Multi antimicrobial extrusion (MATE) efflux family protein. Multidrug resistance efflux pump.
+YKK	Small Multidrug Resistance (SMR) protein family. Multidrug resistance efflux pump, which consists of two proteins.
+VPH	Viomycin phosphotransferase, which chieves inactivation of their antibiotic substrates by phosphorylation.
+TSNR	Specifically methylates the adenosine-1067 in 23S ribosomal RNA. Confers resistance to antibiotic thiostrepton.
+TCMA	Major facilitator superfamily transporter. Resistance to tetracenomycin C by an active tetracenomycin C efflux system which is probably energized by transmembrane electrochemical gradients.
+STR	Streptomycin resistance protein. 
+PBP	The enzyme has a penicillin-insensitive transglycosylase N-terminal domain (formation of linear glycan strands) and a penicillin-sensitive transpeptidase C-terminal domain (cross-linking of the peptide subunits)
+MECR1	Methicillin-resistance regulatory protein for mecA
+MACAB	Resistance-nodulation-cell division transporter system. Multidrug resistance efflux pump. Macrolide-specific efflux system. 
+EMRE	requires EMRD
+EMRD	requires EMRE
+MACA	requires MACB
+MACA	requires TOLC
+MACB	requires MACA
+MACB	requires TOLC
+TOLC	requires MACA
+TOLC	requires MACB
+MDTN	requires MDTO
+MDTN	requires MDTP
+MDTO	requires MDTN
+MDTO	requires MDTP
+MDTP	requires MDTN
+MDTP	requires MDTO
+MDTE	requires MDTF
+MDTE	requires TOLC
+MDTF	requires MDTE
+MDTF	requires TOLC
+TOLC	requires MDTE
+TOLC	requires MDTF
+YKKC	requires YKKD
+YKKD	requires YKKC
+QACA	requires QACB
+QACB	requires QACA
+VANA	requires VANHA
+VANA	requires VANXA
+VANA	requires VANYA
+VANA	requires VANRA
+VANA	requires VANSA
+VANHA	requires VANA
+VANHA	requires VANXA
+VANHA	requires VANYA
+VANHA	requires VANRA
+VANHA	requires VANSA
+VANXA	requires VANA
+VANXA	requires VANHA
+VANXA	requires VANYA
+VANXA	requires VANRA
+VANXA	requires VANSA
+VANYA	requires VANA
+VANYA	requires VANHA
+VANYA	requires VANXA
+VANYA	requires VANRA
+VANYA	requires VANSA
+VANRA	requires VANA
+VANRA	requires VANHA
+VANRA	requires VANXA
+VANRA	requires VANYA
+VANRA	requires VANSA
+VANSA	requires VANA
+VANSA	requires VANHA
+VANSA	requires VANXA
+VANSA	requires VANYA
+VANSA	requires VANRA
+VANB	requires VANHB
+VANB	requires VANXB
+VANB	requires VANYB
+VANB	requires VANRB
+VANB	requires VANSB
+VANB	requires VANWB
+VANHB	requires VANB
+VANHB	requires VANXB
+VANHB	requires VANYB
+VANHB	requires VANRB
+VANHB	requires VANSB
+VANHB	requires VANWB
+VANXB	requires VANB
+VANXB	requires VANHB
+VANXB	requires VANYB
+VANXB	requires VANRB
+VANXB	requires VANSB
+VANXB	requires VANWB
+VANYB	requires VANB
+VANYB	requires VANHB
+VANYB	requires VANXB
+VANYB	requires VANRB
+VANYB	requires VANSB
+VANYB	requires VANWB
+VANRB	requires VANB
+VANRB	requires VANHB
+VANRB	requires VANXB
+VANRB	requires VANYB
+VANRB	requires VANSB
+VANRB	requires VANWB
+VANSB	requires VANB
+VANSB	requires VANHB
+VANSB	requires VANXB
+VANSB	requires VANYB
+VANSB	requires VANRB
+VANSB	requires VANWB
+VANWB	requires VANB
+VANWB	requires VANHB
+VANWB	requires VANXB
+VANWB	requires VANYB
+VANWB	requires VANRB
+VANWB	requires VANSB
+VANC	requires VANXYC
+VANC	requires VANT
+VANC	requires VANRC
+VANC	requires VANSC
+VANXYC	requires VANC
+VANXYC	requires VANT
+VANXYC	requires VANRC
+VANXYC	requires VANSC
+VANT	requires VANC
+VANT	requires VANXYC
+VANT	requires VANRC
+VANT	requires VANSC
+VANRC	requires VANC
+VANRC	requires VANXYC
+VANRC	requires VANT
+VANRC	requires VANSC
+VANSC	requires VANC
+VANSC	requires VANXYC
+VANSC	requires VANT
+VANSC	requires VANRC
+VAND	requires VANHD
+VAND	requires VANYD
+VAND	requires VANXD
+VAND	requires VANRD
+VAND	requires VANSD
+VANHD	requires VAND
+VANHD	requires VANYD
+VANHD	requires VANXD
+VANHD	requires VANRD
+VANHD	requires VANSD
+VANYD	requires VAND
+VANYD	requires VANHD
+VANYD	requires VANXD
+VANYD	requires VANRD
+VANYD	requires VANSD
+VANXD	requires VAND
+VANXD	requires VANHD
+VANXD	requires VANYD
+VANXD	requires VANRD
+VANXD	requires VANSD
+VANRD	requires VAND
+VANRD	requires VANHD
+VANRD	requires VANYD
+VANRD	requires VANXD
+VANRD	requires VANSD
+VANSD	requires VAND
+VANSD	requires VANHD
+VANSD	requires VANYD
+VANSD	requires VANXD
+VANSD	requires VANRD
+VANE	requires VANXYE
+VANE	requires VANTE
+VANE	requires VANRE
+VANE	requires VANSE
+VANXYE	requires VANE
+VANXYE	requires VANTE
+VANXYE	requires VANRE
+VANXYE	requires VANSE
+VANTE	requires VANE
+VANTE	requires VANXYE
+VANTE	requires VANRE
+VANTE	requires VANSE
+VANRE	requires VANE
+VANRE	requires VANXYE
+VANRE	requires VANTE
+VANRE	requires VANSE
+VANSE	requires VANE
+VANSE	requires VANXYE
+VANSE	requires VANTE
+VANSE	requires VANRE
+VANG	requires VANRG
+VANG	requires VANSG
+VANG	requires VANYG
+VANG	requires VANXYG
+VANG	requires VANTG
+VANG	requires VANWG
+VANG	requires VANUG
+VANRG	requires VANG
+VANRG	requires VANSG
+VANRG	requires VANYG
+VANRG	requires VANXYG
+VANRG	requires VANTG
+VANRG	requires VANWG
+VANRG	requires VANUG
+VANSG	requires VANG
+VANSG	requires VANRG
+VANSG	requires VANYG
+VANSG	requires VANXYG
+VANSG	requires VANTG
+VANSG	requires VANWG
+VANSG	requires VANUG
+VANYG	requires VANG
+VANYG	requires VANRG
+VANYG	requires VANSG
+VANYG	requires VANXYG
+VANYG	requires VANTG
+VANYG	requires VANWG
+VANYG	requires VANUG
+VANXYG	requires VANG
+VANXYG	requires VANRG
+VANXYG	requires VANSG
+VANXYG	requires VANYG
+VANXYG	requires VANTG
+VANXYG	requires VANWG
+VANXYG	requires VANUG
+VANTG	requires VANG
+VANTG	requires VANRG
+VANTG	requires VANSG
+VANTG	requires VANYG
+VANTG	requires VANXYG
+VANTG	requires VANWG
+VANTG	requires VANUG
+VANWG	requires VANG
+VANWG	requires VANRG
+VANWG	requires VANSG
+VANWG	requires VANYG
+VANWG	requires VANXYG
+VANWG	requires VANTG
+VANWG	requires VANUG
+VANUG	requires VANG
+VANUG	requires VANRG
+VANUG	requires VANSG
+VANUG	requires VANYG
+VANUG	requires VANXYG
+VANUG	requires VANTG
+VANUG	requires VANWG
+BCRA	requires BCRC
+BCRC	requires BCRA
+ACRA	requires ACRB
+ACRA	requires TOLC
+ACRB	requires ACRA
+ACRB	requires TOLC
+TOLC	requires ACRA
+TOLC	requires ACRB
+ADEA	requires ADEB
+ADEA	requires ADEC
+ADEB	requires ADEA
+ADEB	requires ADEC
+ADEC	requires ADEA
+ADEC	requires ADEB
+AMRA	requires AMRB
+AMRA	requires OPRA
+AMRB	requires AMRA
+AMRB	requires OPRA
+OPRA	requires AMRA
+OPRA	requires AMRB
+CEOA	requires CEOB
+CEOA	requires OPCM
+CEOB	requires CEOA
+CEOB	requires OPCM
+OPCM	requires CEOA
+OPCM	requires CEOB
+SMEA	requires SMEB
+SMEA	requires SMEC
+SMEB	requires SMEA
+SMEB	requires SMEC
+SMEC	requires SMEA
+SMEC	requires SMEB
+SMED	requires SMEE
+SMED	requires SMEF
+SMEE	requires SMED
+SMEE	requires SMEF
+SMEF	requires SMED
+SMEF	requires SMEE
+MEXA	requires MEXB
+MEXA	requires OPRM
+MEXB	requires MEXA
+MEXB	requires OPRM
+OPRM	requires MEXA
+OPRM	requires MEXB
+MEXC	requires MEXD
+MEXC	requires OPRJ
+MEXD	requires MEXC
+MEXD	requires OPRJ
+OPRJ	requires MEXC
+OPRJ	requires MEXD
+MEXE	requires MEXF
+MEXE	requires OPRN
+MEXF	requires MEXE
+MEXF	requires OPRN
+OPRN	requires MEXE
+OPRN	requires MEXF
+MEXH	requires MEXI
+MEXH	requires OPMD
+MEXI	requires MEXH
+MEXI	requires OPMD
+OPMD	requires MEXH
+OPMD	requires MEXI
+MEXJ	requires MEXK
+MEXJ	requires OPRM
+MEXK	requires MEXJ
+MEXK	requires OPRM
+OPRM	requires MEXJ
+OPRM	requires MEXK
+MEXV	requires MEXW
+MEXV	requires OPRM
+MEXW	requires MEXV
+MEXW	requires OPRM
+OPRM	requires MEXV
+OPRM	requires MEXW
+MEXX	requires MEXY
+MEXX	requires OPRM
+MEXY	requires MEXX
+MEXY	requires OPRM
+OPRM	requires MEXX
+OPRM	requires MEXY
+ROSA	requires ROSB
+ROSB	requires ROSA

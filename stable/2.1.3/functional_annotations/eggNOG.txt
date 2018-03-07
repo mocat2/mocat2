@@ -1,0 +1,2 @@
+Please visit http://eggnogdb.embl.de/
+for descriptions of the eggNOG OG groups.

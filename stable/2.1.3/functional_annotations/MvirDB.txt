@@ -1,0 +1,10 @@
+MVIR00001	antibiotic resistance
+MVIR00002	differential gene regulation
+MVIR00003	host range factor
+MVIR00004	transcription factor
+MVIR00005	(Cll2b) Toxin Cll 2b precursor
+MVIR00006	pathogenicity island
+MVIR00007	unknown
+MVIR00008	chemical toxin
+MVIR00009	protein toxin
+MVIR00010	virulence protein
