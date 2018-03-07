@@ -1,0 +1,14 @@
+all: fastq_trim_filter fastx_quality_stats
+
+LDFLAGS = -static -static-libgcc -static-libstdc++
+
+fastx_quality_stats: faststats.cpp fastq.cpp
+	g++ -g -O2 -Wall -o $@ faststats.cpp fastq.cpp $(LDFLAGS)
+
+fastq_trim_filter: fastrtf.cpp fastq.cpp popenstream.cpp
+	g++ -g -O2 -Wall -o $@ fastrtf.cpp fastq.cpp popenstream.cpp $(CFLAGS) -lboost_program_options -lz $(LDFLAGS)
+
+clean:
+	rm -f fastq_trim_filter fastx_quality_stats
+
+.PHONY: all

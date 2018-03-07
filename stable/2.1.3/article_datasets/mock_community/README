@@ -1,0 +1,34 @@
+
+
+                    INFORMATION
+
+=======================================================
+To reproduce the results in the MOCAT article,
+please execute: sh RUN_PIPELINE.sh
+For details, see the shell script.
+
+BEFORE YOU START!
+YOU MUST DOWNLOAD USEARCH FROM
+http://www.drive5.com/usearch/nonprofit_form.html
+
+NOTE: We recommend downloading version 5.x,
+      and not version 6.x
+
+AND SAVE THE FILE AS:
+MOCAT_INSTALL_DIR/ext/usearch/usearch
+
+AND, MAKE IT EXECUTABLE BY RUNNING:
+chmod u+x MOCAT_INSTALL_DIR/ext/usearch/usearch
+
+YOU MUST ALSO DOWNLOAD THE DATASET
+FROM http://mocat.embl.de
+Link: Download HMP mock community metagenome (from MOCAT article; 500 MB)
+And extract it into the folder even_sample
+======================================================
+
+
+======================================================
+To generate mOTU and taxonomic profiles of the
+mock community, like done in the mOTU paper,
+execute the GENERATE_MOTU_AND_TAX_PROFILES.sh script
+======================================================

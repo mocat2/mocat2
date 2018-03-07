@@ -1,0 +1,18 @@
+all: fastq_trim_filter fastx_quality_stats
+
+LDFLAGS =
+
+fastx_quality_stats: faststats.cpp fastq.cpp
+	~/Downloads/usr_5/local/bin/g++ -g -O2 -Wall -o $@ faststats.cpp fastq.cpp $(LDFLAGS)
+
+fastq_trim_filter: fastrtf.cpp fastq.cpp popenstream.cpp
+<<<<<<< HEAD
+	~/Downloads/usr_5/local/bin/g++ --std=c++11 -g -O2 -Wall -o $@ fastrtf.cpp fastq.cpp popenstream.cpp $(CFLAGS) -lboost_program_options -lz $(LDFLAGS)
+=======
+	g++ -g -O2 -Wall -o $@ fastrtf.cpp fastq.cpp popenstream.cpp $(CFLAGS) -L/usr/local/lib -lboost_program_options-mt -lz $(LDFLAGS)
+>>>>>>> 9146af16a1fa1a81a29d3501118b66069d95b3b3
+
+clean:
+	rm -f fastq_trim_filter fastx_quality_stats
+
+.PHONY: all

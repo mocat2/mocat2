@@ -1,0 +1,11 @@
+# process raw reads, assemble, revise assembly and predict genes
+
+# This code is part of the MOCAT analysis pipeline
+# Code is (c) Copyright EMBL and BGI, 2012-2013
+# This code is released under GNU GPL v3.
+
+[command] -rtf
+[command] -a -r reads.processed
+[command] -gp assembly
+[command] -ss
+

@@ -1,0 +1,282 @@
+package MOCATPasteTaxonomyCoverageFiles;
+use strict;
+use warnings;
+use MOCATCore;
+use MOCATVariables;
+
+# This code is part of the MOCAT analysis pipeline
+# Code is (c) Copyright EMBL and BGI, 2012-2013
+# This code is released under GNU GPL v3.
+
+sub run {
+	### DEFINE VARIABLES AND OPEN OUTPUT FILE ###
+	my $job        = $_[0];
+	my $processors = $_[1];
+	$ZIP =~ s/pigz.*/pigz -p $processors/;
+	my $read_type = 'screened';
+	if ($use_extracted_reads) {
+		$read_type = 'extracted';
+	}
+
+	my $uniq = "";
+
+	# These files are anyway summarized into the different identifiers, multiple regions anyway go into the same idenfitier
+	#if ($pcf_uniq) {
+	#	$uniq = ".uniq";
+	#}
+
+	my $databases = join( "_AND_", @databases );
+	my $assembly_type = 'assembly';
+	my $end;
+	my $assembly = 0;
+	my $profile_type;
+	chomp( my $bn = `basename $sample_file` );
+	if (         $databases[0] eq 's'
+		|| $databases[0] eq 'c'
+		|| $databases[0] eq 'f'
+		|| $databases[0] eq 'r' )
+	{
+		if ( $databases[0] eq 's' ) { $end = 'scaftig' }
+		if ( $databases[0] eq 'c' ) { $end = 'contig' }
+		if ( $databases[0] eq 'f' ) { $end = 'scafSeq' }
+		if ( $databases[0] eq 'r' ) {
+			$assembly_type = 'assembly.revised';
+			$end           = 'scaftig';
+		}
+		$assembly  = 1;
+		$databases = "$assembly_type.$end";
+	}
+
+	my @levels;
+	if ( $taxo_profiling_mode eq 'mOTU' ) {
+		@levels       = ('mOTU');
+		$profile_type = "motu";
+	}
+	if ( $taxo_profiling_mode eq 'RefMG' ) {
+		@levels = ( 'kingdom', 'phylum', 'class', 'order', 'family', 'genus', 'species', 'specI_clusters', 'taxaid' );
+		$profile_type = "taxonomic";
+
+	}
+	if ( $taxo_profiling_mode eq 'identifier' ) {
+		@levels       = ('identifier');
+		$profile_type = "identifier";
+	}
+	if ( $taxo_profiling_mode eq 'functional' ) {
+		@levels = ( 'cog', 'ko', 'module', 'pathway' );
+		$profile_type = "functional";
+	}
+
+	system "mkdir -p $cwd/$profile_type.profiles/$databases/$read_type.$reads.$conf{MOCAT_data_type}.$conf{MOCAT_mapping_mode}.l$conf{filter_length_cutoff}.p$conf{filter_percent_cutoff}";
+
+	my @BOI  = ('insert');
+	my @NORM = ('mm.dist.among.unique.scaled');
+	if ( $PUBLIC == 0 ) {
+		@BOI = ( 'base', 'insert' );
+		@NORM = ( 'raw', 'norm', 'only.unique.raw', 'only.unique.norm', 'scaled', 'only.unique.scaled', 'mm.dist.among.unique.raw', 'mm.dist.among.unique.norm', 'mm.dist.among.unique.scaled' );
+	}
+
+	foreach my $boi (@BOI) {
+		foreach my $norm (@NORM) {
+			foreach my $i (@levels) {
+
+				print localtime() . ": Preparing $boi:$norm:$i";
+				my $to_paste = '';
+				my $rownames;
+				my $folder;
+				my $file;
+				my %hash;
+				my $counter1 = 0;
+				my $counter2 = 0;
+				foreach my $sample (@samples) {
+					$counter1++;
+					if ( !$assembly ) {
+						$folder = "$cwd/$sample/$profile_type.profiles.$databases.$conf{MOCAT_data_type}";
+
+						#$rownames = "$folder/$sample.$read_type.$reads.on.$databases.$conf{MOCAT_data_type}.$conf{MOCAT_mapping_mode}.l$conf{filter_length_cutoff}.p$conf{filter_percent_cutoff}.rownames$uniq";
+						#$file     = "$folder/$sample.$read_type.$reads.on.$databases.$conf{MOCAT_data_type}.$conf{MOCAT_mapping_mode}.l$conf{filter_length_cutoff}.p$conf{filter_percent_cutoff}.$boi.coverage.$norm";
+						$file     = "$folder/$sample.$profile_type.profile.$read_type.$reads.on.$databases.$conf{MOCAT_data_type}.$conf{MOCAT_mapping_mode}.l$conf{filter_length_cutoff}.p$conf{filter_percent_cutoff}.$boi.$norm.$i";
+						$rownames = "$folder/$sample.$profile_type.profile.$read_type.$reads.on.$databases.$conf{MOCAT_data_type}.$conf{MOCAT_mapping_mode}.l$conf{filter_length_cutoff}.p$conf{filter_percent_cutoff}.$i.rownames$uniq";
+
+					}
+					elsif ($assembly) {
+						( my $max, my $avg, my $kmer ) = MOCATCore::get_kmer( $sample, $reads, "-r" );
+						$folder = "$cwd/$sample/$boi.coverage.$sample.$assembly_type.$reads.$conf{MOCAT_data_type}.K$kmer.$end";
+
+						#$rownames = "$folder/$sample.filtered.$reads.on.$end.$assembly_type.K$kmer.$conf{MOCAT_data_type}.$conf{MOCAT_mapping_mode}.l$conf{filter_length_cutoff}.p$conf{filter_percent_cutoff}.rownames$uniq";
+						#$file     = "$folder/$sample.filtered.$reads.on.$end.$assembly_type.K$kmer.$conf{MOCAT_data_type}.$conf{MOCAT_mapping_mode}.l$conf{filter_length_cutoff}.p$conf{filter_percent_cutoff}.$boi.coverage.$norm";
+						$file     = "$folder/$sample.$profile_type.profile.$reads.on.$end.$assembly_type.K$kmer.$conf{MOCAT_data_type}.$conf{MOCAT_mapping_mode}.l$conf{filter_length_cutoff}.p$conf{filter_percent_cutoff}.$boi.$norm.$i";
+						$rownames = "$folder/$sample.$profile_type.profile.$reads.on.$end.$assembly_type.K$kmer.$conf{MOCAT_data_type}.$conf{MOCAT_mapping_mode}.l$conf{filter_length_cutoff}.p$conf{filter_percent_cutoff}.$i.rownames$uniq";
+
+					}
+					unless ( -e $file ) {
+
+						# THIS ADDS SUPPORT FOR OLD curated.species files
+						if ( $i eq 'specI_clusters' ) {
+							if ( !$assembly ) {
+								$folder   = "$cwd/$sample/$profile_type.profiles.$databases.$conf{MOCAT_data_type}";
+								$file     = "$folder/$sample.$profile_type.profile.$read_type.$reads.on.$databases.$conf{MOCAT_data_type}.$conf{MOCAT_mapping_mode}.l$conf{filter_length_cutoff}.p$conf{filter_percent_cutoff}.$boi.$norm.curated.species";
+								$rownames = "$folder/$sample.$profile_type.profile.$read_type.$reads.on.$databases.$conf{MOCAT_data_type}.$conf{MOCAT_mapping_mode}.l$conf{filter_length_cutoff}.p$conf{filter_percent_cutoff}.curated.species.rownames$uniq";
+							}
+							elsif ($assembly) {
+								( my $max, my $avg, my $kmer ) = MOCATCore::get_kmer( $sample, $reads, "-r" );
+								$folder   = "$cwd/$sample/$boi.coverage.$sample.$assembly_type.$reads.$conf{MOCAT_data_type}.K$kmer.$end";
+								$file     = "$folder/$sample.$profile_type.profile.$reads.on.$end.$assembly_type.K$kmer.$conf{MOCAT_data_type}.$conf{MOCAT_mapping_mode}.l$conf{filter_length_cutoff}.p$conf{filter_percent_cutoff}.$boi.$norm.curated.species";
+								$rownames = "$folder/$sample.$profile_type.profile.$reads.on.$end.$assembly_type.K$kmer.$conf{MOCAT_data_type}.$conf{MOCAT_mapping_mode}.l$conf{filter_length_cutoff}.p$conf{filter_percent_cutoff}.curated.species.rownames$uniq";
+							}
+							unless ( -e $file ) {
+								die "\nERROR & EXIT: Missing $file";
+							}
+						}
+						else {
+							die "\nERROR & EXIT: Missing $file";
+						}
+					}
+					unless ( $hash{$counter2} ) {
+						$hash{$counter2} = "";
+					}
+					$hash{$counter2} = $hash{$counter2} . " $file ";
+					if ( $counter1 == 100 ) {
+						$counter1 = 0;
+						$counter2++;
+					}
+					print ".";
+				}
+				my $norm2 = $norm;
+				if ( $norm eq 'count' ) {
+					$norm2 = 'raw';
+				}
+				unless ( -e "$rownames" ) {
+					die "\nERROR & EXIT: Missing $rownames";
+				}
+				print " OK!\n";
+				print localtime() . ": Processing $boi:$norm:$i...";
+
+				my $name     = "$cwd/$profile_type.profiles/$databases/$read_type.$reads.$conf{MOCAT_data_type}.$conf{MOCAT_mapping_mode}.l$conf{filter_length_cutoff}.p$conf{filter_percent_cutoff}/$sample_file_basename.$profile_type.profile.$read_type.$reads.on.$databases.$conf{MOCAT_data_type}.$conf{MOCAT_mapping_mode}.l$conf{filter_length_cutoff}.p$conf{filter_percent_cutoff}.$boi.$norm.$i";
+				my $COG_name = "$cwd/$profile_type.profiles/$databases/$read_type.$reads.$conf{MOCAT_data_type}.$conf{MOCAT_mapping_mode}.l$conf{filter_length_cutoff}.p$conf{filter_percent_cutoff}/COGs/$sample_file_basename.$profile_type.profile.$read_type.$reads.on.$databases.$conf{MOCAT_data_type}.$conf{MOCAT_mapping_mode}.l$conf{filter_length_cutoff}.p$conf{filter_percent_cutoff}.$boi.$norm.$i";
+				if ( $taxo_profiling_mode eq 'mOTU' ) {
+					system "mkdir -p $cwd/$profile_type.profiles/$databases/$read_type.$reads.$conf{MOCAT_data_type}.$conf{MOCAT_mapping_mode}.l$conf{filter_length_cutoff}.p$conf{filter_percent_cutoff}/COGs";
+				}
+				system "cp $rownames $name.tmp1";
+				foreach my $f ( sort { $a <=> $b } keys %hash ) {
+					system "paste $name.tmp1 $hash{$f} > $name.tmp2 && mv $name.tmp2 $name.tmp1";
+					print ".";
+				}
+				chomp( my $currentDate = `date` );
+				open C, ">$name.comments" or die "ERROR & EXIT: Cannot write to $!";
+				print C "# MOCAT $version ($MOCAT_ID) $profile_type abundance table ($boi.$norm) summarized at $i level\n";
+				print C "# Created $currentDate by $username @ $hostname with identifier $date\n";
+				print C "# $cwd/MOCAT.pl " . join( " ", @args ) . "\n";
+				print C "# Original filename: $name\n";
+				close C;
+				system "cat $name.comments $name.tmp1 > $name.tmp && rm -f $name.comments $name.tmp1";
+				print " OK!\n";
+				my @mg = ( 'COG0012', 'COG0049', 'COG0052', 'COG0048', 'COG0016', 'COG0018', 'COG0080', 'COG0088', 'COG0081', 'COG0087', 'COG0090', 'COG0085', 'COG0091', 'COG0092', 'COG0093', 'COG0094', 'COG0096', 'COG0097', 'COG0098', 'COG0099', 'COG0100', 'COG0102', 'COG0103', 'COG0124', 'COG0172', 'COG0184', 'COG0185', 'COG0186', 'COG0197', 'COG0200', 'COG0201', 'COG0202', 'COG0215', 'COG0256', 'COG0522', 'COG0495', 'COG0533', 'COG0525', 'COG0552', 'COG0541' );
+				if ( $taxo_profiling_mode eq 'mOTU' ) {
+					print localtime() . ": Grouping $i by COGs...";
+					foreach my $i (@mg) {
+						open IN,  "$name.tmp"         or die "ERROR & EXIT: Missing $name.tmp";
+						open OUT, ">$COG_name.$i.tmp" or die "ERROR & EXIT: Cannot write to $COG_name.$i\n";
+						print OUT "# MOCAT $version ($MOCAT_ID) $profile_type abundance table ($boi.$norm) summarized for $i\n";
+						print OUT "# Created $currentDate by $username @ $hostname with identifier $date\n";
+						print OUT "# $cwd/MOCAT.pl " . join( " ", @args ) . "\n";
+						print OUT "# Original filename: $COG_name.$i\n";
+
+						while (<IN>) {
+							if ( $. == 5 || $_ =~ /^$i\./ ) {    ### WE HAVE 5 HEADER ROWS ###
+								print OUT $_;
+							}
+						}
+						close IN;
+						close OUT;
+						system "$ZIP -$ziplevel -f $COG_name.$i.tmp && mv $COG_name.$i.tmp.gz $COG_name.$i.gz";
+					}
+					print " OK!\n";
+				}
+				system "$scr_dir/MOCATFraction.pl -in $name.tmp -out $name.fraction.tmp";
+				system "$ZIP -f -$ziplevel $name.tmp $name.fraction.tmp && mv $name.tmp.gz $name.gz && mv $name.fraction.tmp.gz $name.fraction.gz";
+			}
+		}
+	}
+
+	# Make nice output files
+	if ( $OUTPUT_FOLDER =~ m/^\// ) {
+	}
+	else {
+		$OUTPUT_FOLDER = "$cwd/$OUTPUT_FOLDER";
+	}
+	system "mkdir -p $OUTPUT_FOLDER";
+	my @input_files  = ();
+	my @output_files = ();
+
+	# Run perl script
+	if ( $taxo_profiling_mode eq 'mOTU' ) {
+		my $LOG = "$cwd/logs/motu_profiles/jobs/MOCATJob_motu_species_profiles\_$date.log";
+		system "mkdir -p $cwd/logs/motu_profiles/jobs/";
+		print localtime() . ": mode is mOTO, generating mOTU profiles...\n";
+		my $name = "$cwd/$profile_type.profiles/$databases/$read_type.$reads.$conf{MOCAT_data_type}.$conf{MOCAT_mapping_mode}.l$conf{filter_length_cutoff}.p$conf{filter_percent_cutoff}/$sample_file_basename.$profile_type.profile.$read_type.$reads.on.$databases.$conf{MOCAT_data_type}.$conf{MOCAT_mapping_mode}.l$conf{filter_length_cutoff}.p$conf{filter_percent_cutoff}.insert.mm.dist.among.unique.scaled.mOTU.gz";
+		my $pre  = "$read_type.$reads.$conf{MOCAT_data_type}.$conf{MOCAT_mapping_mode}.l$conf{filter_length_cutoff}.p$conf{filter_percent_cutoff}";
+		my $file = "$sample_file_basename.$profile_type.profile.$read_type.$reads.on.$databases.$conf{MOCAT_data_type}.$conf{MOCAT_mapping_mode}.l$conf{filter_length_cutoff}.p$conf{filter_percent_cutoff}";
+		my $db   = "$cwd/motu.profiles/$databases";
+		system "mkdir -p $db/$pre";
+		system "echo -e \"perl $scr_dir/MOCATPasteTaxonomyCoverageFiles_generate_mOTU_tables.pl -full-output -wd '$cwd' -map '$data_dir/$databases.motu.linkage.map' -table '$name' -prefix '$db/$pre/$file.insert.mm.dist.among.unique.scaled' >>$LOG 2>>$LOG \n\n\" >>$LOG";
+		print localtime() . ": Generating mOTU tables...\n";
+		system "perl $scr_dir/MOCATPasteTaxonomyCoverageFiles_generate_mOTU_tables.pl -full-output -wd '$cwd' -map '$data_dir/$databases.motu.linkage.map' -table '$name' -prefix '$db/$pre/$file.insert.mm.dist.among.unique.scaled' >>$LOG 2>>$LOG";
+		print localtime() . ": Post processing mOTU tables...\n";
+		my @tables = <$db/$pre/$file*tab>;
+
+		foreach my $table (@tables) {
+			my $tableNoTab = $table;
+			$tableNoTab =~ s/.tab$//;
+			my $annot = "";
+			if ( $table =~ m/annotated.mOTU.clusters/ ) {
+				$annot = " annotated";
+			}
+			my $frac = "";
+			if ( $tableNoTab =~ m/.fraction$/ ) {
+				$frac = " (fractions)";
+			}
+
+			chomp( my $currentDate = `date` );
+			open IN,  "$table"     or die "ERROR & EXIT: Missing $table";
+			open OUT, ">$table.p2" or die "ERROR & EXIT: Cannot write to $table.p2\n";
+			print OUT "# MOCAT $version ($MOCAT_ID)$annot mOTU clusters abundance table (equivalent of species level)\n";
+			print OUT "# Created $currentDate by $username @ $hostname with identifier $date\n";
+			print OUT "# $cwd/MOCAT.pl " . join( " ", @args ) . "\n";
+			print OUT "# Original filename: $tableNoTab\n";
+			while (<IN>) {
+				print OUT $_;
+			}
+			close IN;
+			close OUT;
+			system "rm $table && mv $table.p2 $tableNoTab";
+		}
+		print localtime() . ": Zipping mOTU tables...\n";
+		for my $i ( 0 .. scalar @tables - 1 ) {
+			$tables[$i] =~ s/.tab$//;
+		}
+		system "$ZIP -f -$ziplevel " . join( " ", @tables );
+
+		# Make easy output
+		@input_files = ( "$db/$pre/$file.insert.mm.dist.among.unique.scaled.annotated.mOTU.clusters.fraction.gz", "$db/$pre/$file.insert.mm.dist.among.unique.scaled.mOTU.clusters.fraction.gz", "$db/$pre/$file.insert.mm.dist.among.unique.scaled.annotated.mOTU.clusters.gz", "$db/$pre/$file.insert.mm.dist.among.unique.scaled.mOTU.clusters.gz", "$data_dir/mOTU.v1.map.txt", "$data_dir/mOTU-LG.v1.annotations.txt" );
+		@output_files = ( 'annotated.mOTU.abundances.gz', 'mOTU.abundances.gz', 'annotated.mOTU.counts.gz', 'mOTU.counts.gz', 'mOTU.v1.map.txt', 'mOTU-LG.v1.annotations.txt' );
+	}
+
+	if ( $taxo_profiling_mode eq 'RefMG' ) {
+		@input_files = (
+			"$cwd/$profile_type.profiles/$databases/$read_type.$reads.$conf{MOCAT_data_type}.$conf{MOCAT_mapping_mode}.l$conf{filter_length_cutoff}.p$conf{filter_percent_cutoff}/$sample_file_basename.$profile_type.profile.$read_type.$reads.on.$databases.$conf{MOCAT_data_type}.$conf{MOCAT_mapping_mode}.l$conf{filter_length_cutoff}.p$conf{filter_percent_cutoff}.insert.mm.dist.among.unique.scaled.species.fraction.gz",
+			"$cwd/$profile_type.profiles/$databases/$read_type.$reads.$conf{MOCAT_data_type}.$conf{MOCAT_mapping_mode}.l$conf{filter_length_cutoff}.p$conf{filter_percent_cutoff}/$sample_file_basename.$profile_type.profile.$read_type.$reads.on.$databases.$conf{MOCAT_data_type}.$conf{MOCAT_mapping_mode}.l$conf{filter_length_cutoff}.p$conf{filter_percent_cutoff}.insert.mm.dist.among.unique.scaled.species.gz"
+		);
+		@output_files = ( 'NCBI.species.abundances.gz', 'NCBI.species.counts.gz' );
+	}
+
+	if ( scalar @input_files > 0 ) {
+		for my $i ( 0 .. scalar @input_files - 1 ) {
+			system "ln -sf $input_files[$i] $OUTPUT_FOLDER/$output_files[$i]";
+		}
+	}
+
+	print localtime() . ": Completed.\n";
+	print localtime() . ": RESULTS SAVED IN $cwd/$profile_type.profiles/$databases/$read_type.$reads.$conf{MOCAT_data_type}.$conf{MOCAT_mapping_mode}.l$conf{filter_length_cutoff}.p$conf{filter_percent_cutoff}\n";
+}
+
+1;

@@ -1,0 +1,30 @@
+Revision history for Perl extension Math::Round.
+
+0.01  Wed Oct 25 10:32:06 2000
+	- original version; created by h2xs 1.18
+
+0.02  Thu Mar  8 14:16:16 2001
+	- Small cosmetic changes (e-mail address and such).
+
+0.03  Mon Sep 17 10:34:40 2001
+	- Now using a value for one-half that is slightly larger than
+	  0.5, to thwart the floating-point units.  Thanks to Paul
+	  Rohwer for pointing this out.
+
+0.04  Mon Mar  4 11:33:15 2002
+	- Added nearest_ceil and nearest_floor at the suggestion of
+	  Charlie Kim (Stanford).
+
+0.05  Mon Apr 22 10:07:09 2002
+	- Added nlowmult and nhimult at the suggestion of Tielman
+	  de Villiers.
+
+0.06  Wed Nov 29 20:29:08 2006
+	- Streamlined the code. Thanks to Richard Jelinek of PetaMem.
+	- Made $half a package variable. Thanks to Ruud H. G. van Tol
+	  for pointing out some peculiarities of the rounding.
+
+0.07  Fri Jan  2 10:35:47 2015
+	- Perl 5.22 exports POSIX::round, so "use POSIX" had to be
+	  changed to "use POSIX ()". Thanks to Jarkko Hietaniemi and
+	  Slaven Rezic for the tip.

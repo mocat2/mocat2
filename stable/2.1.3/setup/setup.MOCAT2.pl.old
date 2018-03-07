@@ -1,0 +1,206 @@
+#!/usr/bin/env perl
+
+# This code is part of the MOCAT analysis pipeline
+# Code is (c) Copyright EMBL, 2012-2016
+# This code is released under GNU GPL v3.
+
+use strict;
+use warnings;
+use Term::ANSIColor;
+
+my $system = `uname -s`;
+chomp($system);
+
+my $agree;
+my $version = "v 2.0.0";
+my $sep     = "=================================================================================";
+my $space = " ";
+sub welcome {
+	print "$sep\n";
+	print color 'bold';
+	print "                  MOCAT";
+	print color 'reset';
+	print " - Metagenomics Analysis Toolkit                $space";
+	print color 'bold';
+	print "$version\n";
+	print color 'reset';
+	print " by Jens Roat Kultima, Luis Pedro Coelho, Shinichi Sunagawa @ Bork Group, EMBL
+$sep\n";
+}
+welcome();
+
+unless ( -e "./src/MOCAT.pl" ) {
+	die "ERROR & EXIT: This file must be executed from the MOCAT base directory\nIn this directory there should exist the /src, /bin, /data, /lib directories for MOCAT.\n";
+}
+
+print "\n";
+print "SOFTWARE AGREEMENTS INFORMATION\n";
+print "To proceed you have to agree with the licence agreements of all included software\n";
+
+print "To use the integreated databases you have to download the copy of MOCAT that contains these in the zip file.\n";
+print "To run the example datasets, you have to download these individually form the MOCAT homepage.\n";
+print "This setup will only initialize a few environmental variables.\n";
+
+print "Please type 'yes' and press Enter, if you agree with the licence agreements\n";
+print "for each software used by MOCAT, and wish to proceed (otherwise type 'no'):\n";
+print "(yes/no)\n";
+
+chomp( $agree = <> );
+unless ( $agree eq 'yes' || $agree eq 'YES' || $agree eq 'Yes' || $agree eq 'y' || $agree eq 'Y' ) {
+	die "You did not agree with the terms. Thank you for considering MOCAT!\n";
+}
+
+print "\n";
+print "SETUP THE CONFIG FILE\n";
+print "What queuing system do you use on your system?\n";
+print "This can be changed in the config file later.\n";
+print "If you don't know, type 'none'\n";
+print "('SGE', 'PBS', 'LSF' or 'none')\n";
+
+my $samples = 0;
+my $queue;
+chomp( $agree = <> );
+if ( $agree eq 'SGE' || $agree eq 'sge' ) {
+	$queue = "SGE";
+}
+elsif ( $agree eq 'pbs' || $agree eq 'PBS' ) {
+	$queue = "PBS";
+}
+elsif ( $agree eq 'lsf' || $agree eq 'LSF' ) {
+	$queue = "LSF";
+}
+else {
+	$queue = "none";
+}
+
+my @pes;
+my $PE = "make";
+if ( $queue eq 'SGE' ) {
+	print "SGE SPECIFIC QUESTIONS\n";
+	print "Please specify a parellel environment to use, choose one of the ones listed below.\n";
+	print "This can be manually changed in the config file later. To list these envornments,\n";
+	print "run 'qconf -spl' in a Terminal Window.\n";
+	print "\n";
+	print "Please enter one of these envornments to use:\n";
+	@pes = `qconf -spl`;
+	chomp(@pes);
+
+	foreach my $pe (@pes) {
+		print "- $pe\n";
+	}
+	print "\n";
+	chomp( $PE = <> );
+
+	my $exist = 0;
+	foreach my $pe (@pes) {
+		if ( $pe eq $PE ) {
+			$exist = 1;
+		}
+	}
+	unless ( $exist == 1 ) {
+		print "\n";
+		print "WARNING! THE PARALLELL ENVIRONMENT YOU SPECIFIED DID NOT EXIST IN THE LIST OF POSSIBLE ENVIRONMENTS!\n";
+		print "To resolve this the environment has been set to 'make'\n";
+		$PE = 'make';
+	}
+
+}
+
+my $NCORES = "4";
+
+chomp( my $cwd = `pwd` );
+my $cwd2 = $cwd;
+$cwd2 =~ s/\//\\\//g;
+
+if ( $system =~ m/Darwin/ ) {
+	system "sed -i '' 's/MOCAT_dir.*/MOCAT_dir                : $cwd2\\//' GETTING_STARTED/MOCAT.cfg";
+	system "sed -i '' 's/MOCAT_dir.*/MOCAT_dir                : $cwd2\\//' article_datasets/MOCAT1_examples/mock_community/MOCAT.cfg";
+	system "sed -i '' 's/MOCAT_dir.*/MOCAT_dir                : $cwd2\\//' article_datasets/MOCAT1_examples/simulated_metagenome_100strains/MOCAT.cfg";
+	system "sed -i '' 's/MOCAT_dir.*/MOCAT_dir                : $cwd2\\//' article_datasets/MOCAT1_examples/simulated_metagenome_87/MOCAT.cfg";
+	system "sed -i '' 's/MOCAT_dir.*/MOCAT_dir                : $cwd2\\//' article_datasets/MOCAT2_examples/make_and_annotate_gene_catalog/MOCAT.cfg";
+	
+
+	system "sed -i '' 's/MOCAT_qsub_system.*/MOCAT_qsub_system        : $queue/' GETTING_STARTED/MOCAT.cfg";
+	system "sed -i '' 's/MOCAT_qsub_system.*/MOCAT_qsub_system        : $queue/' article_datasets/MOCAT1_examples/mock_community/MOCAT.cfg";
+	system "sed -i '' 's/MOCAT_qsub_system.*/MOCAT_qsub_system        : $queue/' article_datasets/MOCAT1_examples/simulated_metagenome_100strains/MOCAT.cfg";
+	system "sed -i '' 's/MOCAT_qsub_system.*/MOCAT_qsub_system        : $queue/' article_datasets/MOCAT1_examples/simulated_metagenome_87/MOCAT.cfg";
+	system "sed -i '' 's/MOCAT_qsub_system.*/MOCAT_qsub_system        : $queue/' article_datasets/MOCAT2_examples/make_and_annotate_gene_catalog/MOCAT.cfg";
+
+	if ( $queue eq 'SGE' ) {
+		system "sed -i '' 's/MOCAT_SGE_parallell_env.*/MOCAT_SGE_parallell_env  : $PE [" . join( ",", @pes ) . "]/' GETTING_STARTED/MOCAT.cfg";
+		system "sed -i '' 's/MOCAT_SGE_parallell_env.*/MOCAT_SGE_parallell_env  : $PE [" . join( ",", @pes ) . "]/' article_datasets/MOCAT1_examples/mock_community/MOCAT.cfg";
+		system "sed -i '' 's/MOCAT_SGE_parallell_env.*/MOCAT_SGE_parallell_env  : $PE [" . join( ",", @pes ) . "]/' article_datasets/MOCAT1_examples/simulated_metagenome_100strains/MOCAT.cfg";
+		system "sed -i '' 's/MOCAT_SGE_parallell_env.*/MOCAT_SGE_parallell_env  : $PE [" . join( ",", @pes ) . "]/' article_datasets/MOCAT1_examples/simulated_metagenome_87/MOCAT.cfg";
+		system "sed -i '' 's/MOCAT_SGE_parallell_env.*/MOCAT_SGE_parallell_env  : $PE [" . join( ",", @pes ) . "]/' article_datasets/MOCAT2_examples/make_and_annotate_gene_catalog/MOCAT.cfg";
+	}
+
+}
+else {
+	system "sed -i 's/MOCAT_dir.*/MOCAT_dir                : $cwd2\\//' GETTING_STARTED/MOCAT.cfg";
+	system "sed -i 's/MOCAT_dir.*/MOCAT_dir                : $cwd2\\//' article_datasets/MOCAT1_examples/mock_community/MOCAT.cfg";
+	system "sed -i 's/MOCAT_dir.*/MOCAT_dir                : $cwd2\\//' article_datasets/MOCAT1_examples/simulated_metagenome_100strains/MOCAT.cfg";
+	system "sed -i 's/MOCAT_dir.*/MOCAT_dir                : $cwd2\\//' article_datasets/MOCAT1_examples/simulated_metagenome_87/MOCAT.cfg";
+	system "sed -i 's/MOCAT_dir.*/MOCAT_dir                : $cwd2\\//' article_datasets/MOCAT2_examples/make_and_annotate_gene_catalog/MOCAT.cfg";
+
+	system "sed -i 's/MOCAT_qsub_system.*/MOCAT_qsub_system        : $queue [SGE,PBS,LSF,none]/' GETTING_STARTED/MOCAT.cfg";
+	system "sed -i 's/MOCAT_qsub_system.*/MOCAT_qsub_system        : $queue [SGE,PBS,LSF,none]/' article_datasets/MOCAT1_examples/mock_community/MOCAT.cfg";
+	system "sed -i 's/MOCAT_qsub_system.*/MOCAT_qsub_system        : $queue [SGE,PBS,LSF,none]/' article_datasets/MOCAT1_examples/simulated_metagenome_100strains/MOCAT.cfg";
+	system "sed -i 's/MOCAT_qsub_system.*/MOCAT_qsub_system        : $queue [SGE,PBS,LSF,none]/' article_datasets/MOCAT1_examples/simulated_metagenome_87/MOCAT.cfg";
+	system "sed -i 's/MOCAT_qsub_system.*/MOCAT_qsub_system        : $queue [SGE,PBS,LSF,none]/' article_datasets/MOCAT2_examples/make_and_annotate_gene_catalog/MOCAT.cfg";
+
+	if ( $queue eq 'SGE' ) {
+		system "sed -i 's/MOCAT_SGE_parallell_env.*/MOCAT_SGE_parallell_env  : $PE [" . join( ",", @pes ) . "]/' GETTING_STARTED/MOCAT.cfg";
+		system "sed -i 's/MOCAT_SGE_parallell_env.*/MOCAT_SGE_parallell_env  : $PE [" . join( ",", @pes ) . "]/' article_datasets/MOCAT1_examples/mock_community/MOCAT.cfg";
+		system "sed -i 's/MOCAT_SGE_parallell_env.*/MOCAT_SGE_parallell_env  : $PE [" . join( ",", @pes ) . "]/' article_datasets/MOCAT1_examples/simulated_metagenome_100strains/MOCAT.cfg";
+		system "sed -i 's/MOCAT_SGE_parallell_env.*/MOCAT_SGE_parallell_env  : $PE [" . join( ",", @pes ) . "]/' article_datasets/MOCAT1_examples/simulated_metagenome_87/MOCAT.cfg";
+		system "sed -i 's/MOCAT_SGE_parallell_env.*/MOCAT_SGE_parallell_env  : $PE [" . join( ",", @pes ) . "]/' article_datasets/MOCAT2_examples/make_and_annotate_gene_catalog/MOCAT.cfg";
+	}
+}
+
+unless ( $NCORES eq 'na' ) {
+	if ( $system =~ m/Darwin/ ) {
+		system "sed -i '' 's/\\&\\&/-p $NCORES \\&\\&/' article_datasets/MOCAT1_examples/mock_community/RUN_PIPELINE.sh";
+		system "sed -i '' 's/\\&\\&/-p $NCORES \\&\\&/' article_datasets/MOCAT1_examples/simulated_metagenome_100strains/RUN_PIPELINE.sh";
+		
+	}
+	else {
+		system "sed -i 's/\\&\\&/-p $NCORES \\&\\&/' article_datasets/MOCAT1_examples/mock_community/RUN_PIPELINE.sh";
+		system "sed -i 's/\\&\\&/-p $NCORES \\&\\&/' article_datasets/MOCAT1_examples/simulated_metagenome_100strains/RUN_PIPELINE.sh";
+	}
+}
+
+if ( $system =~ m/Darwin/ ) {
+	system "sed -i '' 's/MOCAT_zip_program.*/MOCAT_zip_program        : gzip [gzip]/' GETTING_STARTED/MOCAT.cfg";
+	system "sed -i '' 's/MOCAT_zip_program.*/MOCAT_zip_program        : gzip [gzip]/' article_datasets/MOCAT1_examples/mock_community/MOCAT.cfg";
+	system "sed -i '' 's/MOCAT_zip_program.*/MOCAT_zip_program        : gzip [gzip]/' article_datasets/MOCAT1_examples/simulated_metagenome_100strains/MOCAT.cfg";
+	system "sed -i '' 's/MOCAT_zip_program.*/MOCAT_zip_program        : gzip [gzip]/' article_datasets/MOCAT1_examples/simulated_metagenome_87/MOCAT.cfg";
+	system "sed -i '' 's/MOCAT_zip_program.*/MOCAT_zip_program        : gzip [gzip]/' article_datasets/MOCAT2_examples/make_and_annotate_gene_catalog/MOCAT.cfg";
+
+	system "sed -i '' 's/MOCAT_mapping_mode.*/MOCAT_mapping_mode       : random [allbest *NOT SUPPORTED ON OSX*,random,unique]/' GETTING_STARTED/MOCAT.cfg";
+	system "sed -i '' 's/MOCAT_mapping_mode.*/MOCAT_mapping_mode       : random [allbest *NOT SUPPORTED ON OSX*,random,unique]/' article_datasets/MOCAT1_examples/mock_community/MOCAT.cfg";
+	system "sed -i '' 's/MOCAT_mapping_mode.*/MOCAT_mapping_mode       : random [allbest *NOT SUPPORTED ON OSX*,random,unique]/' article_datasets/MOCAT1_examples/simulated_metagenome_100strains/MOCAT.cfg";
+	system "sed -i '' 's/MOCAT_mapping_mode.*/MOCAT_mapping_mode       : random [allbest *NOT SUPPORTED ON OSX*,random,unique]/' article_datasets/MOCAT1_examples/simulated_metagenome_87/MOCAT.cfg";
+	system "sed -i '' 's/MOCAT_mapping_mode.*/MOCAT_mapping_mode       : random [allbest *NOT SUPPORTED ON OSX*,random,unique]/' article_datasets/MOCAT2_examples/make_and_annotate_gene_catalog/MOCAT.cfg";
+
+}
+
+system "echo \"\n### EXPORTED BY MOCAT ###\nexport PERL5LIB=\\\$PERL5LIB:$cwd/src\nPATH=\\\$PATH:$cwd/src\n### EXPORTED BY MOCAT ###\n\" >> ~/.bashrc";
+system "echo \"\n### EXPORTED BY MOCAT ###\nexport PERL5LIB=\\\$PERL5LIB:$cwd/src\nPATH=\\\$PATH:$cwd/src\n### EXPORTED BY MOCAT ###\n\" >> ~/.bash_profile";
+
+print "CONFIG FILE INFORMATION\n";
+print "Changed MOCAT.cfg for this system.\n";
+print "Setup set the flag 'MOCAT_dir' to $cwd\n";
+
+print "\n";
+print "UNIX / OSX STARTUP FILE CHANGES\n";
+print "Exported $cwd/src to \$PERL5LIB and \$PATH variable\n";
+print "to ~./bashrc and ~./bash_profile\n";
+
+system "chmod -R uga+rwx bin/*";
+
+print "\n$sep\nSUCCESS! MOCAT has now been setup and is ready to be used!\nYou start it by running 'MOCAT.pl' from any directory.\n$sep\n\n";
+print "LAST THING TO DO BEFORE RUNNING MOCAT.pl\n";
+print "Please execute commands below, to ensure Perl libraries are correctly loaded\n";
+print "EXECUTE: source ~/.bashrc; source ~/.bash_profile\n";
+
+exit 0;

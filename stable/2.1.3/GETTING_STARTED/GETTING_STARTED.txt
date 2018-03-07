@@ -1,0 +1,40 @@
+Welcome!
+
+This is the SUPER quick guide to MOCAT.
+After installation you can run MOCAT in either of these ways:
+
+
+==== runMOCAT.sh ====
+
+> runMOCAT.sh
+This is used for running multiple MOCAT commands in a row, 
+which is generally what you want. If you want to generate mOTU
+and taxonomic profiles, or assemble metagenomes and predict genes?
+- USE THIS!
+
+
+
+==== MOCAT.pl ====
+
+> MOCAT.pl
+This is the actual MOCAT executable, which is invoked by runMOCAT.sh.
+Using MOCAT.pl you can run only few steps or run multiple steps on a project.
+Advanatage is that you decide exactly which steps to run, but it may be confusing
+which steps are needed to be run in order to create taxonomic and mOTU profiles.
+So, if you're unsure, use runMOCAT.sh and once you get the hang of using MOCAT
+or if you need to re-run a specific step only, use MOCAT.pl
+
+
+
+==== Example scripts in /article_dataset folder ====
+
+> GENERATE_MOTU_AND_TAX_PROFILES.sh
+This script does the same thing as running 'runMOCAT.sh' and choosing to create
+taxonomic and mOTU profiles without removing human contaminants. This is a generic
+script you can copy to your project folder and just execute to create these profiles.
+(This script is available in the mock_community folder).
+
+> RUN_PIPELINE.sh
+These scripts are specific for each dataset and reproduces the results form the MOCAT
+paper. You can use the as examples to understand how to run MOCAT on your dataset.
+

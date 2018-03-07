@@ -1,0 +1,329 @@
+#!/usr/bin/env perl
+use strict;
+use warnings;
+use Getopt::Long;
+
+# This code is part of the MOCAT analysis pipeline
+# Code is (c) Copyright EMBL and BGI, 2012-2013
+# This code is released under GNU GPL v3.
+
+# Takes a number of input files and references files as input and merges
+# the input files in an ordered fashion, in comparion to the reference files
+# Limitations:
+# 1. reference files MUST be in the same order as they were given to SOAPaligner for mapping
+# 2. when ran SOAPaligner, the files have to be in the order which is produced by 'ls *pair*gz *single*gz'
+# 3. all input and reference files must be in gz format
+# 4. input files MUST be in SOAP format
+# 5. reference files MUST be FastQ format
+# 6. input reference files must have files names like this: *pair.1.fq* *pair.2.fq* *single*
+
+my ( @input_files, $execute_step, @reference_files, @input, $output2, $output, $output1, $output_file, @input_line, @input_line1, @input_open, $temp_output_file, $direction, @input_direction, $twoStep );
+my $zip      = 'pigz -2 -p 8';
+my $any_open = 0;
+GetOptions(
+	'output_file:s'         => \$output_file,
+	'temp_output_file:s'    => \$temp_output_file,
+	'input_files=s{,}'      => \@input_files,
+	'reference_filess=s{,}' => \@reference_files,
+	'zip'                   => \$zip,
+	'2step'                 => \$twoStep, 
+	'execute_step' => \$execute_step
+);
+
+print STDERR "MOCATFilter : initializing\n";
+
+# Open files
+my @array = (1..2);
+if ($execute_step) {
+	@array = ($execute_step);
+} 
+for my $run ( @array ) {
+	if ( $run == 1 ) {    # processing is done in two steps, here we create a .1 and .2 file where the reads are seperated
+		print STDERR "MOCATFilter : processing initial input & reference files\n";
+		for my $i ( 0 .. $#input_files ) {
+			( -e "$input_files[$i]" ) or die "ERROR & EXIT: Cannot open $input_files[$i]: $!";
+			open $input[$i], "gunzip -c $input_files[$i] | " or die "ERROR & EXIT: Cannot open input pipe 'gunzip -c $input_files[$i] | ': $!";
+			$input_open[$i] = 1;
+			$any_open++;
+		}
+		if ($twoStep) {
+		}
+		else {
+			open $output1, " | $zip -c > $temp_output_file.0" or die "ERROR & EXIT: Cannot open output pipe ' | $zip -c > $temp_output_file.0': $!";
+			open $output2, " | $zip -c > $temp_output_file.1" or die "ERROR & EXIT: Cannot open output pipe ' | $zip -c > $temp_output_file.1': $!";
+		}
+		foreach my $reference (@reference_files) {
+			( -e $reference ) or die "ERROR & EXIT: Cannot open reference file $reference: $!";
+		}
+	}
+	if ( $run == 2 ) {    # in the second step we process the .1 and .2 files, to generate the combined output file
+		print STDERR "MOCATFilter : processing secondary input files ($temp_output_file.(1|2)\n";
+		$any_open   = 0;
+		@input      = ();
+		@input_open = ();
+		for my $i ( 0 .. 1 ) {
+			( -e "$temp_output_file.$i" ) or die "ERROR & EXIT: Cannot open $temp_output_file.$i: $!";
+			if ($twoStep) {
+
+				#				if ($i == 0) {
+				#					open $input[$i], "<", STDIN or die "ERROR & EXIT: Cannot open input pipe 'gunzip -c $temp_output_file.$i | ': $!";
+				#				} else {
+				#					open $input[$i], "gunzip -c $temp_output_file.$i | " or die "ERROR & EXIT: Cannot open input pipe 'gunzip -c $temp_output_file.$i | ': $!";
+				#				}
+			}
+			else {
+				open $input[$i], "gunzip -c $temp_output_file.$i | " or die "ERROR & EXIT: Cannot open input pipe 'gunzip -c $temp_output_file.$i | ': $!";
+			}
+			$input_open[$i] = 1;
+			$any_open++;
+		}
+		open $output1, " | $zip -c > $output_file" or die "ERROR & EXIT: Cannot open output pipe ' | $zip -c > $output_file': $!";
+
+		my @temp_refs;
+		foreach my $reference (@reference_files) {
+			unless ( $reference =~ m/\.pair\.2\./ ) {
+				push @temp_refs, $reference;
+			}
+		}
+		@reference_files = @temp_refs;    # here we only pick /1 files and the single files
+	}
+
+	# Process
+	foreach my $reference (@reference_files) {
+		if ( $any_open > 0 ) {
+			print STDERR "MOCATFilter :  $reference\n";
+			open my $REF, "gunzip -c $reference | " or die "ERROR & EXIT: Cannot open reference pipe 'gunzip -c $reference | ': $!";
+			my $current;
+
+			while (<$REF>) {
+				next unless $. % 4 == 1;    # only process every 4th line
+				chomp( my $ref = $_ );
+				$ref =~ s/^@//;
+				if ( $run == 2 ) {
+					$ref =~ s/.$//;    # if we process the second round, and a pri.1 file, then we remove the trailing 1 or 2 after the ref
+
+				}
+				
+				
+				if ($twoStep) {
+					
+					
+									foreach my $i ( 0 .. $#input ) {
+					if ( $input_open[$i] ) {    # only process if there are lines left in this input file
+						my $loop = 1;     # set that we will by default read more lines fmor file
+						if ( $input_line1[$i] ) {    # we already have something stored from previous ref
+							if ( $input_line1[$i] eq $ref ) {    # this new ref matches the old line ref
+								                           #print "$i :: SAVED MATCH! $ref\n";
+
+								if ( $run == 2 ) {
+									$input_line1[$i] .= $input_direction[$i];
+								}
+								if ($twoStep) {
+									if ( $run == 1 ) {
+										$input_line[$i] =~ m/(.)$/;
+										print STDOUT "$1$input_line[$i]";
+									}
+									else {
+										print STDOUT $input_line[$i];
+									}
+								}
+								else {
+									if ( $ref =~ /1$/ || $run == 2 ) {    # if run==2 we print to only one file, might as well be this one
+										print {$output1} $input_line[$i];    # print to /1 file
+										                                     #print "printed :: $input_line[$i]";
+									}
+									elsif ( $ref =~ /2$/ ) {
+										print {$output2} $input_line[$i];    # print to /2 file
+									}
+									else {
+										die "ERROR & EXIT: Read ID does not end with /1 or /2";
+									}
+								}
+								delete $input_line1[$i];                                 # delete the ref
+							}
+							else {                                                             # we still haven't gotten to a ref that exists, wait a bit more
+								$loop = 0;                                               # don't read any enw liens from this input file
+							}
+						}
+						while ($loop) {
+							my $line;
+							unless ($twoStep && $run == 2) {
+								$line = readline( $input[$i] );                                                              # if we want to read more lines
+							} else {
+								$line = <STDIN>;
+							}
+							if ( $line  ) {                         # this returns undef if the last line
+								my @line = split "\t", $line;                            # split the line
+								if ( $run == 2 ) {
+									$line[0] =~ s/(.)$//;
+									$direction = $1;
+
+									#print "line0=$line[0] | dir=$direction\n";
+								}
+
+								if ( $line[0] eq $ref ) {                                # this line matches the currewnt ref, process it
+									if ($twoStep) {
+										if ( $run == 1 ) {
+											$ref =~ m/(.)$/;
+											print STDOUT "$1$line";
+										}
+										else {
+											print STDOUT $line;
+										}
+									}
+									else {
+										if ( $ref =~ /1$/ || $run == 2 ) {    # if run==2 we print to only one file, might as well be this one
+											print {$output1} $line;     # print to /1 file
+										}
+										elsif ( $ref =~ /2$/ ) {
+											print {$output2} $line;     # print to /2 file
+										}
+										else {
+											die "ERROR & EXIT: Read ID does not end with /1 or /2";
+										}
+									}
+								}
+								else {
+									$input_line[$i]  = $line;                       # this line reference don't match the current ref, we still have to read more ref before we get to this ref in the input file
+									$input_line1[$i] = $line[0];                    # just so we don't have to split the line again next time we want to check if the ref is the same
+									$loop            = 0;
+									if ( $run == 2 ) {
+										$input_direction[$i] = $direction;
+									}
+								}
+							}
+							else {                                                              # last line, close this file by setting the checker to undef
+								$input_open[$i] = undef;                                  # set checker to undef
+								$loop = 0;
+								$any_open--;
+							}
+						}
+					}
+				}
+					
+					
+					
+				}
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				else {
+				foreach my $i ( 0 .. $#input ) {
+					if ( $input_open[$i] ) {    # only process if there are lines left in this input file
+						my $loop = 1;     # set that we will by default read more lines fmor file
+						if ( $input_line1[$i] ) {    # we already have something stored from previous ref
+							if ( $input_line1[$i] eq $ref ) {    # this new ref matches the old line ref
+								                           #print "$i :: SAVED MATCH! $ref\n";
+
+								if ( $run == 2 ) {
+									$input_line1[$i] .= $input_direction[$i];
+								}
+								if ($twoStep) {
+									if ( $run == 1 ) {
+										$input_line[$i] =~ m/(.)$/;
+										print STDOUT "$1$input_line[$i]";
+									}
+									else {
+										print STDOUT $input_line[$i];
+									}
+								}
+								else {
+									if ( $ref =~ /1$/ || $run == 2 ) {    # if run==2 we print to only one file, might as well be this one
+										print {$output1} $input_line[$i];    # print to /1 file
+										                                     #print "printed :: $input_line[$i]";
+									}
+									elsif ( $ref =~ /2$/ ) {
+										print {$output2} $input_line[$i];    # print to /2 file
+									}
+									else {
+										die "ERROR & EXIT: Read ID does not end with /1 or /2";
+									}
+								}
+								delete $input_line1[$i];                                 # delete the ref
+							}
+							else {                                                             # we still haven't gotten to a ref that exists, wait a bit more
+								$loop = 0;                                               # don't read any enw liens from this input file
+							}
+						}
+						while ($loop) {
+							my $line;
+							unless ($twoStep && $run == 2) {
+								$line = readline( $input[$i] );                                                              # if we want to read more lines
+							} else {
+								$line = <STDIN>;
+							}
+							if ( $line  ) {                         # this returns undef if the last line
+								my @line = split "\t", $line;                            # split the line
+								if ( $run == 2 ) {
+									$line[0] =~ s/(.)$//;
+									$direction = $1;
+
+									#print "line0=$line[0] | dir=$direction\n";
+								}
+
+								if ( $line[0] eq $ref ) {                                # this line matches the currewnt ref, process it
+									if ($twoStep) {
+										if ( $run == 1 ) {
+											$ref =~ m/(.)$/;
+											print STDOUT "$1$line";
+										}
+										else {
+											print STDOUT $line;
+										}
+									}
+									else {
+										if ( $ref =~ /1$/ || $run == 2 ) {    # if run==2 we print to only one file, might as well be this one
+											print {$output1} $line;     # print to /1 file
+										}
+										elsif ( $ref =~ /2$/ ) {
+											print {$output2} $line;     # print to /2 file
+										}
+										else {
+											die "ERROR & EXIT: Read ID does not end with /1 or /2";
+										}
+									}
+								}
+								else {
+									$input_line[$i]  = $line;                       # this line reference don't match the current ref, we still have to read more ref before we get to this ref in the input file
+									$input_line1[$i] = $line[0];                    # just so we don't have to split the line again next time we want to check if the ref is the same
+									$loop            = 0;
+									if ( $run == 2 ) {
+										$input_direction[$i] = $direction;
+									}
+								}
+							}
+							else {                                                              # last line, close this file by setting the checker to undef
+								$input_open[$i] = undef;                                  # set checker to undef
+								$loop = 0;
+								$any_open--;
+							}
+						}
+					}
+				}
+				last if ( $any_open == 0 );
+				}
+			}
+		}
+		else {
+			print STDERR "MOCATFilter :  already processed all input - skipping $reference\n";
+		}
+	}
+	close $output1 if ($output1);
+	close $output2 if ($output2);
+}
+
+print STDERR "MOCATFilter : closing\n";
+foreach my $file (@input) {
+	close $file;
+}
+
+exit 0;
