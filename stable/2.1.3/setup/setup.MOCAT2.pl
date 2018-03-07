@@ -337,7 +337,7 @@ print "Setup set the flag 'MOCAT_dir' to $cwd\n";
 print "\n";
 print "UNIX / OSX STARTUP FILE CHANGES\n";
 print "Exported $cwd/src to \$PERL5LIB and \$PATH variable\n";
-print "to ~./bashrc and ~./bash_profile\n";
+print "to ~/.bashrc and ~/.bash_profile\n";
 
 system "chmod -R uga+rwx bin/*";
 
