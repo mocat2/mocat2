@@ -4,7 +4,14 @@ MOCAT2 (metagenomic analysis toolkit) is a package for analyzing metagenomics da
 
 Unfortunately, development of MOCAT2 has stopped. Here is the MOCAT2 Bioinformatics paper (http://bit.ly/1VbJnzi). This Github repo contains the latest MOCAT2 version.
 
-To use the functional annotation step, you need to download the required data files here: (4GB)
+
+HOW TO INSTALL
+
+1. Clone the repository.
+2. Use the files in stable/2.1.3. Run the setup.MOCAT2.pl script.
+3. To use the functional annotation step, you need to download the required data file here: http://vm-lux.embl.de/~kultima/share/MOCAT/v2.0/MOCAT2_data_files.zip (4GB)
+4. Extract the MOCAT2_Data_files.zip file into the correct folder structure.
+
 
 OUTPUT FILES
 
