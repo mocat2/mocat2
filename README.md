@@ -9,8 +9,7 @@ HOW TO INSTALL
 
 1. Clone the repository.
 2. Use the files in stable/2.1.3. Run the setup.MOCAT2.pl script.
-3. To use the functional annotation step, you need to download the required data file here: http://vm-lux.embl.de/~kultima/share/MOCAT/v2.0/MOCAT2_data_files.zip (4GB)
-4. Extract the MOCAT2_Data_files.zip file into the correct folder structure.
+3. To use the functional annotation step, you need to download and extract the required data file into the MOCAT folder: http://vm-lux.embl.de/~kultima/share/MOCAT/v2.0/MOCAT2_data_files.zip (4GB)
 
 
 OUTPUT FILES
