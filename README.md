@@ -1,3 +1,8 @@
+# Notice
+
+**MOCAT is no longer being actively developed and supported**  
+Please consider switching to newer tools such as [NGLess](https://ngless.embl.de/) and [NGLess meta profilers](https://github.com/ngless-toolkit/ng-meta-profiler) in conjunction with the [mOTUs profiler](https://motu-tool.org/), the [GMGC gene catalog](http://gmgc.embl.de/) and the [EggNOG database](http://eggnog5.embl.de) and [mapper](http://eggnog-mapper.embl.de/).
+
 # MOCAT 2
 
 MOCAT2 (metagenomic analysis toolkit) is a package for analyzing metagenomics datasets. Currently MOCAT2 supports Illumina single- and paired-end reads in raw FastQ format. Using MOCAT2 you can generate taxonomic and functional profiles, as well as assemble reads and predict genes in assembled sequences. The official MOCAT2 page is http://mocat.embl.de/
